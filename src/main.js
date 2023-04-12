@@ -7,7 +7,7 @@ import axios from 'axios';
 Vue.config.productionTip = false
 
 Vue.prototype.$http = axios;
-Vue.prototype.$baseUrl = 'http://127.0.0.1:8000/api/public';
+Vue.prototype.$baseUrl = 'http://127.0.0.1:8000';
 Vue.prototype.$api = 'http://127.0.0.1:8000/api';
 
 new Vue({

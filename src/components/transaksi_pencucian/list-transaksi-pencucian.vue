@@ -31,11 +31,11 @@
                         <template v-slot:[`item.actions`]="{ item }">
                             <v-icon dense color="#316291" @click="detailHandler(item)" class="data-table-icon">mdi-information</v-icon>
                             <v-icon v-if="item.status == 'Baru'" dense color="#316291" @click="editHandler(item)" class="data-table-icon">mdi-pencil</v-icon>
-                            <v-icon v-if="item.status == 'Baru'" dense color="#316291" @click="prosesCuci(item)" class="data-table-icon">mdi-water</v-icon>
-                            <v-icon v-if="item.status == 'Proses Cuci'" dense color="#316291" @click="prosesKering(item)" class="data-table-icon">mdi-weather-windy</v-icon>
-                            <v-icon v-if="item.status == 'Proses Kering'" dense color="#316291" @click="prosesBayar(item)" class="data-table-icon">mdi-cash</v-icon>
-                            <v-icon v-if="item.status == 'Proses Bayar'" dense color="#316291" @click="finish(item)" class="data-table-icon">mdi-check</v-icon>
-                            <v-icon v-if="item.status == 'Selesai'" dense color="#316291" @click="cetakNota(item)" class="data-table-icon">mdi-download</v-icon>
+                            <v-icon v-if="item.status == 'Baru'" dense color="#316291" @click="ubahStatusHandler(item.id, 'cuci')" class="data-table-icon">mdi-water</v-icon>
+                            <v-icon v-if="item.status == 'Proses Cuci'" dense color="#316291" @click="ubahStatusHandler(item.id, 'kering')" class="data-table-icon">mdi-weather-windy</v-icon>
+                            <v-icon v-if="item.status == 'Proses Kering'" dense color="#316291" @click="ubahStatusHandler(item.id, 'bayar')" class="data-table-icon">mdi-cash</v-icon>
+                            <v-icon v-if="item.status == 'Proses Bayar'" dense color="#316291" @click="ubahStatusHandler(item.id, 'finish')" class="data-table-icon">mdi-check</v-icon>
+                            <v-icon v-if="item.status == 'Selesai'" dense color="#316291" @click="cetakNota(item.id)" class="data-table-icon">mdi-download</v-icon>
                             <v-icon v-if="item.status == 'Baru'" dense color="#316291" @click="deleteHandler(item.id)" class="data-table-icon">mdi-delete</v-icon>
                         </template>
                         <template v-slot:no-data>
@@ -58,6 +58,22 @@
                     <v-spacer></v-spacer>
                     <v-btn dense color="btn-confirm-cancel" @click="dialogConfirmDelete = false">Batal</v-btn>
                     <v-btn dense class="btn-confirm-delete" @click="deleteData()">Hapus</v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+
+        <v-dialog v-model="dialogConfirmUbahStatus" persistent max-width="450px">
+            <v-card>
+                <v-card-title class="dialog-confirm-title">
+                    <span class="headline white--text">Ubah Status Transaksi Pencucian</span>
+                </v-card-title>
+                <v-card-text class="dialog-confirm-text">
+                    <span >Apakah anda yakin ingin mengubah status transaksi pencucian ini?</span>
+                </v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn dense color="btn-confirm-cancel" @click="cancelUbahStatus()">Batal</v-btn>
+                    <v-btn dense class="btn-confirm-delete" @click="updateStatusProses()">Ubah</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -135,8 +151,11 @@ export default {
             stasuses: ['Semua', 'Baru', 'Proses Cuci', 'Proses Kering', 'Proses Bayar', 'Selesai'],
             selected_status: '',
             dialogConfirmDelete: false,
+            dialogConfirmUbahStatus: false,
             editId: '',
             deleteId: '',
+            statusId: '',
+            selectedProses: '',
             snackbar: {
                 snackbarNotif: false,
                 color: '',
@@ -199,6 +218,26 @@ export default {
             });
         },
 
+        updateStatusProses(){
+            let data = {
+                "id": this.statusId,
+            }
+            var url = this.$api + "/transaksi-pencucian/" + this.selectedProses;
+            this.$http.put(url, data).then((response) => {
+                this.snackbar.error_message = response.data.message;
+                this.snackbar.color = "green";
+                this.snackbar.snackbarNotif = true;
+                this.dialogConfirmUbahStatus = false;
+                this.axioData(this.selected_status);
+            })
+            .catch((error) => {
+                this.snackbar.error_message = error.response.data.message;
+                this.snackbar.color = "red";
+                this.snackbar.snackbarNotif = true;
+                this.dialogConfirmUbahStatus = false;
+            });
+        },
+
         deleteHandler(item) {
             this.deleteId = item
             this.dialogConfirmDelete = true
@@ -224,6 +263,38 @@ export default {
 
         getVarName(items){
             return items.map((item) => item.nama).toString();
+        },
+
+        ubahStatusHandler(item, status){
+            this.statusId = item;
+            
+            switch(status){
+                case 'cuci':{
+                    this.selectedProses = 'cuci';
+                    break;
+                }
+                case 'kering':{
+                    this.selectedProses = 'kering';
+                    break;
+                }
+                case 'bayar':{
+                    this.selectedProses = 'bayar';
+                    break;
+                }
+                case 'finish':{
+                    this.selectedProses = 'finish'
+                    break;
+                }
+                default:
+                    break;
+            }
+            this.dialogConfirmUbahStatus = true;
+        },
+
+        cancelUbahStatus(){
+            this.statusId = '';
+            this.selectedProses = '';
+            this.dialogConfirmUbahStatus = false;
         },
     },
     mounted(){

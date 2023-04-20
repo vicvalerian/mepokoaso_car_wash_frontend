@@ -35,7 +35,7 @@
                             <v-icon v-if="item.status == 'Proses Cuci'" dense color="#316291" @click="ubahStatusHandler(item.id, 'kering')" class="data-table-icon">mdi-weather-windy</v-icon>
                             <v-icon v-if="item.status == 'Proses Kering'" dense color="#316291" @click="ubahStatusHandler(item.id, 'bayar')" class="data-table-icon">mdi-cash</v-icon>
                             <v-icon v-if="item.status == 'Proses Bayar'" dense color="#316291" @click="ubahStatusHandler(item.id, 'finish')" class="data-table-icon">mdi-check</v-icon>
-                            <v-icon v-if="item.status == 'Selesai'" dense color="#316291" @click="cetakNota(item.id)" class="data-table-icon">mdi-download</v-icon>
+                            <v-icon v-if="item.status == 'Selesai'" dense color="#316291" @click="cetakNotaHandler(item)" class="data-table-icon">mdi-download</v-icon>
                             <v-icon v-if="item.status == 'Baru'" dense color="#316291" @click="deleteHandler(item.id)" class="data-table-icon">mdi-delete</v-icon>
                         </template>
                         <template v-slot:no-data>
@@ -74,6 +74,22 @@
                     <v-spacer></v-spacer>
                     <v-btn dense color="btn-confirm-cancel" @click="cancelUbahStatus()">Batal</v-btn>
                     <v-btn dense class="btn-confirm-delete" @click="updateStatusProses()">Ubah</v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+
+        <v-dialog v-model="dialogConfirmCetakNota" persistent max-width="450px">
+            <v-card>
+                <v-card-title class="dialog-confirm-title">
+                    <span class="headline white--text">Cetak Nota Transaksi Pencucian</span>
+                </v-card-title>
+                <v-card-text class="dialog-confirm-text">
+                    <span >Apakah anda yakin ingin mencetak nota transaksi pencucian ini?</span>
+                </v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn dense color="btn-confirm-cancel" @click="cancelCetakNota()">Batal</v-btn>
+                    <v-btn dense class="btn-confirm-delete" @click="cetakNota()">Cetak</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -152,9 +168,12 @@ export default {
             selected_status: '',
             dialogConfirmDelete: false,
             dialogConfirmUbahStatus: false,
+            dialogConfirmCetakNota: false,
             editId: '',
             deleteId: '',
             statusId: '',
+            notaId: '',
+            notaPencucianNumber: '',
             selectedProses: '',
             snackbar: {
                 snackbarNotif: false,
@@ -238,6 +257,25 @@ export default {
             });
         },
 
+        cetakNota(){
+            var url = this.$api + "/transaksi-pencucian/nota/" + this.notaId;
+            this.$http.get(url, {
+                responseType: 'arraybuffer'
+            }).then((response) => {
+                let blob = new Blob([response.data], { type: 'application/pdf' });
+                let link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = 'Nota Pencucian ' + this.notaPencucianNumber + '.pdf';
+                link.click();
+                this.dialogConfirmCetakNota = false;
+            })
+            .catch((error) => {
+                this.snackbar.error_message = error.response.data.message;
+                this.snackbar.color = "red";
+                this.dialogConfirmCetakNota = false;
+            });
+        },
+
         deleteHandler(item) {
             this.deleteId = item
             this.dialogConfirmDelete = true
@@ -295,6 +333,18 @@ export default {
             this.statusId = '';
             this.selectedProses = '';
             this.dialogConfirmUbahStatus = false;
+        },
+
+        cetakNotaHandler(item){
+            this.notaId = item.id;
+            this.notaPencucianNumber = item.no_pencucian;
+            this.dialogConfirmCetakNota = true;
+        },
+
+        cancelCetakNota(){
+            this.notaId = '';
+            this.notaPencucianNumber = '';
+            this.dialogConfirmCetakNota = false;
         },
     },
     mounted(){

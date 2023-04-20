@@ -92,8 +92,13 @@ export default {
                     this.snackbar.color = "green";
                     this.snackbar.snackbarNotif = true;
                     this.clear();
-                    localStorage.setItem('userLogin', JSON.stringify(response.data.data.id));
-                    localStorage.setItem('jabatan', response.data.data.jabatan.nama);
+                    
+                    let userLogin = {
+                        id: response.data.data.id,
+                        jabatan: response.data.data.jabatan.nama,
+                    }
+
+                    localStorage.setItem('userLogin', JSON.stringify(userLogin));
                     this.$router.push({
                         name: 'Dashboard',
                     });

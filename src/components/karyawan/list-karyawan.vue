@@ -93,7 +93,6 @@
                         <v-text-field v-model="form.nama" label="Nama Karyawan" required></v-text-field>
                         <v-text-field v-model="form.no_telp" label="Nomor Telepon Karyawan" required></v-text-field>
                         <v-text-field v-model="form.username" label="Username Karyawan" required></v-text-field>
-                        <v-text-field v-model="form.password" label="Password Karyawan" required></v-text-field>
                         <v-text-field v-model="form.gaji" label="Gaji Karyawan" required></v-text-field>
                         <v-select :items="statuses" v-model="form.status" label="Status Karyawan" item-value="id" item-text="nama" required></v-select>
                         <v-file-input append-icon="mdi-camera" accept="image/*" label="Foto Karyawan" id="fotoKaryawan" ref="fileKaryawan"></v-file-input>
@@ -284,7 +283,6 @@ export default {
             this.karyawan.append('nama', this.form.nama);
             this.karyawan.append('no_telp', this.form.no_telp);
             this.karyawan.append('username', this.form.username);
-            this.karyawan.append('password', this.form.password);
             this.karyawan.append('gaji', this.form.gaji);
             this.karyawan.append('status', this.form.status);
 

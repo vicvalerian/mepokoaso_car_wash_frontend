@@ -168,4 +168,71 @@ const router = new VueRouter({
   ],
 });
 
+router.beforeEach((to, from, next) => {
+  let userLogin = JSON.parse(localStorage.getItem("userLogin")) ?? null;
+  let jabatan = '';
+  if(userLogin){
+    jabatan = userLogin.jabatan;
+  }
+
+  //Jika sudah Login maka tidak dapat kembali ke halaman Login & Register
+  if(to.name == "Login"  && localStorage.getItem("userLogin") != null){
+      next({ name: "Dashboard" })
+      document.title = "Dashboard"
+  }
+  
+  //Jika belum Login maka tidak dapat membuka halaman lain
+  if(to.name == "Jenis Kendaraan" && localStorage.getItem("userLogin") == null ||
+      to.name == "Jabatan" && localStorage.getItem("userLogin") == null ||
+      to.name == "Kendaraan" && localStorage.getItem("userLogin") == null ||
+      to.name == "Karyawan" && localStorage.getItem("userLogin") == null ||
+      to.name == "Peminjaman Karyawan" && localStorage.getItem("userLogin") == null ||
+      to.name == "Menu Kedai" && localStorage.getItem("userLogin") == null ||
+      to.name == "Gaji Karyawan" && localStorage.getItem("userLogin") == null ||
+      to.name == "Pengeluaran Kedai" && localStorage.getItem("userLogin") == null ||
+      to.name == "Mobil Pelanggan" && localStorage.getItem("userLogin") == null ||
+      to.name == "Transaksi Pencucian" && localStorage.getItem("userLogin") == null ||
+      to.name == "Pilih Kendaraan Transaksi Pencucian" && localStorage.getItem("userLogin") == null ||
+      to.name == "Tambah Transaksi Pencucian" && localStorage.getItem("userLogin") == null ||
+      to.name == "Detail Transaksi Pencucian" && localStorage.getItem("userLogin") == null ||
+      to.name == "Ubah Transaksi Pencucian" && localStorage.getItem("userLogin") == null ||
+      to.name == "Transaksi Kedai" && localStorage.getItem("userLogin") == null ||
+      to.name == "Tambah Transaksi Kedai" && localStorage.getItem("userLogin") == null ||
+      to.name == "Detail Transaksi Kedai" && localStorage.getItem("userLogin") == null ||
+      to.name == "Ubah Transaksi Kedai" && localStorage.getItem("userLogin") == null ||
+      to.name == "Laporan" && localStorage.getItem("userLogin") == null ||
+      to.name == "Dashboard" && localStorage.getItem("userLogin") == null ||
+      to.name == "Profil" && localStorage.getItem("userLogin") == null){
+    next({ name: "Login" })
+    document.title = "Login"
+  }
+
+  //Pemilik hanya dapat melihat dashboard, profil, dan laporan
+  if(to.name == "Jenis Kendaraan" && jabatan != 'Kasir' ||
+      to.name == "Jabatan" && jabatan != 'Kasir' ||
+      to.name == "Kendaraan" && jabatan != 'Kasir' ||
+      to.name == "Karyawan" && jabatan != 'Kasir' ||
+      to.name == "Peminjaman Karyawan" && jabatan != 'Kasir' ||
+      to.name == "Menu Kedai" && jabatan != 'Kasir' ||
+      to.name == "Gaji Karyawan" && jabatan != 'Kasir' ||
+      to.name == "Pengeluaran Kedai" && jabatan != 'Kasir' ||
+      to.name == "Mobil Pelanggan" && jabatan != 'Kasir' ||
+      to.name == "Transaksi Pencucian" && jabatan != 'Kasir' ||
+      to.name == "Pilih Kendaraan Transaksi Pencucian" && jabatan != 'Kasir' ||
+      to.name == "Tambah Transaksi Pencucian" && jabatan != 'Kasir' ||
+      to.name == "Detail Transaksi Pencucian" && jabatan != 'Kasir' ||
+      to.name == "Ubah Transaksi Pencucian" && jabatan != 'Kasir' ||
+      to.name == "Transaksi Kedai" && jabatan != 'Kasir' ||
+      to.name == "Tambah Transaksi Kedai" && jabatan != 'Kasir' ||
+      to.name == "Detail Transaksi Kedai" && jabatan != 'Kasir' ||
+      to.name == "Ubah Transaksi Kedai" && jabatan != 'Kasir'){
+    next({ name: "Dashboard" })
+    document.title = "Dashboard"
+  }
+
+  document.title = to.meta.title;
+  next();
+});
+
+
 export default router

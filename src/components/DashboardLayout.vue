@@ -11,8 +11,19 @@
 
       <v-divider></v-divider>
 
-      <v-list dense nav>
+      <v-list dense nav v-if="loggedInKasir">
         <v-list-item v-for="item in admins" :key="item.title" color="#316291" link tag="router-link" :to="item.to">
+          <v-list-item-icon>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title class="text-left">{{ item.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+
+      <v-list dense nav v-if="loggedInPemilik">
+        <v-list-item v-for="item in pemilik" :key="item.title" color="#316291" link tag="router-link" :to="item.to">
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
@@ -26,7 +37,8 @@
     
     <v-app-bar app fixed height="80px" class="primary--background">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" color="white"></v-app-bar-nav-icon>
-      <v-toolbar-title class="white--text"><b>Selamat datang, Admin!</b></v-toolbar-title>
+      <v-toolbar-title v-if="loggedInKasir" class="white--text"><b>Selamat datang, Kasir!</b></v-toolbar-title>
+      <v-toolbar-title v-if="loggedInPemilik" class="white--text"><b>Selamat datang, Pemilik!</b></v-toolbar-title>
       <VSpacer/>
       <v-toolbar-items>
         <v-btn @click="goToProfile()" text router><v-icon color="white" size="30">mdi-account-circle</v-icon></v-btn>
@@ -45,6 +57,7 @@
     data() {
       return {
         drawer: true,
+        userLogin: JSON.parse(localStorage.getItem('userLogin')),
         admins: [
           { title: "Dashboard", to: '/dashboard', icon: 'mdi-monitor' },
           { title: 'Kendaraan', to: '/kendaraan', icon: 'mdi-car-multiple' },
@@ -60,6 +73,10 @@
           { title: 'Pengeluaran Kedai', to: '/pengeluaran-kedai', icon: 'mdi-cart' },
           { title: 'Laporan', to: '/laporan', icon: 'mdi-file-export' },
         ],
+        pemilik: [
+          { title: "Dashboard", to: '/dashboard', icon: 'mdi-monitor' },
+          { title: 'Laporan', to: '/laporan', icon: 'mdi-file-export' },
+        ]
       };
     },
     methods: {
@@ -70,21 +87,21 @@
       },
 
       logout(){
-        if(localStorage.getItem('id_pelanggan') != null){
-          this.$router.push({
-            name: 'Login',
-          });
-        } else if(localStorage.getItem('id_pegawai') != null){
-          this.$router.push({
-            name: 'Login',
-          });
-        }
+        localStorage.removeItem('userLogin');
+        this.$router.push({
+          name: 'Login',
+        });
       },
     },
     computed: {
-      //Login Admin
-      loggedInAdmin(){
-        return localStorage.getItem('id_jabatan') == '2' && localStorage.getItem("email") != null;
+      //Login Kasir
+      loggedInKasir(){
+        return this.userLogin.jabatan == 'Kasir';
+      },
+
+      //Login Pemilik
+      loggedInPemilik(){
+        return this.userLogin.jabatan == 'Pemilik';
       },
     },
   };

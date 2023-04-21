@@ -6,7 +6,7 @@
             <v-flex md4 sm6 xs12 class="pr-2 pb-2">
                 <v-card>
                     <v-card-text class="dialog-confirm-content text-center">
-                        <v-img contain height="250px" :src="previewImgLogo == '' ? $baseUrl+'/storage/'+form.foto : previewImgLogo" style="object-fit:cover;"></v-img>
+                        <v-img contain height="250px" :src="form.foto != '' ? $baseUrl+'/storage/'+form.foto : form.foto" style="object-fit:cover;"></v-img>
                     </v-card-text>
                     <v-card-actions class="justify-center">
                         <v-btn dense color="btn-confirm-cancel" @click="dialogUbahFoto = true">Ubah Foto Profil</v-btn>
@@ -263,6 +263,7 @@ export default {
                 this.dialogAddEdit = false
                 this.axioData();
                 this.closeDialogFoto();
+                location.reload();
             })
             .catch((error) => {
                 this.snackbar.error_message = error.response.data.message;

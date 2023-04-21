@@ -64,7 +64,9 @@
     },
     methods: {
       goToProfile(){
-
+        this.$router.push({
+          name: 'Profil',
+        });
       },
 
       logout(){

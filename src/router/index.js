@@ -151,7 +151,19 @@ const router = new VueRouter({
           meta: { title: 'Dashboard' },
           component: importComponent('dashboard/view-dashboard'),
         },
+        {
+          path: '/profil',
+          name: 'Profil',
+          meta: { title: 'Profil' },
+          component: importComponent('profil/view-profil'),
+        },
       ],
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      meta: { title: 'Login' },
+      component: importComponent('LoginPage'),
     },
   ],
 });

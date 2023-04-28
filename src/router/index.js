@@ -28,6 +28,12 @@ const router = new VueRouter({
   mode: 'history',
   routes:[
     {
+      path: '/',
+      name: 'Riwayat Pencucian Mobil',
+      meta: { title: 'Riwayat Pencucian Mobil' },
+      component: importComponent('riwayat_mobil/cari-riwayat-mobil'),
+    },
+    {
       path: '',
       component: importComponent('DashboardLayout'),
       children: [
@@ -160,7 +166,7 @@ const router = new VueRouter({
       ],
     },
     {
-      path: '/login',
+      path: '/admin',
       name: 'Login',
       meta: { title: 'Login' },
       component: importComponent('LoginPage'),
@@ -176,6 +182,10 @@ const router = new VueRouter({
       name: 'Hasil Riwayat Pencucian Mobil',
       meta: { title: 'Hasil Riwayat Pencucian Mobil' },
       component: importComponent('riwayat_mobil/hasil-riwayat-mobil'),
+    },
+    {
+      path: '*',
+      redirect: '/riwayat-pencucian'
     },
   ],
 });

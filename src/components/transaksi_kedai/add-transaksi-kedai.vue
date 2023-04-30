@@ -54,7 +54,7 @@
                                                     v-on="on"
                                                 ></v-text-field>
                                             </template>
-                                            <v-time-picker v-if="modal2" v-model="form.waktu_penjualan" format="24hr" full-width>
+                                            <v-time-picker v-if="modal2" v-model="form.waktu_penjualan" format="24hr" full-width use-seconds>
                                                 <v-spacer></v-spacer>
                                                 <v-btn text color="primary" @click="modal2 = false">Batal</v-btn>
                                                 <v-btn text color="primary" @click="$refs.dialog2.save(form.waktu_penjualan)">Simpan</v-btn>

@@ -113,7 +113,7 @@ export default {
         processTimelineItem(){
             for (let index = 0; index < this.form.transaksis.length; index++) {
                 let text = '';
-                text = 'Kendaraan melakukan pencucian pada tanggal ' + this.form.transaksis[index].formatTgl + ' pukul ' + this.form.transaksis[index].waktu_pencucian;
+                text = 'Kendaraan melakukan pencucian pada tanggal ' + this.form.transaksis[index].formatTgl + ' pukul ' + this.form.transaksis[index].waktu_pencucian + ' WITA';
                 this.tamp_logs.push(text);
             }
         },

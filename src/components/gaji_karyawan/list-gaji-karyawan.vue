@@ -4,14 +4,14 @@
         <h1 class="page-custom-title">DATA GAJI KARYAWAN</h1>
         <v-card>
             <v-card-title>
-                <v-spacer></v-spacer>
-                <v-btn dense class="btn-add-data" @click="dialogAddEdit=true">Sinkronisasi Gaji</v-btn>
                 <v-flex xs3>
                     <v-select class="mr-4" label="Pilih Karyawan" :items="karyawan_list" v-model="filter.search" item-value="nama" item-text="nama" single-line hide-details clearable></v-select>
                 </v-flex>
                 <v-flex xs3>
-                <v-text-field v-model="list.search" append-icon="mdi-magnify" label="Cari gaji karyawan" single-line hide-details></v-text-field>
+                    <v-text-field v-model="list.search" append-icon="mdi-magnify" label="Cari gaji karyawan" single-line hide-details></v-text-field>
                 </v-flex>
+                <v-spacer></v-spacer>
+                <v-btn dense class="btn-add-data" @click="dialogAddEdit=true">Sinkronisasi Gaji</v-btn>
 
             </v-card-title>
 

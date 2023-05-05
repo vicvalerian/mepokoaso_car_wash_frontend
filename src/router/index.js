@@ -171,12 +171,12 @@ const router = new VueRouter({
       meta: { title: 'Login' },
       component: importComponent('LoginPage'),
     },
-    {
-      path: '/riwayat-pencucian',
-      name: 'Riwayat Pencucian Mobil',
-      meta: { title: 'Riwayat Pencucian Mobil' },
-      component: importComponent('riwayat_mobil/cari-riwayat-mobil'),
-    },
+    // {
+    //   path: '/riwayat-pencucian',
+    //   name: 'Riwayat Pencucian Mobil',
+    //   meta: { title: 'Riwayat Pencucian Mobil' },
+    //   component: importComponent('riwayat_mobil/cari-riwayat-mobil'),
+    // },
     {
       path: '/riwayat-pencucian/hasil',
       name: 'Hasil Riwayat Pencucian Mobil',

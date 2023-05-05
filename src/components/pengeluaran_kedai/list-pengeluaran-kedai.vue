@@ -10,8 +10,8 @@
             </v-card-title>
 
             <v-data-table :headers="list.headers" :items="list.datas" :search="list.search" class="elevation-1">
-                <template v-slot:[`item.harga`]="{ item }">
-                    <template>Rp{{ item.harga }}</template>
+                <template v-slot:[`item.harga_pembelian`]="{ item }">
+                    <template>{{ formatRupiah(item.harga_pembelian, 'Rp') }}</template>
                 </template>
                 <template v-slot:[`item.stok`]="{ item }">
                     <template v-if="item.stok == null"><b>-</b></template>
@@ -460,7 +460,7 @@ export default {
             this.formDetail.nama_barang = item.nama_barang;
             this.formDetail.tgl_pembelian = item.tgl_pembelian;
             this.formDetail.jumlah_barang = item.jumlah_barang+" pcs";
-            this.formDetail.harga_pembelian = "Rp"+item.harga_pembelian;
+            this.formDetail.harga_pembelian = this.formatRupiah(item.harga_pembelian, 'Rp');
             this.dialogDetail = true
         },
 
@@ -509,6 +509,23 @@ export default {
             } else if(value == false){
                 this.dialogAddEditNonStok = true
             }
+        },
+
+        formatRupiah(value, prefix){
+            let number_string = value.toString();
+			let split   		= number_string.split(',');
+			let sisa     		= split[0].length % 3;
+			let rupiah     		= split[0].substr(0, sisa);
+			let ribuan     		= split[0].substr(sisa).match(/\d{3}/gi);
+ 
+			// tambahkan titik jika yang di input sudah menjadi angka ribuan
+			if(ribuan){
+				let separator = sisa ? '.' : '';
+				rupiah += separator + ribuan.join('.');
+			}
+ 
+			rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+			return prefix == undefined ? rupiah : (rupiah ? 'Rp' + rupiah : '');
         },
     },
     mounted(){

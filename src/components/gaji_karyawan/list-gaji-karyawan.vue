@@ -17,8 +17,8 @@
 
             <v-data-table :headers="list.headers" :items="list.datas" :search="list.search" class="elevation-1">
                 <template v-slot:[`item.total_gaji_bersih`]="{ item }">
-                    <template v-if="item.total_gaji_bersih <= 0"><b class="red--text">Rp{{ item.total_gaji_bersih }}</b></template>
-                    <template v-else><b class="green--text">Rp{{ item.total_gaji_bersih }}</b></template>
+                    <template v-if="item.total_gaji_bersih <= 0"><b class="red--text">{{ formatRupiah(item.total_gaji_bersih, 'Rp') }}</b></template>
+                    <template v-else><b class="green--text">{{ formatRupiah(item.total_gaji_bersih, 'Rp') }}</b></template>
                 </template>
                 <template v-slot:[`item.status`]="{ item }">
                     <v-chip v-if="item.status === 'Utang'" color="red" outlined>{{ item.status }}</v-chip>
@@ -318,9 +318,9 @@ export default {
             this.formDetail.karyawan = item.karyawan.nama;
             this.formDetail.bulan = item.bulan;
             this.formDetail.tahun = item.tahun;
-            this.formDetail.total_gaji_kotor = "Rp"+item.total_gaji_kotor;
-            this.formDetail.total_utang = "Rp"+item.total_utang;
-            this.formDetail.total_gaji_bersih = "Rp"+item.total_gaji_bersih;
+            this.formDetail.total_gaji_kotor = this.formatRupiah(item.total_gaji_kotor, 'Rp');
+            this.formDetail.total_utang = this.formatRupiah(item.total_utang, 'Rp');
+            this.formDetail.total_gaji_bersih = this.formatRupiah(item.total_gaji_bersih, 'Rp');
             this.formDetail.status = item.status;
             this.dialogDetail = true
         },
@@ -354,6 +354,23 @@ export default {
             this.clearForm()
             this.dialogAddEdit = false
             this.inputType = 'Sync'
+        },
+
+        formatRupiah(value, prefix){
+            let number_string = value.toString();
+			let split   		= number_string.split(',');
+			let sisa     		= split[0].length % 3;
+			let rupiah     		= split[0].substr(0, sisa);
+			let ribuan     		= split[0].substr(sisa).match(/\d{3}/gi);
+ 
+			// tambahkan titik jika yang di input sudah menjadi angka ribuan
+			if(ribuan){
+				let separator = sisa ? '.' : '';
+				rupiah += separator + ribuan.join('.');
+			}
+ 
+			rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+			return prefix == undefined ? rupiah : (rupiah ? 'Rp' + rupiah : '');
         },
     },
     mounted(){

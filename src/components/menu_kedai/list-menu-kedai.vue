@@ -17,7 +17,7 @@
 
             <v-data-table :headers="list.headers" :items="list.datas" :search="list.search" class="elevation-1">
                 <template v-slot:[`item.harga`]="{ item }">
-                    <template>Rp{{ item.harga }}</template>
+                    <template>{{ formatRupiah(item.harga, 'Rp') }}</template>
                 </template>
                 <template v-slot:[`item.stok`]="{ item }">
                     <template v-if="item.stok == null || item.is_stok == false"><b>-</b></template>
@@ -324,8 +324,8 @@ export default {
         detailHandler(item){
             this.formDetail.nama = item.nama;
             this.formDetail.jenis = item.jenis;
-            this.formDetail.harga = "Rp"+item.harga;
-            this.formDetail.stok = item.stok;
+            this.formDetail.harga = this.formatRupiah(item.harga, 'Rp');
+            this.formDetail.stok = item.stok ?? "-";
             if(item.is_stok == true){
                 this.formDetail.is_stok = 'Ya'
             } else{
@@ -364,6 +364,23 @@ export default {
             this.clearForm()
             this.dialogAddEdit = false
             this.inputType = 'Tambah'
+        },
+
+        formatRupiah(value, prefix){
+            let number_string = value.toString();
+			let split   		= number_string.split(',');
+			let sisa     		= split[0].length % 3;
+			let rupiah     		= split[0].substr(0, sisa);
+			let ribuan     		= split[0].substr(sisa).match(/\d{3}/gi);
+ 
+			// tambahkan titik jika yang di input sudah menjadi angka ribuan
+			if(ribuan){
+				let separator = sisa ? '.' : '';
+				rupiah += separator + ribuan.join('.');
+			}
+ 
+			rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+			return prefix == undefined ? rupiah : (rupiah ? 'Rp' + rupiah : '');
         },
     },
     mounted(){

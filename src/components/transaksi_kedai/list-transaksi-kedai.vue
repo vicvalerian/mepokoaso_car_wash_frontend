@@ -11,7 +11,7 @@
 
             <v-data-table :headers="list.headers" :items="list.datas" :search="list.search" class="elevation-1">
                 <template v-slot:[`item.total_penjualan`]="{ item }">
-                    <template>Rp{{ item.total_penjualan }}</template>
+                    <template>{{ formatRupiah(item.total_penjualan, 'Rp') }}</template>
                 </template>
                 <template v-slot:[`item.actions`]="{ item }">
                     <v-icon dense color="#316291" @click="detailHandler(item)" class="data-table-icon">mdi-information</v-icon>
@@ -185,6 +185,23 @@ export default {
             this.$router.push({
                 path: '/transaksi-kedai/ubah/' + item.id,
             });
+        },
+
+        formatRupiah(value, prefix){
+            let number_string = value.toString();
+			let split   		= number_string.split(',');
+			let sisa     		= split[0].length % 3;
+			let rupiah     		= split[0].substr(0, sisa);
+			let ribuan     		= split[0].substr(sisa).match(/\d{3}/gi);
+ 
+			// tambahkan titik jika yang di input sudah menjadi angka ribuan
+			if(ribuan){
+				let separator = sisa ? '.' : '';
+				rupiah += separator + ribuan.join('.');
+			}
+ 
+			rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+			return prefix == undefined ? rupiah : (rupiah ? 'Rp' + rupiah : '');
         },
     },
     mounted(){

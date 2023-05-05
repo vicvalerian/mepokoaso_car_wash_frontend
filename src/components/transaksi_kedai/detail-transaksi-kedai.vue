@@ -36,7 +36,7 @@
                                 <h2 class="page-custom-title">DAFTAR MENU</h2>
                                 <v-data-table :headers="list.headers" :items="list.datas" class="elevation-1" hide-default-footer>
                                     <template v-slot:[`item.pivot.sub_total`]="{ item }">
-                                        <template>Rp{{ item.pivot.sub_total }}</template>
+                                        <template>{{ formatRupiah(item.pivot.sub_total, 'Rp') }}</template>
                                     </template>
                                     <template v-slot:no-data>
                                         <div color="white" class="red--text" icon="warning"><b>Maaf, tidak ada data tersedia.</b></div>
@@ -166,7 +166,7 @@ export default {
             let url = this.$api + '/transaksi-kedai/' + this.id;
             this.$http.get(url).then(response => {
                 this.form = response.data.data;
-                this.form.total_penjualan = 'Rp'+response.data.data.total_penjualan;
+                this.form.total_penjualan = this.formatRupiah(response.data.data.total_penjualan, 'Rp');
                 this.list.datas = response.data.data.menu_kedai;
             });
         },
@@ -191,6 +191,23 @@ export default {
             this.$router.push({
                 name: 'Transaksi Kedai',
             });
+        },
+
+        formatRupiah(value, prefix){
+            let number_string = value.toString();
+			let split   		= number_string.split(',');
+			let sisa     		= split[0].length % 3;
+			let rupiah     		= split[0].substr(0, sisa);
+			let ribuan     		= split[0].substr(sisa).match(/\d{3}/gi);
+ 
+			// tambahkan titik jika yang di input sudah menjadi angka ribuan
+			if(ribuan){
+				let separator = sisa ? '.' : '';
+				rupiah += separator + ribuan.join('.');
+			}
+ 
+			rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+			return prefix == undefined ? rupiah : (rupiah ? 'Rp' + rupiah : '');
         },
     },
     mounted(){

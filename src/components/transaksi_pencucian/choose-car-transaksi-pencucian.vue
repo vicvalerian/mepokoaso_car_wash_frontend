@@ -11,12 +11,12 @@
                                 <v-flex xs2>
                                     <v-item-group mandatory>
                                         <v-col v-for="(item, index) in jenis_kendaraan_list" :key="index">
-                                            <v-item v-slot="{ active }">
-                                                <v-card class="mt-4" width="150" height="160" :color="active ? '#BCBCBC' : ''" @click="axioKendaraan(item.nama)">
-                                                    <v-card-title class="justify-center">
+                                            <v-item v-slot="{ active, toggle }">
+                                                <v-card class="mt-4" width="150" height="160" :color="active ? '#BCBCBC' : ''" @click="toggle">
+                                                    <v-card-title class="justify-center" @click="axioKendaraan(item.nama)">
                                                         <v-img contain width="100" height="100" :src="previewImageUrl == '' ? $baseUrl+'/storage/'+item.logo : previewImageUrl" style="object-fit:cover;"></v-img>
                                                     </v-card-title>
-                                                    <v-card-text>
+                                                    <v-card-text @click="axioKendaraan(item.nama)">
                                                         {{ item.nama }}
                                                     </v-card-text>
                                                 </v-card>

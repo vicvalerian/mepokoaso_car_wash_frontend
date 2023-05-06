@@ -60,7 +60,7 @@
                             <v-flex xs12>
                                 <div class="row">
                                     <div class="mr-8">
-                                        <v-img width="300px" height="400px" :src="previewImgLogo == '' ? $baseUrl+'/storage/'+formDetail.foto : previewImgLogo" style="object-fit:cover;"></v-img>
+                                        <v-img contain width="300px" height="400px" :src="previewImgLogo == '' ? $baseUrl+'/storage/'+formDetail.foto : previewImgLogo" style="object-fit:cover;"></v-img>
                                     </div>
                                     <div>
                                         <v-text-field v-model="formDetail.jabatan" label="Jabatan" readonly></v-text-field>

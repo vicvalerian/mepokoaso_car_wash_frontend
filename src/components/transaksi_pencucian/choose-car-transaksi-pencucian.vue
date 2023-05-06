@@ -28,16 +28,16 @@
                                 <v-flex xs10>
                                     <div class="container">
                                         <v-card class="mt-4" width="330" height="350" v-for="(item, index) in kendaraan_list" :key="index" @click="goToTambahPencucian(item)">
-                                        <v-card-title class="justify-center">
-                                            <v-img contain width="100" height="250" :src="previewImageUrl == '' ? $baseUrl+'/storage/'+item.foto : previewImageUrl" style="object-fit:cover;"></v-img>
-                                        </v-card-title>
-                                        <v-card-text>
-                                            <b class="black--text" style="font-size: 16px">
-                                            {{ item.nama }} <br>
-                                            {{ formatRupiah(item.harga, 'Rp') }}
-                                            </b>
-                                        </v-card-text>
-                                    </v-card>
+                                            <v-card-title class="justify-center">
+                                                <v-img contain width="100" height="250" :src="previewImageUrl == '' ? $baseUrl+'/storage/'+item.foto : previewImageUrl" style="object-fit:cover;"></v-img>
+                                            </v-card-title>
+                                            <v-card-text>
+                                                <b class="black--text" style="font-size: 16px">
+                                                {{ item.nama }} <br>
+                                                {{ formatRupiah(item.harga, 'Rp') }}
+                                                </b>
+                                            </v-card-text>
+                                        </v-card>
                                     </div>
                                     
                                 </v-flex>

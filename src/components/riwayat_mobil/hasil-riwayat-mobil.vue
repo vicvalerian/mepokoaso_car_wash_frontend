@@ -77,7 +77,7 @@
 <script>
 
 export default {
-    name: 'login-view',
+    name: 'result-car-history-view',
 
     created() {
         this.axioData();

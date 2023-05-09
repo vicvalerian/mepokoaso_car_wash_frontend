@@ -107,7 +107,7 @@
 <script>
 
 export default {
-    name: 'transaksi-pencucian-list',
+    name: 'transaksi-kedai-list',
     data() {
         return {
             dialogConfirmDelete: false,
@@ -148,7 +148,7 @@ export default {
 
         deleteData(){
             let id = this.deleteId;
-            var url = this.$api + "/transaksi-pencucian/" + id;
+            var url = this.$api + "/transaksi-kedai/" + id;
             this.$http.delete(url).then((response) => {
                 this.snackbar.error_message = response.data.message;
                 this.snackbar.color = "green";

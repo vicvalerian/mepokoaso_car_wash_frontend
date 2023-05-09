@@ -59,7 +59,7 @@
 <script>
 
 export default {
-    name: 'login-view',
+    name: 'search-car-history-view',
 
     created() {
 

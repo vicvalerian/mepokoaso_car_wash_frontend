@@ -142,7 +142,7 @@
 <script>
 
 export default {
-    name: 'jabatan-list',
+    name: 'profil-list',
     data() {
         return {
             show: false,

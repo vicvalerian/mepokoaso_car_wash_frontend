@@ -10,7 +10,7 @@
                             <div>
                                 <v-layout justify>
                                     <v-flex xs12>
-                                        <v-text-field v-model="form.no_pencucian" label="Nomor Pencucian" readonly></v-text-field>
+                                        <v-text-field v-model="form.no_pencucian" label="Nomor Transaksi Pencucian" readonly></v-text-field>
                                     </v-flex>
                                 </v-layout>
                                 <v-layout justify>

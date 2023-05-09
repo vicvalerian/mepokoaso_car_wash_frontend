@@ -9,107 +9,141 @@
                         <v-flex xs12>
                             <div>
                                 <v-layout justify>
-                                    <v-flex xs12>
-                                        <v-text-field v-model="form.no_penjualan" label="Nomor Penjualan" readonly></v-text-field>
+                                    <v-flex xs7>
+                                        <v-item-group mandatory>
+                                            <v-container>
+                                                <v-row>
+                                                    <v-col v-for="(item, index) in jenis_menu_list" :key="index" cols="12" md="3" style="padding-top: 0;">
+                                                        <v-item v-slot="{ active, toggle }">
+                                                            <v-card :color="active ? '#316291' : ''" @click="toggle">
+                                                                <v-card-text :class="active ? 'white--text justify-center' : 'black--text justify-center'" @click="axioMenuKedai(item.value)">
+                                                                    <div class="row center">
+                                                                        <v-icon :class="active ? 'white--text' : 'black--text'">{{item.icon}}</v-icon>
+                                                                        <h4>{{ item.name }}</h4>
+                                                                    </div>
+                                                                </v-card-text>
+                                                            </v-card>
+                                                        </v-item>
+                                                    </v-col>
+                                                </v-row>
+                                            </v-container>
+                                        </v-item-group>
+                                        <v-item-group>
+                                            <v-container>
+                                                <v-row>
+                                                    <v-col v-for="(item, index) in menu_kedai_list" :key="index" cols="12" md="3">
+                                                        <v-item>
+                                                            <v-card elevation="5" class="" style="height: auto;">
+                                                                <v-card-title class="justify-center" style="padding: 8px">
+                                                                    <v-card color="#316291" width="100%" height="100" elevation="0" class="center mb-2">
+                                                                        <v-icon v-if="item.jenis == 'Makanan'" color="white" x-large>mdi-rice</v-icon>
+                                                                        <v-icon v-else color="white" x-large>mdi-cup</v-icon>
+                                                                    </v-card>
+                                                                </v-card-title>
+                                                                <v-card-text style="height: 50px;">
+                                                                    <h3 class="black--text" style="text-align: left;">{{ item.nama }}</h3>
+                                                                </v-card-text>
+                                                                <v-card-actions>
+                                                                    <v-chip class="white--text" color="#316291" label><b>{{ formatRupiah(item.harga, 'Rp') }}</b></v-chip>
+                                                                    <v-spacer></v-spacer>
+                                                                    <v-chip @click="insertTableMenu(item)" class="custom-blue--text" color="#B3E5FC" label><v-icon>mdi-plus</v-icon></v-chip>
+                                                                </v-card-actions>
+                                                            </v-card>
+                                                        </v-item>
+                                                    </v-col>
+                                                </v-row>
+                                            </v-container>
+                                        </v-item-group>
                                     </v-flex>
-                                </v-layout>
-                                <v-layout justify>
-                                    <v-flex xs12>
-                                        <v-text-field v-model="form.total_penjualan" label="Total Penjualan" readonly></v-text-field>
-                                    </v-flex>
-                                </v-layout>
-                                <v-layout justify>
                                     <v-flex xs5>
-                                        <v-dialog ref="dialog" v-model="modal" :return-value.sync="form.tgl_penjualan" persistent width="290px">
-                                            <template v-slot:activator="{ on, attrs }">
-                                                <v-text-field
-                                                    v-model="form.tgl_penjualan"
-                                                    label="Tanggal Penjualan"
-                                                    prepend-icon="mdi-calendar-blank-outline"
-                                                    readonly
-                                                    v-bind="attrs"
-                                                    v-on="on"
-                                                ></v-text-field>
-                                            </template>
-                                            <v-date-picker v-model="form.tgl_penjualan" scrollable>
+                                        <v-card>
+                                            <v-card-title>
+                                                <h3 class="page-custom-title">DAFTAR PESANAN</h3>
+                                            </v-card-title>
+                                            <v-card-text>
+                                                <v-data-table :headers="list.headers" :items="list.datas" class="elevation-1" hide-default-footer>
+                                                    <template v-slot:[`item.kuantitas`]="{ item }">
+                                                        <v-text-field type="number" min="1" v-model="item.kuantitas" @change="calculateQty(item)"></v-text-field>
+                                                    </template>
+                                                    <template v-slot:[`item.sub_total_show`]="{ item }">
+                                                        <v-text-field v-model="item.sub_total_show" readonly></v-text-field>
+                                                    </template>
+                                                    <template v-slot:[`item.actions`]="{ item }">
+                                                        <v-icon dense color="#316291" @click="deleteTableMenu(item.id)" class="data-table-icon">mdi-delete</v-icon>
+                                                    </template>
+                                                    <template v-slot:no-data>
+                                                        <div color="white" class="red--text" icon="warning"><b>Maaf, tidak ada data tersedia.</b></div>
+                                                    </template>
+                                                </v-data-table>
+                                                <br/>
+                                                <v-layout justify>
+                                                    <v-flex xs5>
+                                                        <v-dialog ref="dialog" v-model="modal" :return-value.sync="form.tgl_penjualan" persistent width="290px">
+                                                            <template v-slot:activator="{ on, attrs }">
+                                                                <v-text-field
+                                                                    v-model="form.tgl_penjualan"
+                                                                    label="Tanggal Penjualan" outlined
+                                                                    prepend-inner-icon="mdi-calendar-blank-outline"
+                                                                    readonly
+                                                                    v-bind="attrs"
+                                                                    v-on="on"
+                                                                ></v-text-field>
+                                                            </template>
+                                                            <v-date-picker v-model="form.tgl_penjualan" scrollable>
+                                                                <v-spacer></v-spacer>
+                                                                <v-btn text color="primary" @click="modal = false">Batal</v-btn>
+                                                                <v-btn text color="primary" @click="$refs.dialog.save(form.tgl_penjualan)">Simpan</v-btn>
+                                                            </v-date-picker>
+                                                        </v-dialog>
+                                                    </v-flex>
+                                                    <v-spacer></v-spacer>
+                                                    <v-flex xs6>
+                                                        <v-dialog ref="dialog2" v-model="modal2" :return-value.sync="form.waktu_penjualan" persistent width="290px">
+                                                            <template v-slot:activator="{ on, attrs }">
+                                                                <v-text-field
+                                                                    v-model="form.waktu_penjualan"
+                                                                    label="Waktu Penjualan" outlined
+                                                                    prepend-inner-icon="mdi-clock-time-four-outline"
+                                                                    readonly
+                                                                    v-bind="attrs"
+                                                                    v-on="on"
+                                                                ></v-text-field>
+                                                            </template>
+                                                            <v-time-picker v-if="modal2" v-model="form.waktu_penjualan" format="24hr" full-width use-seconds>
+                                                                <v-spacer></v-spacer>
+                                                                <v-btn text color="primary" @click="modal2 = false">Batal</v-btn>
+                                                                <v-btn text color="primary" @click="$refs.dialog2.save(form.waktu_penjualan)">Simpan</v-btn>
+                                                            </v-time-picker>
+                                                        </v-dialog>
+                                                    </v-flex>
+                                                </v-layout>
+                                                <v-select outlined :items="penjaga_kedai_list" v-model="form.karyawan_id" label="Pilih Penjaga Kedai" required></v-select>
+                                                <v-layout>
+                                                    <v-card width="100%" height="32px" color="grey lighten-4" elevation="0" class="center">
+                                                        <v-flex xs5>
+                                                            <h3 class="black--text"><b>Total</b></h3>
+                                                        </v-flex>
+                                                        <v-spacer></v-spacer>
+                                                        <v-flex xs6>
+                                                            <h3 class="black--text"><b>{{ form.total_penjualan_show }}</b></h3>
+                                                        </v-flex>
+                                                    </v-card>
+                                                </v-layout>
+                                            </v-card-text>
+                                            <v-card-actions>
                                                 <v-spacer></v-spacer>
-                                                <v-btn text color="primary" @click="modal = false">Batal</v-btn>
-                                                <v-btn text color="primary" @click="$refs.dialog.save(form.tgl_penjualan)">Simpan</v-btn>
-                                            </v-date-picker>
-                                        </v-dialog>
-                                    </v-flex>
-                                    <v-spacer></v-spacer>
-                                    <v-flex xs6>
-                                        <v-dialog ref="dialog2" v-model="modal2" :return-value.sync="form.waktu_penjualan" persistent width="290px">
-                                            <template v-slot:activator="{ on, attrs }">
-                                                <v-text-field
-                                                    v-model="form.waktu_penjualan"
-                                                    label="Waktu Penjualan"
-                                                    prepend-icon="mdi-clock-time-four-outline"
-                                                    readonly
-                                                    v-bind="attrs"
-                                                    v-on="on"
-                                                ></v-text-field>
-                                            </template>
-                                            <v-time-picker v-if="modal2" v-model="form.waktu_penjualan" format="24hr" full-width use-seconds>
-                                                <v-spacer></v-spacer>
-                                                <v-btn text color="primary" @click="modal2 = false">Batal</v-btn>
-                                                <v-btn text color="primary" @click="$refs.dialog2.save(form.waktu_penjualan)">Simpan</v-btn>
-                                            </v-time-picker>
-                                        </v-dialog>
+                                                <v-btn dense color="btn-confirm-cancel" @click="goToListTransaksiKedai()">Batal</v-btn>
+                                                <v-btn dense class="btn-confirm-delete" @click="updateData()">Simpan Pesanan</v-btn>
+                                            </v-card-actions>
+                                        </v-card>
                                     </v-flex>
                                 </v-layout>
-                                <v-layout justify>
-                                    <v-flex xs12>
-                                        <v-select :items="penjaga_kedai_list" v-model="form.karyawan_id" label="Pilih Karyawan" required></v-select>
-                                    </v-flex>
-                                </v-layout>
-
-                                <h2 class="page-custom-title">DAFTAR MENU</h2>
-                                <v-layout justify-end>
-                                    <v-flex xs2 class="mb-4">
-                                        <v-btn dense class="btn-confirm-delete" @click="dialogMenuKedai = true">Ubah Menu</v-btn>
-                                    </v-flex>
-                                </v-layout>
-                                <v-data-table :headers="list.headers" :items="list.datas" class="elevation-1" hide-default-footer>
-                                    <template v-slot:[`item.kuantitas`]="{ item }">
-                                        <v-text-field type="number" min="1" v-model="item.kuantitas" @change="calculateQty(item)"></v-text-field>
-                                    </template>
-                                    <template v-slot:[`item.sub_total`]="{ item }">
-                                        <v-text-field v-model="item.sub_total" readonly></v-text-field>
-                                    </template>
-                                    <template v-slot:no-data>
-                                        <div color="white" class="red--text" icon="warning"><b>Maaf, tidak ada data tersedia.</b></div>
-                                    </template>
-                                </v-data-table>
                             </div>     
                         </v-flex>
                     </v-layout>
                 </v-container>
             </v-card-text>
-
-            <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn dense color="btn-confirm-cancel" @click="goToListTransaksiKedai()">Batal</v-btn>
-                <v-btn dense class="btn-confirm-delete" @click="updateData()">Simpan</v-btn>
-            </v-card-actions>
         </v-card>
-
-        <v-dialog v-model="dialogMenuKedai" persistent max-width="800px">
-            <v-card>
-                <v-card-title class="dialog-confirm-title">
-                    <span class="headline white--text">Pilih Menu Kedai</span>
-                </v-card-title>
-                <v-card-text class="dialog-confirm-text">
-                    <v-autocomplete v-model="form.detail_transaksi_kedai" chips deletable-chips multiple :items="menu_kedai_list" label="Pilih Menu Kedai"></v-autocomplete>
-                </v-card-text>
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn dense color="btn-confirm-cancel" @click="dialogMenuKedai = false">Batal</v-btn>
-                    <v-btn dense class="btn-confirm-delete" @click="insertToTableMenu()">Simpan</v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
 
         <v-snackbar v-model="snackbar.snackbarNotif" :color="snackbar.color" timeout="3000" bottom>{{ snackbar.error_message }}</v-snackbar>
     </v-main>
@@ -126,6 +160,21 @@
     .data-table-icon{
         padding: 0 5px !important;
     }
+
+    .chip-add-menu{
+        background-color: #316291 !important;
+    }
+
+    .v-application .custom-blue--text {
+        color: #316291!important;
+        caret-color: #316291!important;
+    }
+
+    .center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    } 
 
     .btn-add-data{
         background-color: #316291 !important;
@@ -181,20 +230,24 @@ export default {
     data() {
         return {
             id: this.$route.params.id,
+            jenis_menu_list: [
+                { name: 'Semua', value: '', icon: 'mdi-silverware' }, 
+                { name: 'Makanan', value: 'Makanan', icon: 'mdi-rice' }, 
+                { name: 'Minuman', value: 'Minuman', icon: 'mdi-cup' }
+            ],
             modal: false,
             modal2: false,
             penjaga_kedai_list: [],
             menu_kedai_list: [],
-            dialogMenuKedai: false,
             snackbar: {
                 snackbarNotif: false,
                 color: '',
                 message: '',
             },
             form: {
-                no_penjualan: '',
                 karyawan_id: '',
                 total_penjualan: '',
+                total_penjualan_show: '',
                 tgl_penjualan: '',
                 waktu_penjualan: '',
                 detail_transaksi_kedai: [],
@@ -211,20 +264,25 @@ export default {
     methods: {
         initialize(){
             this.list.headers = [
-                { text: "Nama Menu", value: "nama"},
-                { text: "Kuantitas", value: "kuantitas"},
-                { text: "Subtotal", value: "sub_total"},
+                { text: "Nama Menu", value: "nama", width: '40%'},
+                { text: "Kuantitas", value: "kuantitas", width: '25%'},
+                { text: "Subtotal", value: "sub_total_show", width: '25%'},
+                { text: "Aksi", value: "actions", sortable: false },
             ];
 
             this.axioData();
             this.axioKaryawanPenjagaKedai();
-            this.axioMenuKedai();
+            this.axioMenuKedai('');
         },
 
         axioData(){
             let url = this.$api + '/transaksi-kedai/' + this.id;
             this.$http.get(url).then(response => {
-                this.form = response.data.data;
+                this.form.karyawan_id = response.data.data.karyawan_id;
+                this.form.total_penjualan = response.data.data.total_penjualan;
+                this.form.tgl_penjualan = response.data.data.tgl_penjualan;
+                this.form.waktu_penjualan = response.data.data.waktu_penjualan;
+                this.form.total_penjualan_show = this.formatRupiah(response.data.data.total_penjualan, 'Rp');
 
                 let tempMenuKedai = response.data.data.menu_kedai;
                 tempMenuKedai.map(x => {
@@ -232,9 +290,10 @@ export default {
                     d.menu_kedai_id = x.pivot.menu_kedai_id;
                     d.kuantitas = x.pivot.kuantitas;
                     d.sub_total = x.pivot.sub_total;
+                    d.sub_total_show = this.formatRupiah(x.pivot.sub_total, 'Rp');
                     d.nama = x.nama;
                     d.harga = x.harga;
-                    this.list.datas.push(d);     
+                    this.list.datas.push(d);
                 });
 
                 this.form.detail_transaksi_kedai = [];
@@ -261,25 +320,16 @@ export default {
             });
         },
 
-        axioMenuKedai(){
-            let url = this.$api + '/list-selection-menu-kedai';
+        axioMenuKedai(jenis){
+            let url = this.$api + '/menu-kedai?jenis=' + jenis;
             this.$http.get(url).then(response => {
-                if(response.status == 200){
-                    let data = JSON.parse(JSON.stringify(response.data));
-                    data.forEach((item)=>{
-                        let dashboard = item;
-                        dashboard.text = item.nama
-                        dashboard.value = item.id
-                        this.menu_kedai_list.push(dashboard);
-                    });
-                }
+                this.menu_kedai_list = response.data.data;
             });
         },
 
         updateData(){
             let data = {
                 'karyawan_id': this.form.karyawan_id,
-                'no_penjualan': this.form.no_penjualan,
                 'tgl_penjualan': this.form.tgl_penjualan,
                 'waktu_penjualan': this.form.waktu_penjualan,
                 'total_penjualan': this.form.total_penjualan,
@@ -303,52 +353,37 @@ export default {
             });
         },
 
+        insertTableMenu(item){
+            let found = false;
+            this.list.datas.forEach((x) => {
+                if(x.id == item.id){
+                    found = true;
+                }
+            });
+
+            if(!found){
+                item.menu_kedai_id = item.id;
+                item.kuantitas = 1;
+                item.sub_total = item.harga;
+                item.sub_total_show = this.formatRupiah(item.harga, 'Rp');
+                this.list.datas.push(item);
+                this.calculateTotal();
+            }
+        },
+
+        deleteTableMenu(item){
+            let objWithIdIndex = this.list.datas.findIndex((obj) => obj.id === item);
+
+            if(objWithIdIndex > -1) {
+                this.list.datas.splice(objWithIdIndex, 1);
+                this.calculateTotal();
+            }
+        },
+
         goToListTransaksiKedai(){
             this.$router.push({
                 name: 'Transaksi Kedai',
             });
-        },
-
-        insertToTableMenu(){
-            this.menu_kedai_list.forEach((x)=>{
-                this.form.detail_transaksi_kedai.forEach((y)=>{
-                    if(x.id == y){
-                        let isFoundDuplicate = this.list.datas.some(element => {
-                            if(element.id == y){
-                                return true;
-                            }
-                            return false;
-                        });
-
-                        if(!isFoundDuplicate){
-                            let d = JSON.parse(JSON.stringify(x));
-                            d.menu_kedai_id = x.value;
-                            d.nama = x.nama;
-                            d.kuantitas = 1;
-                            d.harga = x.harga;
-                            d.sub_total = x.harga;
-                            this.list.datas.push(d); 
-                        }
-                    }
-
-                });
-            });
-
-            var isFound = false;
-            for(var i = 0; i < this.list.datas.length; i++){
-                isFound = false;
-                for(var j = 0; j < this.form.detail_transaksi_kedai.length; j++) {
-                    if(this.list.datas[i].id == this.form.detail_transaksi_kedai[j]) {
-                        isFound = true;
-                    }
-                }
-                if(isFound == false){
-                    this.list.datas.splice(i, 1);
-                }
-            }
-
-            this.calculateTotal();
-            this.dialogMenuKedai = false;
         },
 
         calculateQty(value){
@@ -356,6 +391,7 @@ export default {
                 if(x.id == value.id){
                     let quantity = x.kuantitas * value.harga;
                     x.sub_total = quantity;
+                    x.sub_total_show = this.formatRupiah(quantity, 'Rp');
                 }
             });
             this.calculateTotal();
@@ -367,7 +403,25 @@ export default {
                 total = total + x.sub_total;
             })
             this.form.total_penjualan = total;
-        }
+            this.form.total_penjualan_show = this.formatRupiah(total, 'Rp');
+        },
+
+        formatRupiah(value, prefix){
+            let number_string = value.toString();
+			let split   		= number_string.split(',');
+			let sisa     		= split[0].length % 3;
+			let rupiah     		= split[0].substr(0, sisa);
+			let ribuan     		= split[0].substr(sisa).match(/\d{3}/gi);
+ 
+			// tambahkan titik jika yang di input sudah menjadi angka ribuan
+			if(ribuan){
+				let separator = sisa ? '.' : '';
+				rupiah += separator + ribuan.join('.');
+			}
+ 
+			rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+			return prefix == undefined ? rupiah : (rupiah ? 'Rp' + rupiah : '');
+        },
     },
     mounted(){
 

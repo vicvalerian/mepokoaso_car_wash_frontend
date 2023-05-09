@@ -8,97 +8,101 @@
                     <v-layout justify-center>
                         <v-flex xs12>
                             <div>
-                                <v-layout justify>
-                                    <v-flex xs12>
-                                        <v-text-field v-model="form.no_pencucian" label="Nomor Pencucian" readonly></v-text-field>
-                                    </v-flex>
-                                </v-layout>
-                                <v-layout justify>
-                                    <v-flex xs5>
-                                        <v-autocomplete v-model="form.kendaraan_id" :items="kendaraan_list" label="Nama Kendaraan" item-text="nama" item-value="id"></v-autocomplete>
-                                    </v-flex>
-                                    <v-spacer></v-spacer>
-                                    <v-flex xs6>
-                                        <v-text-field v-model="form.tarif_kendaraan" label="Tarif Kendaraan" readonly></v-text-field>
-                                    </v-flex>
-                                </v-layout>
-                                <v-layout justify>
-                                    <v-flex xs5>
-                                        <v-text-field v-model="form.no_polisi" label="Nomor Polisi"></v-text-field>
-                                    </v-flex>
-                                    <v-spacer></v-spacer>
-                                    <v-flex xs6>
-                                        <v-select :items="jenis_kendaraan_list" v-model="form.jenis_kendaraan" label="Jenis Kendaraan" required></v-select>
-                                    </v-flex>
-                                </v-layout>
-                                <v-layout justify>
-                                    <v-flex xs5>
-                                        <v-dialog ref="dialog" v-model="modal" :return-value.sync="form.tgl_pencucian" persistent width="290px">
-                                            <template v-slot:activator="{ on, attrs }">
-                                                <v-text-field
-                                                    v-model="form.tgl_pencucian"
-                                                    label="Tanggal Pencucian"
-                                                    prepend-icon="mdi-calendar-blank-outline"
-                                                    readonly
-                                                    v-bind="attrs"
-                                                    v-on="on"
-                                                ></v-text-field>
-                                            </template>
-                                            <v-date-picker v-model="form.tgl_pencucian" scrollable>
+                                <v-stepper v-model="e1">
+                                    <v-stepper-header>
+                                        <v-stepper-step :complete="e1 > 1" color="#316291" step="1">Ubah Data Kendaraan</v-stepper-step>
+                                        <v-divider></v-divider>
+                                        <v-stepper-step :complete="e1 > 2" color="#316291" step="2">Pilih Pencuci</v-stepper-step>
+                                    </v-stepper-header>
+                                    <v-stepper-content step="1">
+                                        <v-card>
+                                            <v-card-text>
+                                                <v-layout justify>
+                                                    <v-flex xs4>
+                                                        <v-card class="mb-6" height="300">
+                                                            <v-card-title class="justify-center">
+                                                                <v-img contain height="250" :src="formMobil.foto != '' ? $baseUrl+'/storage/'+formMobil.foto : ''" style="object-fit:cover;"></v-img>
+                                                            </v-card-title>
+                                                        </v-card>
+                                                    </v-flex>
+                                                    <v-spacer></v-spacer>
+                                                    <v-flex xs7>
+                                                        <v-autocomplete outlined v-model="form.kendaraan_id" :items="kendaraan_list" label="Nama Kendaraan" item-text="nama" item-value="id"></v-autocomplete>
+                                                        <v-text-field outlined v-model="form.tarif_kendaraan" label="Tarif Kendaraan" readonly></v-text-field>
+                                                        <v-text-field outlined v-model="form.no_polisi" label="Nomor Polisi"></v-text-field>
+                                                        <v-select outlined :items="jenis_kendaraan_list" v-model="form.jenis_kendaraan" label="Jenis Kendaraan" required></v-select>
+                                                        <v-dialog ref="dialog" v-model="modal" :return-value.sync="form.tgl_pencucian" persistent width="290px">
+                                                            <template v-slot:activator="{ on, attrs }">
+                                                                <v-text-field
+                                                                    v-model="form.tgl_pencucian"
+                                                                    label="Tanggal Pencucian" outlined
+                                                                    prepend-inner-icon="mdi-calendar-blank-outline"
+                                                                    readonly
+                                                                    v-bind="attrs"
+                                                                    v-on="on"
+                                                                ></v-text-field>
+                                                            </template>
+                                                            <v-date-picker v-model="form.tgl_pencucian" scrollable>
+                                                                <v-spacer></v-spacer>
+                                                                <v-btn text color="primary" @click="modal = false">Batal</v-btn>
+                                                                <v-btn text color="primary" @click="$refs.dialog.save(form.tgl_pencucian)">Simpan</v-btn>
+                                                            </v-date-picker>
+                                                        </v-dialog>
+                                                        <v-dialog ref="dialog2" v-model="modal2" :return-value.sync="form.waktu_pencucian" persistent width="290px">
+                                                            <template v-slot:activator="{ on, attrs }">
+                                                                <v-text-field
+                                                                    v-model="form.waktu_pencucian"
+                                                                    label="Waktu Pencucian" outlined
+                                                                    prepend-inner-icon="mdi-clock-time-four-outline"
+                                                                    readonly
+                                                                    v-bind="attrs"
+                                                                    v-on="on"
+                                                                ></v-text-field>
+                                                            </template>
+                                                            <v-time-picker v-if="modal2" v-model="form.waktu_pencucian" format="24hr" full-width use-seconds>
+                                                                <v-spacer></v-spacer>
+                                                                <v-btn text color="primary" @click="modal2 = false">Batal</v-btn>
+                                                                <v-btn text color="primary" @click="$refs.dialog2.save(form.waktu_pencucian)">Simpan</v-btn>
+                                                            </v-time-picker>
+                                                        </v-dialog>
+                                                    </v-flex>
+                                                </v-layout>
+                                            </v-card-text>
+                                            <v-card-actions>
                                                 <v-spacer></v-spacer>
-                                                <v-btn text color="primary" @click="modal = false">Batal</v-btn>
-                                                <v-btn text color="primary" @click="$refs.dialog.save(form.tgl_pencucian)">Simpan</v-btn>
-                                            </v-date-picker>
-                                        </v-dialog>
-                                    </v-flex>
-                                    <v-spacer></v-spacer>
-                                    <v-flex xs6>
-                                        <v-dialog ref="dialog2" v-model="modal2" :return-value.sync="form.waktu_pencucian" persistent width="290px">
-                                            <template v-slot:activator="{ on, attrs }">
-                                                <v-text-field
-                                                    v-model="form.waktu_pencucian"
-                                                    label="Waktu Pencucian"
-                                                    prepend-icon="mdi-clock-time-four-outline"
-                                                    readonly
-                                                    v-bind="attrs"
-                                                    v-on="on"
-                                                ></v-text-field>
-                                            </template>
-                                            <v-time-picker v-if="modal2" v-model="form.waktu_pencucian" format="24hr" full-width use-seconds>
+                                                <v-btn dense color="btn-confirm-cancel" @click="goToListTransaksiPencucian()">Batal</v-btn>
+                                                <v-btn dense class="btn-confirm-delete" @click="e1 = 2">Berikutnya</v-btn>
+                                            </v-card-actions>
+                                        </v-card>
+                                    </v-stepper-content>
+                                    <v-stepper-content step="2">
+                                        <v-card>
+                                            <v-card-title>
                                                 <v-spacer></v-spacer>
-                                                <v-btn text color="primary" @click="modal2 = false">Batal</v-btn>
-                                                <v-btn text color="primary" @click="$refs.dialog2.save(form.waktu_pencucian)">Simpan</v-btn>
-                                            </v-time-picker>
-                                        </v-dialog>
-                                    </v-flex>
-                                </v-layout>
-                                <v-layout justify>
-                                    <v-flex xs5>
-                                        <v-select :items="kasir_list" v-model="form.karyawan_id" label="Nama Karyawan" item-value="id" item-text="nama" required></v-select>
-                                    </v-flex>
-                                    <v-spacer></v-spacer>
-                                    <v-flex xs6>
-                                        <v-text-field v-model="form.status" label="Status" readonly></v-text-field>
-                                    </v-flex>
-                                </v-layout>
-
-                                <h2 class="page-custom-title">DAFTAR PENCUCI</h2>
-                                <v-data-table v-model="list.selectedPencuci" :headers="list.headers" :items="list.datas" class="elevation-1" hide-default-footer show-select>
-                                    <template v-slot:no-data>
-                                        <div color="white" class="red--text" icon="warning"><b>Maaf, tidak ada data tersedia.</b></div>
-                                    </template>
-                                </v-data-table>
+                                                <v-spacer></v-spacer>
+                                                <v-spacer></v-spacer>
+                                                <v-text-field v-model="list.search" append-icon="mdi-magnify" label="Cari Pencuci" single-line hide-details></v-text-field>
+                                            </v-card-title>
+                                            <v-card-text>
+                                                <v-data-table v-model="list.selectedPencuci" :headers="list.headers" :items="list.datas" :search="list.search" class="elevation-1" show-select>
+                                                    <template v-slot:no-data>
+                                                        <div color="white" class="red--text" icon="warning"><b>Maaf, tidak ada data tersedia.</b></div>
+                                                    </template>
+                                                </v-data-table>
+                                            </v-card-text>
+                                            <v-card-actions>
+                                                <v-spacer></v-spacer>
+                                                <v-btn dense color="btn-confirm-cancel" @click="e1 = 1">Sebelumnya</v-btn>
+                                                <v-btn dense class="btn-confirm-delete" @click="updateData()">Simpan Data</v-btn>
+                                            </v-card-actions>
+                                        </v-card>
+                                    </v-stepper-content>
+                                </v-stepper>
                             </div>     
                         </v-flex>
                     </v-layout>
                 </v-container>
             </v-card-text>
-
-            <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn dense color="btn-confirm-cancel" @click="goToListTransaksiPencucian()">Batal</v-btn>
-                <v-btn dense class="btn-confirm-delete" @click="updateData()">Simpan</v-btn>
-            </v-card-actions>
         </v-card>
 
         <v-snackbar v-model="snackbar.snackbarNotif" :color="snackbar.color" timeout="3000" bottom>{{ snackbar.error_message }}</v-snackbar>
@@ -106,7 +110,14 @@
 
 </template>
 
-<style>
+<style scoped>
+    .v-data-table-header th {
+        text-transform: uppercase;
+        font-size: 14px !important;
+        font-weight: bold !important;
+        color: black !important;
+    }
+    
     .page-custom-title{
         margin: 24px 0px;
         text-align: left;
@@ -170,6 +181,9 @@ export default {
     name: 'transaksi-pencucian-edit',
     data() {
         return {
+            e1: 1,
+            userLogin: JSON.parse(localStorage.getItem('userLogin')),
+            previewImgMobil: '',
             id: this.$route.params.id,
             pencucianCart: JSON.parse(localStorage.getItem('pencucianCart')),
             singleSelect: false,
@@ -185,7 +199,7 @@ export default {
                 message: '',
             },
             form: {
-                no_pencucian: '',
+                // no_pencucian: '',
                 kendaraan_id: '',
                 nama_kendaraan: '',
                 tarif_kendaraan: '',
@@ -197,7 +211,13 @@ export default {
                 status: 'Baru',
                 detail_transaksi_pencuci: [],
             },
+            formMobil: {
+                foto: '',
+                nama: '',
+                harga: '',
+            },
             list: {
+                search: '',
                 headers: [],
                 datas: [],
                 selectedPencuci: [],
@@ -208,6 +228,10 @@ export default {
         this.initialize();
     },
     methods: {
+        onPreviewImage(e) {
+            this.previewImgMobil = URL.createObjectURL(e)
+        },
+
         initialize(){
             this.list.headers = [
                 { text: "Nama Pencuci", value: "nama"},
@@ -225,6 +249,7 @@ export default {
                 this.form = response.data.data;
                 this.list.datas = response.data.data.karyawan_pencucis;
                 this.list.selectedPencuci = response.data.data.karyawan_pencucis;
+                this.readKendaraan();
             });
         },
 
@@ -240,6 +265,14 @@ export default {
                         this.kasir_list.push(dashboard);
                     });
                 }
+            });
+        },
+
+        readKendaraan(){
+            let url = this.$api + '/kendaraan/' + this.form.kendaraan_id;
+            this.$http.get(url).then(response => {
+                this.formMobil.foto = response.data.data.foto;
+                this.form.tarif_kendaraan = response.data.data.harga;
             });
         },
 
@@ -312,12 +345,13 @@ export default {
 
     },
     watch: {
-        'form.kendaraan_id'(val){
-            this.kendaraan_list.forEach((item)=>{
-                if(item.id == val){
-                    this.form.tarif_kendaraan = item.harga
-                }
-            });
+        'form.kendaraan_id'(){
+            // this.kendaraan_list.forEach((item)=>{
+            //     if(item.id == val){
+            //         this.form.tarif_kendaraan = item.harga
+            //     }
+            // });
+            this.readKendaraan();
         }
     },
     computed:{

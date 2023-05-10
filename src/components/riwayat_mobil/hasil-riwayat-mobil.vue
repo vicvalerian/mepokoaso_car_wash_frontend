@@ -8,29 +8,32 @@
                 <b class="white--text">MEPOKASO CAR WASH</b>
             </v-toolbar-title>
         </v-app-bar>
-        <v-container fill-height>
-            <v-layout row wrap>
-            <!-- <v-layout row wrap justify-start> -->
-                <v-flex xs12 align-self-end class="text-right">
-                    <v-btn dense class="btn-confirm-delete right" @click="goToPencarian()">Kembali</v-btn>
-                </v-flex>
-                <v-flex xs12 class="mb-4">
-                    <h1 class="page-custom-title">RIWAYAT PENCUCIAN MOBIL</h1>
-                    <h4 class="page-custom-subtitle">Nomor Plat: {{ form.no_polisi }}</h4>
-                    <h4 class="page-custom-subtitle">Jenis Kendaraan: {{ form.nama_kendaraan }}</h4>
-                    <h4 class="page-custom-subtitle">Jumlah Transaksi: {{ form.jml_transaksi }}</h4>
-                </v-flex>
-                <v-timeline dense>
-                    <template v-for="(item,index) in this.tamp_logs">
-                        <v-timeline-item class="mb-12" :key="index" color="#316291" small>
-                            <v-layout align-center justify-center>
-                                <v-flex class="black--text">{{ item }}</v-flex>
-                            </v-layout>
-                        </v-timeline-item>
-                    </template>
-                </v-timeline>
-            </v-layout>
-        </v-container>
+        <v-main>
+            <v-container>
+                <v-layout row wrap>
+                    <v-flex xs12 align-self-end class="text-right">
+                        <v-btn dense class="btn-confirm-delete right" @click="goToPencarian()">Kembali</v-btn>
+                    </v-flex>
+                    <v-flex xs12 class="mb-4">
+                        <v-timeline dense>
+                            <v-timeline-item hide-dot class="mb-4">
+                                <h1 class="page-custom-title">RIWAYAT PENCUCIAN MOBIL</h1>
+                                <h4 class="page-custom-subtitle">Nomor Plat: {{ form.no_polisi }}</h4>
+                                <h4 class="page-custom-subtitle">Jenis Kendaraan: {{ form.nama_kendaraan }}</h4>
+                                <h4 class="page-custom-subtitle">Jumlah Transaksi: {{ form.jml_transaksi }}</h4>
+                            </v-timeline-item>
+                            <template v-for="(item,index) in this.tamp_logs">
+                                <v-timeline-item class="mb-12" :key="index" color="#316291" small>
+                                    <v-layout align-center justify-center>
+                                        <v-flex class="black--text text-left">{{ item }}</v-flex>
+                                    </v-layout>
+                                </v-timeline-item>
+                            </template>
+                        </v-timeline>
+                    </v-flex>
+                </v-layout>
+            </v-container>
+        </v-main>
         <v-snackbar v-model="snackbar.snackbarNotif" :color="snackbar.color" timeout="3000" bottom>{{ snackbar.error_message }}</v-snackbar>
     </v-main>
 </template>

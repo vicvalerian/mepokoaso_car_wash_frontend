@@ -244,12 +244,19 @@ router.beforeEach((to, from, next) => {
       to.name == "Tambah Transaksi Pencucian" && jabatan != 'Kasir' ||
       to.name == "Detail Transaksi Pencucian" && jabatan != 'Kasir' ||
       to.name == "Ubah Transaksi Pencucian" && jabatan != 'Kasir' ||
-      to.name == "Transaksi Kedai" && jabatan != 'Kasir' ||
-      to.name == "Tambah Transaksi Kedai" && jabatan != 'Kasir' ||
-      to.name == "Detail Transaksi Kedai" && jabatan != 'Kasir' ||
-      to.name == "Ubah Transaksi Kedai" && jabatan != 'Kasir'){
+      to.name == "Transaksi Kedai" && (jabatan != 'Kasir' && jabatan != 'Penjaga Kedai') ||
+      to.name == "Tambah Transaksi Kedai" && (jabatan != 'Kasir' && jabatan != 'Penjaga Kedai') ||
+      to.name == "Detail Transaksi Kedai" && (jabatan != 'Kasir' && jabatan != 'Penjaga Kedai') ||
+      to.name == "Ubah Transaksi Kedai" && (jabatan != 'Kasir' && jabatan != 'Penjaga Kedai')){
     next({ name: "Dashboard" })
     document.title = "Dashboard"
+  }
+
+  //Penjaga kedai hanya dapat melihat transaksi kedai
+  if(to.name == "Dashboard" && (jabatan != 'Kasir' && jabatan != 'Pemilik')  ||
+      to.name == "Laporan" && (jabatan != 'Kasir' && jabatan != 'Pemilik')){
+    next({ name: "Transaksi Kedai" })
+    document.title = "Transaksi Kedai"
   }
 
   document.title = to.meta.title;

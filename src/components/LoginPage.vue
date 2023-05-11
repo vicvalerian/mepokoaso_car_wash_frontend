@@ -99,9 +99,16 @@ export default {
                     }
 
                     localStorage.setItem('userLogin', JSON.stringify(userLogin));
-                    this.$router.push({
-                        name: 'Dashboard',
-                    });
+
+                    if(userLogin.jabatan == 'Penjaga Kedai'){
+                        this.$router.push({
+                            name: 'Transaksi Kedai',
+                        });
+                    } else{
+                        this.$router.push({
+                            name: 'Dashboard',
+                        });
+                    }
                 })
                 .catch((error) => {
                     this.snackbar.error_message = error.response.data.message;

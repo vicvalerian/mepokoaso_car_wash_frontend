@@ -29,7 +29,7 @@
                                 </v-layout>
                                 <v-layout justify>
                                     <v-flex xs12>
-                                        <v-select :items="penjaga_kedai_list" v-model="form.karyawan_id" label="Pilih Karyawan" required readonly></v-select>
+                                        <v-select :items="penjaga_kedai_list" v-model="form.karyawan_id" label="Pelayan" required readonly></v-select>
                                     </v-flex>
                                 </v-layout>
 

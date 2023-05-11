@@ -117,7 +117,7 @@
                                                         </v-dialog>
                                                     </v-flex>
                                                 </v-layout>
-                                                <v-select outlined :items="penjaga_kedai_list" v-model="form.karyawan_id" label="Pilih Penjaga Kedai" required></v-select>
+                                                <!-- <v-select outlined :items="penjaga_kedai_list" v-model="form.karyawan_id" label="Pilih Penjaga Kedai" required></v-select> -->
                                                 <v-layout>
                                                     <v-card width="100%" height="32px" color="grey lighten-4" elevation="0" class="center">
                                                         <v-flex xs5>
@@ -305,7 +305,7 @@ export default {
         },
 
         axioKaryawanPenjagaKedai(){
-            let url = this.$api + '/list-selection-penjaga-kedai';
+            let url = this.$api + '/list-selection-karyawan';
             this.$http.get(url).then(response => {
                 if(response.status == 200){
                     let data = JSON.parse(JSON.stringify(response.data));

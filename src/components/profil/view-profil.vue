@@ -21,8 +21,8 @@
                         <v-text-field v-model="form.nama" label="Nama Lengkap"></v-text-field>
                         <v-text-field v-model="form.no_telp" label="Nomor Telepon"></v-text-field>
                         <v-text-field v-model="form.username" label="Nama Pengguna"></v-text-field>
-                        <v-select :items="statuses" v-model="form.status" label="Status"></v-select>
-                        <v-select :items="jabatan_list" v-model="form.jabatan_id" label="Jabatan"></v-select>
+                        <!-- <v-select :items="statuses" v-model="form.status" label="Status"></v-select> -->
+                        <v-select :items="jabatan_list" v-model="form.jabatan_id" label="Jabatan" readonly></v-select>
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>

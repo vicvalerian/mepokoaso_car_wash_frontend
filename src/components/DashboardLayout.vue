@@ -49,6 +49,17 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
+
+      <v-list dense nav v-if="loggedInPenjagaKedai">
+        <v-list-item v-for="item in penjaga_kedai" :key="item.title" color="#316291" link tag="router-link" :to="item.to">
+          <v-list-item-icon>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title class="text-left">{{ item.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
       
     </v-navigation-drawer>
     
@@ -56,6 +67,7 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" color="white"></v-app-bar-nav-icon>
       <v-toolbar-title v-if="loggedInKasir" class="white--text"><b>Selamat datang, Kasir!</b></v-toolbar-title>
       <v-toolbar-title v-if="loggedInPemilik" class="white--text"><b>Selamat datang, Pemilik!</b></v-toolbar-title>
+      <v-toolbar-title v-if="loggedInPenjagaKedai" class="white--text"><b>Selamat datang, Penjaga Kedai!</b></v-toolbar-title>
       <VSpacer/>
       <v-toolbar-items>
         <v-tooltip bottom color="#316291">
@@ -112,6 +124,9 @@
           },
           { title: 'Laporan', to: '/laporan', icon: 'mdi-file-export' },
         ],
+        penjaga_kedai: [
+          { title: 'Transaksi Kedai', to: '/transaksi-kedai', icon: 'mdi-store' },
+        ],
         pemilik: [
           { title: "Dashboard", to: '/dashboard', icon: 'mdi-monitor' },
           { title: 'Laporan', to: '/laporan', icon: 'mdi-file-export' },
@@ -144,6 +159,11 @@
       //Login Pemilik
       loggedInPemilik(){
         return this.userLogin.jabatan == 'Pemilik';
+      },
+
+      //Login Penjaga Kedai
+      loggedInPenjagaKedai(){
+        return this.userLogin.jabatan == 'Penjaga Kedai';
       },
     },
   };

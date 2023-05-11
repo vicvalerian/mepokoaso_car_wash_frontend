@@ -14,7 +14,7 @@
                                 <template v-slot:activator="{ on, attrs }">
                                     <v-text-field
                                         v-model="dateMulaiTransaksiPencucian"
-                                        label="Tanggal Mulai"
+                                        label="Tanggal Mulai" hide-details
                                         prepend-icon="mdi-calendar-blank-outline"
                                         readonly
                                         v-bind="attrs"
@@ -33,7 +33,7 @@
                                 <template v-slot:activator="{ on, attrs }">
                                     <v-text-field
                                         v-model="dateSelesaiTransaksiPencucian"
-                                        label="Tanggal Selesai"
+                                        label="Tanggal Selesai" hide-details
                                         prepend-icon="mdi-calendar-blank-outline"
                                         readonly
                                         v-bind="attrs"
@@ -66,7 +66,7 @@
                                 <template v-slot:activator="{ on, attrs }">
                                     <v-text-field
                                         v-model="dateMulaiTransaksiKedai"
-                                        label="Tanggal Mulai"
+                                        label="Tanggal Mulai" hide-details
                                         prepend-icon="mdi-calendar-blank-outline"
                                         readonly
                                         v-bind="attrs"
@@ -85,7 +85,7 @@
                                 <template v-slot:activator="{ on, attrs }">
                                     <v-text-field
                                         v-model="dateSelesaiTransaksiKedai"
-                                        label="Tanggal Selesai"
+                                        label="Tanggal Selesai" hide-details
                                         prepend-icon="mdi-calendar-blank-outline"
                                         readonly
                                         v-bind="attrs"
@@ -118,7 +118,7 @@
                                 <template v-slot:activator="{ on, attrs }">
                                     <v-text-field
                                         v-model="dateMulaiPengeluaranKedai"
-                                        label="Tanggal Mulai"
+                                        label="Tanggal Mulai" hide-details
                                         prepend-icon="mdi-calendar-blank-outline"
                                         readonly
                                         v-bind="attrs"
@@ -137,7 +137,7 @@
                                 <template v-slot:activator="{ on, attrs }">
                                     <v-text-field
                                         v-model="dateSelesaiPengeluaranKedai"
-                                        label="Tanggal Selesai"
+                                        label="Tanggal Selesai" hide-details
                                         prepend-icon="mdi-calendar-blank-outline"
                                         readonly
                                         v-bind="attrs"
@@ -181,6 +181,9 @@
 <style>
     .document-printable-card {
         min-height: 100px !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .underline{

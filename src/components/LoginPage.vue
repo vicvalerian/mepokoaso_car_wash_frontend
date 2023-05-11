@@ -11,13 +11,13 @@
                             <v-card-text class="pt-0">
                                 <v-text-field
                                     v-model="form.username" prepend-icon="mdi-account"
-                                    label="Username" :rules="username_rule"
-                                    hint="Masukkan username anda" size="10"
+                                    label="Nama Pengguna" :rules="username_rule"
+                                    hint="Masukkan nama pengguna anda" size="10"
                                 ></v-text-field>
                                 <v-text-field
                                     v-model="form.password" prepend-icon="mdi-lock"
-                                    label="Password" :rules="password_rule"
-                                    hint="Masukkan password anda"
+                                    label="Kata Sandi" :rules="password_rule"
+                                    hint="Masukkan kata sandi anda"
                                     :type="show ? 'text' : 'password'" color="blue"
                                     @click:append="show = !show" :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
                                 ></v-text-field>

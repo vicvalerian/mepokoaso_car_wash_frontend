@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard">
-    <v-navigation-drawer v-model="drawer" class="fullheight" width="300" height="390" app>
+    <v-navigation-drawer v-model="drawer" class="fullheight" width="300" height="390" app temporary>
       <v-list-item class="primary--background">
         <v-list-item-content class="mt-n4 mb-n4 ml-n4">
           <v-col cols="">

@@ -128,8 +128,8 @@ export default {
             },
             pencucianChart: {
                 series: [{
-                    name: 'Jumlah Pencucian',
-                    data: [4, 1, 1],
+                    name: 'Jumlah Transaksi Pencucian',
+                    data: [],
                 }],
             },
             pencucianChartOptions: {
@@ -149,7 +149,7 @@ export default {
             },
             kedaiChart: {
                 series: [{
-                    name: 'Jumlah Penjualan',
+                    name: 'Jumlah Transaksi Penjualan',
                     data: [],
                 }],
             },
@@ -215,7 +215,7 @@ export default {
             });
 
             let insertData = {
-                name: 'Jumlah Pencucian',
+                name: 'Jumlah Transaksi Pencucian',
                 data: dataTotal,
             }
             this.pencucianChart.series.push(insertData);
@@ -245,7 +245,7 @@ export default {
             });
 
             let insertData = {
-                name: 'Jumlah Penjualan',
+                name: 'Jumlah Transaksi Penjualan',
                 data: dataTotal,
             }
             this.kedaiChart.series.push(insertData);

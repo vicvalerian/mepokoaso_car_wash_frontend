@@ -33,11 +33,6 @@
                                 <div>
                                     <div>
                                         <v-data-table :headers="formDetail.headers" :items="formDetail.datas" class="elevation-1" hide-default-footer>
-                                            <template v-slot:[`item.status`]="{ item }">
-                                                <v-chip v-if="item.status === 'Utang'" color="red" outlined>{{ item.status }}</v-chip>
-                                                <v-chip v-if="item.status === 'Belum Diterima'" color="orange" outlined>{{ item.status }}</v-chip>
-                                                <v-chip v-if="item.status === 'Lunas'" color="green" outlined>{{ item.status }}</v-chip>
-                                            </template>
                                             <template v-slot:no-data>
                                                 <div color="white" class="red--text" icon="warning"><b>Maaf, tidak ada data tersedia.</b></div>
                                             </template>

@@ -65,8 +65,8 @@
                                     <div>
                                         <v-text-field v-model="formDetail.jabatan" label="Jabatan" readonly></v-text-field>
                                         <v-text-field v-model="formDetail.nama" label="Nama Karyawan" readonly></v-text-field>
-                                        <v-text-field v-model="formDetail.no_telp" label="Jenis Karyawan" readonly></v-text-field>
-                                        <v-text-field v-model="formDetail.username" label="Username Karyawan" readonly></v-text-field>
+                                        <v-text-field v-model="formDetail.no_telp" label="Nomor Telepon Karyawan" readonly></v-text-field>
+                                        <v-text-field v-model="formDetail.username" label="Nama Pengguna Karyawan" readonly></v-text-field>
                                         <v-text-field v-model="formDetail.gaji" label="Gaji Karyawan" readonly></v-text-field>
                                         <v-text-field v-model="formDetail.status" label="Status Karyawan" readonly></v-text-field>
                                     </div>
@@ -92,7 +92,7 @@
                         <v-select :items="jabatan_list" v-model="form.jabatan_id" label="Jabatan Karyawan" item-value="id" item-text="nama" required></v-select>
                         <v-text-field v-model="form.nama" label="Nama Karyawan" required></v-text-field>
                         <v-text-field v-model="form.no_telp" label="Nomor Telepon Karyawan" required></v-text-field>
-                        <v-text-field v-model="form.username" label="Username Karyawan" required></v-text-field>
+                        <v-text-field v-model="form.username" label="Nama Pengguna Karyawan" required></v-text-field>
                         <v-text-field v-model="form.gaji" label="Gaji Karyawan" required></v-text-field>
                         <v-select :items="statuses" v-model="form.status" label="Status Karyawan" item-value="id" item-text="nama" required></v-select>
                         <v-file-input append-icon="mdi-camera" accept="image/*" label="Foto Karyawan" id="fotoKaryawan" ref="fileKaryawan"></v-file-input>
@@ -101,7 +101,7 @@
                         <v-select :items="jabatan_list" v-model="form.jabatan_id" label="Jabatan Karyawan" item-value="id" item-text="nama" required></v-select>
                         <v-text-field v-model="form.nama" label="Nama Karyawan" required></v-text-field>
                         <v-text-field v-model="form.no_telp" label="Nomor Telepon Karyawan" required></v-text-field>
-                        <v-text-field v-model="form.username" label="Username Karyawan" required></v-text-field>
+                        <v-text-field v-model="form.username" label="Nama Pengguna Karyawan" required></v-text-field>
                         <v-text-field v-model="form.gaji" label="Gaji Karyawan" required></v-text-field>
                         <v-select :items="statuses" v-model="form.status" label="Status Karyawan" item-value="id" item-text="nama" required></v-select>
                         <v-file-input append-icon="mdi-camera" accept="image/*" label="Foto Karyawan" id="fotoKaryawan" ref="fileKaryawan"></v-file-input>

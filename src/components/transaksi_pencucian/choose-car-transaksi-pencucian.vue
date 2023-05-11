@@ -17,29 +17,35 @@
                                                         <v-img contain width="100" height="100" :src="previewImageUrl == '' ? $baseUrl+'/storage/'+item.logo : previewImageUrl" style="object-fit:cover;"></v-img>
                                                     </v-card-title>
                                                     <v-card-text @click="axioKendaraan(item.nama)">
-                                                        {{ item.nama }}
+                                                        <b class="black--text" style="font-size: 16px">{{ item.nama }}</b>
                                                     </v-card-text>
                                                 </v-card>
                                             </v-item>
                                         </v-col>
                                     </v-item-group>
                                 </v-flex>
-                                <v-spacer></v-spacer>
                                 <v-flex xs10>
-                                    <div class="container">
-                                        <v-card class="mt-4" width="330" height="350" v-for="(item, index) in kendaraan_list" :key="index" @click="goToTambahPencucian(item)">
-                                            <v-card-title class="justify-center">
-                                                <v-img contain width="100" height="250" :src="previewImageUrl == '' ? $baseUrl+'/storage/'+item.foto : previewImageUrl" style="object-fit:cover;"></v-img>
-                                            </v-card-title>
-                                            <v-card-text>
-                                                <b class="black--text" style="font-size: 16px">
-                                                {{ item.nama }} <br>
-                                                {{ formatRupiah(item.harga, 'Rp') }}
-                                                </b>
-                                            </v-card-text>
-                                        </v-card>
-                                    </div>
-                                    
+                                    <v-item-group>
+                                        <v-container>
+                                            <v-row>
+                                                <v-col v-for="(item, index) in kendaraan_list" :key="index" cols="12" md="4">
+                                                    <v-item>
+                                                        <v-card class="mt-4" style="height: auto;" elevation="5" @click="goToTambahPencucian(item)">
+                                                            <v-card-title class="justify-center">
+                                                                <v-img contain width="100" height="250" :src="previewImageUrl == '' ? $baseUrl+'/storage/'+item.foto : previewImageUrl" style="object-fit:cover;"></v-img>
+                                                            </v-card-title>
+                                                            <v-card-text>
+                                                                <b class="black--text" style="font-size: 16px">
+                                                                {{ item.nama }} <br>
+                                                                {{ formatRupiah(item.harga, 'Rp') }}
+                                                                </b>
+                                                            </v-card-text>
+                                                        </v-card>
+                                                    </v-item>
+                                                </v-col>
+                                            </v-row>
+                                        </v-container>
+                                    </v-item-group>
                                 </v-flex>
                             </div>
                         </v-flex>

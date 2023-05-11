@@ -58,6 +58,11 @@
                                         <v-text-field v-model="form.keuntungan" label="Keuntungan" readonly></v-text-field>
                                     </v-flex>
                                 </v-layout>
+                                <v-layout justify>
+                                    <v-flex xs12>
+                                        <v-text-field v-model="form.total_pembayaran" label="Total Pembayaran" readonly></v-text-field>
+                                    </v-flex>
+                                </v-layout>
 
                                 <h2 class="page-custom-title">DAFTAR PENCUCI</h2>
                                 <v-data-table :headers="list.headers" :items="list.datas" class="elevation-1" hide-default-footer>
@@ -182,6 +187,7 @@ export default {
                 status: '',
                 is_free: '',
                 keuntungan: '',
+                total_pembayaran: '',
                 karyawan_pencucis: [],
             },
             list: {
@@ -209,8 +215,9 @@ export default {
             let url = this.$api + '/transaksi-pencucian/' + this.id;
             this.$http.get(url).then(response => {
                 this.form = response.data.data;
-                this.form.keuntungan = 'Rp'+response.data.data.keuntungan;
-                this.form.tarif_kendaraan = 'Rp'+response.data.data.tarif_kendaraan;
+                this.form.keuntungan = this.formatRupiah(response.data.data.keuntungan, 'Rp');
+                this.form.tarif_kendaraan = this.formatRupiah(response.data.data.tarif_kendaraan, 'Rp');
+                this.form.total_pembayaran = this.formatRupiah(response.data.data.total_pembayaran, 'Rp');
                 this.form.is_free = response.data.data.is_free ? 'Ya' : 'Tidak';
                 this.list.datas = response.data.data.karyawan_pencucis;
             });

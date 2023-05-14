@@ -15,7 +15,7 @@
                                 </v-layout>
                                 <v-layout justify>
                                     <v-flex xs12>
-                                        <v-text-field v-model="form.total_penjualan" label="Total Penjualan" readonly></v-text-field>
+                                        <v-select :items="penjaga_kedai_list" v-model="form.karyawan_id" label="Pelayan" required readonly></v-select>
                                     </v-flex>
                                 </v-layout>
                                 <v-layout justify>
@@ -29,7 +29,7 @@
                                 </v-layout>
                                 <v-layout justify>
                                     <v-flex xs12>
-                                        <v-select :items="penjaga_kedai_list" v-model="form.karyawan_id" label="Pelayan" required readonly></v-select>
+                                        <v-text-field v-model="form.total_penjualan" label="Total Penjualan" readonly></v-text-field>
                                     </v-flex>
                                 </v-layout>
 
@@ -172,7 +172,7 @@ export default {
         },
 
         axioKaryawanPenjagaKedai(){
-            let url = this.$api + '/list-selection-penjaga-kedai';
+            let url = this.$api + '/list-selection-karyawan';
             this.$http.get(url).then(response => {
                 if(response.status == 200){
                     let data = JSON.parse(JSON.stringify(response.data));

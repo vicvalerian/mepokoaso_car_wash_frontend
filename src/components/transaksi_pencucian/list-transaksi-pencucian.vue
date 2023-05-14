@@ -194,7 +194,7 @@ export default {
         initialize(){
             this.list.headers = [
                 { text: "Status", value: "status"},
-                { text: "Nomor Pencucian", value: "no_pencucian"},
+                { text: "Nomor Transaksi Pencucian", value: "no_pencucian"},
                 { text: "Kendaraan", value: "kendaraan.nama"},
                 { text: "Nomor Polisi", value: "no_polisi"},
                 { text: "Tanggal", value: "tgl_pencucian"},

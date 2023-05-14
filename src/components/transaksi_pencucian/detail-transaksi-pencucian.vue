@@ -42,7 +42,7 @@
                                 </v-layout>
                                 <v-layout justify>
                                     <v-flex xs5>
-                                        <v-select :items="kasir_list" v-model="form.karyawan_id" label="Nama Karyawan" item-value="id" item-text="nama" required readonly></v-select>
+                                        <v-select :items="kasir_list" v-model="form.karyawan_id" label="Kasir" item-value="id" item-text="nama" required readonly></v-select>
                                     </v-flex>
                                     <v-spacer></v-spacer>
                                     <v-flex xs6>
@@ -55,12 +55,12 @@
                                     </v-flex>
                                     <v-spacer></v-spacer>
                                     <v-flex xs6>
-                                        <v-text-field v-model="form.keuntungan" label="Keuntungan" readonly></v-text-field>
+                                        <v-text-field v-model="form.total_pembayaran" label="Total Pembayaran" readonly></v-text-field>
                                     </v-flex>
                                 </v-layout>
                                 <v-layout justify>
                                     <v-flex xs12>
-                                        <v-text-field v-model="form.total_pembayaran" label="Total Pembayaran" readonly></v-text-field>
+                                        <v-text-field v-model="form.keuntungan" label="Keuntungan" readonly></v-text-field>
                                     </v-flex>
                                 </v-layout>
 

@@ -10,9 +10,11 @@
             </v-tabs>
 
             <v-card-title>
+                <v-flex xs3>
+                    <v-text-field v-model="list.search" append-icon="mdi-magnify" label="Cari transaksi pencucian" single-line hide-details></v-text-field>
+                </v-flex>
                 <v-spacer></v-spacer>
                 <v-btn dense class="btn-add-data" @click="goToAdd()">Tambah Data</v-btn>
-                <v-text-field v-model="list.search" append-icon="mdi-magnify" label="Cari transaksi pencucian" single-line hide-details></v-text-field>
             </v-card-title>
 
             <v-tabs-items v-model="tab">

@@ -4,9 +4,11 @@
         <h1 class="page-custom-title">DATA TRANSAKSI KEDAI</h1>
         <v-card>
             <v-card-title>
+                <v-flex xs3>
+                    <v-text-field v-model="list.search" append-icon="mdi-magnify" label="Cari transaksi kedai" single-line hide-details></v-text-field>
+                </v-flex>
                 <v-spacer></v-spacer>
                 <v-btn dense class="btn-add-data" @click="goToAdd()">Tambah Data</v-btn>
-                <v-text-field v-model="list.search" append-icon="mdi-magnify" label="Cari transaksi kedai" single-line hide-details></v-text-field>
             </v-card-title>
 
             <v-data-table :headers="list.headers" :items="list.datas" :search="list.search" class="elevation-1">

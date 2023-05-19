@@ -5,7 +5,7 @@
         <v-card>
             <v-card-title>
                 <v-flex xs3>
-                    <v-select class="mr-4" label="Pilih Karyawan" :items="karyawan_list" v-model="filter.search" item-value="nama" item-text="nama" single-line hide-details clearable></v-select>
+                    <v-select class="mr-4" label="Pilih karyawan" :items="karyawan_list" v-model="filter.search" item-value="nama" item-text="nama" single-line hide-details clearable></v-select>
                 </v-flex>
                 <v-flex xs3>
                     <v-text-field v-model="list.search" append-icon="mdi-magnify" label="Cari gaji karyawan" single-line hide-details></v-text-field>

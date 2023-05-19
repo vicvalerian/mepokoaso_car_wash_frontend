@@ -4,14 +4,14 @@
         <h1 class="page-custom-title">DATA PEMINJAMAN KARYAWAN</h1>
         <v-card>
             <v-card-title>
-                <v-spacer></v-spacer>
-                <v-btn dense class="btn-add-data" @click="dialogAddEdit=true">Tambah Data</v-btn>
                 <v-flex xs3>
-                    <v-select class="mr-4" label="Pilih Karyawan" :items="karyawan_list" v-model="filter.search" single-line hide-details clearable></v-select>
+                    <v-select class="mr-4" label="Pilih karyawan" :items="karyawan_list" v-model="filter.search" single-line hide-details clearable></v-select>
                 </v-flex>
                 <v-flex xs3>
                     <v-text-field v-model="list.search" append-icon="mdi-magnify" label="Cari peminjaman karyawan" single-line hide-details></v-text-field>
                 </v-flex>
+                <v-spacer></v-spacer>
+                <v-btn dense class="btn-add-data" @click="dialogAddEdit=true">Tambah Data</v-btn>
             </v-card-title>
 
             <v-data-table :headers="list.headers" :items="list.datas" :search="list.search" class="elevation-1">

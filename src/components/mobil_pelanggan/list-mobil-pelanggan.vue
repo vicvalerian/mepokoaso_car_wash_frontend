@@ -34,7 +34,7 @@
                             <v-flex xs12>
                                 <div>
                                     <div>
-                                        <v-data-table :headers="formDetail.headers" :items="formDetail.datas" class="elevation-1" hide-default-footer>
+                                        <v-data-table :headers="formDetail.headers" :items="formDetail.datas" class="elevation-1">
                                             <template v-slot:no-data>
                                                 <div color="white" class="red--text" icon="warning"><b>Maaf, tidak ada data tersedia.</b></div>
                                             </template>
@@ -151,7 +151,7 @@ export default {
             ];
 
             this.formDetail.headers = [
-                { text: "Nomor Pencucian", value: "no_pencucian"},
+                { text: "Nomor Transaksi Pencucian", value: "no_pencucian"},
                 { text: "Status", value: "status"},
                 { text: "Tanggal Pencucian", value: "tgl_pencucian"},
                 { text: "Waktu Pencucian", value: "waktu_pencucian"},

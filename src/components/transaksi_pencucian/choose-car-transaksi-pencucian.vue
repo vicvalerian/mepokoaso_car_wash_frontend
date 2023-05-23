@@ -158,7 +158,7 @@ export default {
             let url = this.$api + '/list-card-jenis-kendaraan';
             this.$http.get(url).then(response => {
                 this.jenis_kendaraan_list = response.data;
-                this.init_jenis = this.jenis_kendaraan_list[0].nama;
+                this.init_jenis = this.jenis_kendaraan_list[0] ? this.jenis_kendaraan_list[0].nama : '';
 
                 this.axioKendaraan(this.init_jenis)
             });

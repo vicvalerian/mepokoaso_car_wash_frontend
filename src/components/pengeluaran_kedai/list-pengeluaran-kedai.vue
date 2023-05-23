@@ -86,7 +86,7 @@
                         <v-btn dense class="btn-select-stok" @click="openSelectedDialogStok(true)">Stok</v-btn>
                     </v-flex>
                     <v-flex xs12 mt-4>
-                        <v-btn dense class="btn-select-stok" @click="openSelectedDialogStok(false)">Non Stok</v-btn>
+                        <v-btn dense class="btn-select-stok" @click="openSelectedDialogStok(false)">Tanpa Stok</v-btn>
                     </v-flex>
                 </v-card-text>
                 <v-card-actions>

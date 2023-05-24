@@ -266,6 +266,10 @@ export default {
                 this.axioData();
                 this.cancelForm();
                 this.inputType = 'Tambah';
+
+                if(dataLogoJenisKendaraan){
+                    location.reload();
+                }
             })
             .catch((error) => {
                 this.snackbar.error_message = error.response.data.message;

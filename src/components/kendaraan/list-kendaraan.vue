@@ -313,6 +313,10 @@ export default {
                 this.axioData();
                 this.cancelForm();
                 this.inputType = 'Tambah';
+
+                if(dataFotoKendaraan){
+                    location.reload();
+                }
             })
             .catch((error) => {
                 this.snackbar.error_message = error.response.data.message;

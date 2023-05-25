@@ -247,7 +247,6 @@ export default {
             let url = this.$api + '/transaksi-pencucian/' + this.id;
             this.$http.get(url).then(response => {
                 this.form = response.data.data;
-                this.list.datas = response.data.data.karyawan_pencucis;
                 this.list.selectedPencuci = response.data.data.karyawan_pencucis;
                 this.readKendaraan();
             });

@@ -104,7 +104,7 @@
                 </v-card-title>
                 <v-card-text class="dialog-confirm-text">
                     <v-container v-if="inputType == 'Tambah'">
-                        <v-select :items="menu_kedai_list" v-model="form.menu_kedai_id" label="Nama Barang" required></v-select>
+                        <v-autocomplete :items="menu_kedai_list" v-model="form.menu_kedai_id" label="Nama Barang" required></v-autocomplete>
                         <v-dialog ref="dialog" v-model="modal" :return-value.sync="form.tgl_pembelian" persistent width="290px">
                             <template v-slot:activator="{ on, attrs }">
                                 <v-text-field
@@ -126,8 +126,8 @@
                         <v-text-field v-model="form.harga_pembelian" label="Harga Barang" required></v-text-field>
                     </v-container>
                     <v-container v-else>
-                        <v-select :items="menu_kedai_list" v-model="form.menu_kedai_id" label="Nama Barang" required></v-select>
-                        <v-dialog ref="dialog" v-model="modal" :return-value.sync="form.tgl_pembelian" persistent width="290px">
+                        <v-autocomplete :items="menu_kedai_list" v-model="form.menu_kedai_id" label="Nama Barang" required></v-autocomplete>
+                        <v-dialog ref="dialog2" v-model="modal2" :return-value.sync="form.tgl_pembelian" persistent width="290px">
                             <template v-slot:activator="{ on, attrs }">
                                 <v-text-field
                                     v-model="form.tgl_pembelian"
@@ -140,8 +140,8 @@
                             </template>
                             <v-date-picker v-model="form.tgl_pembelian" scrollable>
                                 <v-spacer></v-spacer>
-                                <v-btn text color="primary" @click="modal = false">Batal</v-btn>
-                                <v-btn text color="primary" @click="$refs.dialog.save(form.tgl_pembelian)">Simpan</v-btn>
+                                <v-btn text color="primary" @click="modal2 = false">Batal</v-btn>
+                                <v-btn text color="primary" @click="$refs.dialog2.save(form.tgl_pembelian)">Simpan</v-btn>
                             </v-date-picker>
                         </v-dialog>
                         <v-text-field v-model="form.jumlah_barang" label="Jumlah Barang (pcs)" required></v-text-field>
@@ -164,7 +164,7 @@
                 <v-card-text class="dialog-confirm-text">
                     <v-container v-if="inputType == 'Tambah'">
                         <v-text-field v-model="form.nama_barang" label="Nama Barang" required></v-text-field>
-                        <v-dialog ref="dialog" v-model="modal" :return-value.sync="form.tgl_pembelian" persistent width="290px">
+                        <v-dialog ref="dialog3" v-model="modal3" :return-value.sync="form.tgl_pembelian" persistent width="290px">
                             <template v-slot:activator="{ on, attrs }">
                                 <v-text-field
                                     v-model="form.tgl_pembelian"
@@ -177,8 +177,8 @@
                             </template>
                             <v-date-picker v-model="form.tgl_pembelian" scrollable>
                                 <v-spacer></v-spacer>
-                                <v-btn text color="primary" @click="modal = false">Batal</v-btn>
-                                <v-btn text color="primary" @click="$refs.dialog.save(form.tgl_pembelian)">Simpan</v-btn>
+                                <v-btn text color="primary" @click="modal3 = false">Batal</v-btn>
+                                <v-btn text color="primary" @click="$refs.dialog3.save(form.tgl_pembelian)">Simpan</v-btn>
                             </v-date-picker>
                         </v-dialog>
                         <v-text-field v-model="form.jumlah_barang" label="Jumlah Barang (pcs)" required></v-text-field>
@@ -186,7 +186,7 @@
                     </v-container>
                     <v-container v-else>
                         <v-text-field v-model="form.nama_barang" label="Nama Menu" required></v-text-field>
-                        <v-dialog ref="dialog" v-model="modal" :return-value.sync="form.tgl_pembelian" persistent width="290px">
+                        <v-dialog ref="dialog4" v-model="modal4" :return-value.sync="form.tgl_pembelian" persistent width="290px">
                             <template v-slot:activator="{ on, attrs }">
                                 <v-text-field
                                     v-model="form.tgl_pembelian"
@@ -199,8 +199,8 @@
                             </template>
                             <v-date-picker v-model="form.tgl_pembelian" scrollable>
                                 <v-spacer></v-spacer>
-                                <v-btn text color="primary" @click="modal = false">Batal</v-btn>
-                                <v-btn text color="primary" @click="$refs.dialog.save(form.tgl_pembelian)">Simpan</v-btn>
+                                <v-btn text color="primary" @click="modal4 = false">Batal</v-btn>
+                                <v-btn text color="primary" @click="$refs.dialog4.save(form.tgl_pembelian)">Simpan</v-btn>
                             </v-date-picker>
                         </v-dialog>
                         <v-text-field v-model="form.jumlah_barang" label="Jumlah Barang (pcs)" required></v-text-field>
@@ -295,6 +295,9 @@ export default {
     data() {
         return {
             modal: false,
+            modal2: false,
+            modal3: false,
+            modal4: false,
             menu_kedai_list: [],
             inputType: 'Tambah',
             dialogConfirmDelete: false,

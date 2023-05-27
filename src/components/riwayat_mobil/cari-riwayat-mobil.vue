@@ -1,5 +1,5 @@
 <template>
-    <v-main>
+    <v-main style="padding: 5%">
         <v-app-bar app fixed height="80px" id="primary-bg">
             <v-app-bar-nav-icon class="ml-4">
                 <img src="@/assets/logocarwash.png" height="75px">

@@ -5,7 +5,7 @@
                 <img src="@/assets/logocarwash.png" height="75px">
             </v-app-bar-nav-icon>
             <v-toolbar-title class="text-center">
-                <b class="white--text">MEPOKASO CAR WASH</b>
+                <b class="white--text">MEPOKOASO CAR WASH</b>
             </v-toolbar-title>
         </v-app-bar>
         <v-container class="fill-height" fluid>

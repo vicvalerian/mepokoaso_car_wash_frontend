@@ -123,7 +123,7 @@
                             </v-date-picker>
                         </v-dialog>
                         <v-text-field v-model="form.jumlah_barang" label="Jumlah Barang (pcs)" required></v-text-field>
-                        <v-text-field v-model="form.harga_pembelian" label="Harga Barang" required></v-text-field>
+                        <v-text-field v-model="form.harga_pembelian" label="Harga Pembelian" required></v-text-field>
                     </v-container>
                     <v-container v-else>
                         <v-autocomplete :items="menu_kedai_list" v-model="form.menu_kedai_id" label="Nama Barang" required></v-autocomplete>
@@ -145,7 +145,7 @@
                             </v-date-picker>
                         </v-dialog>
                         <v-text-field v-model="form.jumlah_barang" label="Jumlah Barang (pcs)" required></v-text-field>
-                        <v-text-field v-model="form.harga_pembelian" label="Harga Barang" required></v-text-field>
+                        <v-text-field v-model="form.harga_pembelian" label="Harga Pembelian" required></v-text-field>
                     </v-container>
                 </v-card-text>
                 <v-card-actions>
@@ -182,7 +182,7 @@
                             </v-date-picker>
                         </v-dialog>
                         <v-text-field v-model="form.jumlah_barang" label="Jumlah Barang (pcs)" required></v-text-field>
-                        <v-text-field v-model="form.harga_pembelian" label="Harga Barang" required></v-text-field>
+                        <v-text-field v-model="form.harga_pembelian" label="Harga Pembelian" required></v-text-field>
                     </v-container>
                     <v-container v-else>
                         <v-text-field v-model="form.nama_barang" label="Nama Menu" required></v-text-field>
@@ -204,7 +204,7 @@
                             </v-date-picker>
                         </v-dialog>
                         <v-text-field v-model="form.jumlah_barang" label="Jumlah Barang (pcs)" required></v-text-field>
-                        <v-text-field v-model="form.harga_pembelian" label="Harga Barang" required></v-text-field>
+                        <v-text-field v-model="form.harga_pembelian" label="Harga Pembelian" required></v-text-field>
                     </v-container>
                 </v-card-text>
                 <v-card-actions>

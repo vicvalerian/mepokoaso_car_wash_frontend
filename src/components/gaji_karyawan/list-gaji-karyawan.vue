@@ -23,7 +23,7 @@
                 <template v-slot:[`item.status`]="{ item }">
                     <v-chip v-if="item.status === 'Utang'" color="red" outlined>{{ item.status }}</v-chip>
                     <v-chip v-if="item.status === 'Belum Diterima'" color="orange" outlined>{{ item.status }}</v-chip>
-                    <v-chip v-if="item.status === 'Lunas'" color="green" outlined>{{ item.status }}</v-chip>
+                    <v-chip v-if="item.status === 'Sudah Diterima'" color="green" outlined>{{ item.status }}</v-chip>
                 </template>
                 <template v-slot:[`item.actions`]="{ item }">
                     <v-icon dense color="#316291" @click="detailHandler(item)" class="data-table-icon">mdi-information</v-icon>
@@ -184,7 +184,7 @@ export default {
             karyawan_list: [],
             select_bulan: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
             select_tahun: [2021, 2022, 2023, 2024, 2025],
-            statuses: ['Belum Diterima', 'Utang', 'Lunas'],
+            statuses: ['Utang', 'Belum Diterima', 'Sudah Diterima'],
             menuKedai: new FormData(),
             editId: '',
             snackbar: {

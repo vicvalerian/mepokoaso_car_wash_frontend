@@ -340,11 +340,13 @@ export default {
 
         insertTableMenu(item){
             let found = false;
-            this.list.datas.forEach((x) => {
-                if(x.id == item.id){
+            let arrIndex = 0;
+            for (let index = 0; index < this.list.datas.length; index++) {
+                if(this.list.datas[index].id == item.id){
                     found = true;
+                    arrIndex = index;
                 }
-            });
+            }
 
             if(!found){
                 item.menu_kedai_id = item.id;
@@ -353,6 +355,11 @@ export default {
                 item.sub_total_show = this.formatRupiah(item.harga, 'Rp');
                 this.list.datas.push(item);
                 this.calculateTotal();
+            } else{
+                this.list.datas[arrIndex].kuantitas = this.list.datas[arrIndex].kuantitas + 1;
+                this.list.datas[arrIndex].sub_total = this.list.datas[arrIndex].sub_total + item.harga;
+                this.list.datas[arrIndex].sub_total_show = this.formatRupiah(this.list.datas[arrIndex].sub_total, 'Rp');
+                this.calculateTotal();  
             }
         },
 

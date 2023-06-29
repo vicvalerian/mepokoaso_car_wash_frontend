@@ -35,6 +35,9 @@
                                 <div>
                                     <div>
                                         <v-data-table :headers="formDetail.headers" :items="formDetail.datas" class="elevation-1">
+                                            <template v-slot:[`item.tgl_pencucian`]="{ item }">
+                                                <template>{{ formatTanggal(item.tgl_pencucian) }}</template>
+                                            </template>
                                             <template v-slot:no-data>
                                                 <div color="white" class="red--text" icon="warning"><b>Maaf, tidak ada data tersedia.</b></div>
                                             </template>
@@ -173,6 +176,10 @@ export default {
                 this.formDetail.datas = response.data;
             });
             this.dialogDetail = true
+        },
+
+        formatTanggal(value){
+            return value.split("-").reverse().join("-");
         },
     },
     mounted(){

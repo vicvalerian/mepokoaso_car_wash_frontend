@@ -30,7 +30,7 @@
                                                         <v-autocomplete outlined v-model="form.kendaraan_id" :items="kendaraan_list" label="Nama Kendaraan" item-text="nama" item-value="id" readonly></v-autocomplete>
                                                         <v-text-field outlined v-model="form.tarif_kendaraan" label="Tarif Kendaraan" readonly></v-text-field>
                                                         <v-text-field outlined v-model="form.no_polisi" label="Nomor Polisi"></v-text-field>
-                                                        <v-select outlined :items="jenis_kendaraan_list" v-model="form.jenis_kendaraan" label="Jenis Kendaraan" required></v-select>
+                                                        <!-- <v-select outlined :items="jenis_kendaraan_list" v-model="form.jenis_kendaraan" label="Jenis Kendaraan" required readonly></v-select> -->
                                                         <v-dialog ref="dialog" v-model="modal" :return-value.sync="form.tgl_pencucian" persistent width="290px">
                                                             <template v-slot:activator="{ on, attrs }">
                                                                 <v-text-field
@@ -288,6 +288,7 @@ export default {
                 this.formMobil.foto = response.data.data.foto;
                 this.formMobil.nama = response.data.data.nama;
                 this.formMobil.harga = response.data.data.harga;
+                this.form.jenis_kendaraan = response.data.data.tipe;
             });
         },
 

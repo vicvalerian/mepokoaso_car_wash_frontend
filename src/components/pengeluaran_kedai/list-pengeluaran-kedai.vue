@@ -12,6 +12,9 @@
             </v-card-title>
 
             <v-data-table :headers="list.headers" :items="list.datas" :search="list.search" class="elevation-1">
+                <template v-slot:[`item.tgl_pembelian`]="{ item }">
+                    <template>{{ formatTanggal(item.tgl_pembelian) }}</template>
+                </template>
                 <template v-slot:[`item.harga_pembelian`]="{ item }">
                     <template>{{ formatRupiah(item.harga_pembelian, 'Rp') }}</template>
                 </template>
@@ -463,7 +466,7 @@ export default {
 
         detailHandler(item){
             this.formDetail.nama_barang = item.nama_barang;
-            this.formDetail.tgl_pembelian = item.tgl_pembelian;
+            this.formDetail.tgl_pembelian = this.formatTanggal(item.tgl_pembelian);
             this.formDetail.jumlah_barang = item.jumlah_barang+" pcs";
             this.formDetail.harga_pembelian = this.formatRupiah(item.harga_pembelian, 'Rp');
             this.dialogDetail = true
@@ -531,6 +534,10 @@ export default {
  
 			rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
 			return prefix == undefined ? rupiah : (rupiah ? 'Rp' + rupiah : '');
+        },
+
+        formatTanggal(value){
+            return value.split("-").reverse().join("-");
         },
     },
     mounted(){

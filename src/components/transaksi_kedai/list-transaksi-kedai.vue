@@ -12,6 +12,9 @@
             </v-card-title>
 
             <v-data-table :headers="list.headers" :items="list.datas" :search="list.search" class="elevation-1">
+                <template v-slot:[`item.tgl_penjualan`]="{ item }">
+                    <template>{{ formatTanggal(item.tgl_penjualan) }}</template>
+                </template>
                 <template v-slot:[`item.total_penjualan`]="{ item }">
                     <template>{{ formatRupiah(item.total_penjualan, 'Rp') }}</template>
                 </template>
@@ -204,6 +207,10 @@ export default {
  
 			rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
 			return prefix == undefined ? rupiah : (rupiah ? 'Rp' + rupiah : '');
+        },
+
+        formatTanggal(value){
+            return value.split("-").reverse().join("-");
         },
     },
     mounted(){

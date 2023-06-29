@@ -15,6 +15,9 @@
             </v-card-title>
 
             <v-data-table :headers="list.headers" :items="list.datas" :search="list.search" class="elevation-1">
+                <template v-slot:[`item.tgl_peminjaman`]="{ item }">
+                    <template>{{ formatTanggal(item.tgl_peminjaman) }}</template>
+                </template>
                 <template v-slot:[`item.nominal`]="{ item }">
                     <template>{{ formatRupiah(item.nominal, 'Rp') }}</template>
                 </template>
@@ -360,7 +363,7 @@ export default {
         },
 
         detailHandler(item){
-            this.formDetail.tgl_peminjaman = item.tgl_peminjaman
+            this.formDetail.tgl_peminjaman = this.formatTanggal(item.tgl_peminjaman)
             this.formDetail.nominal = this.formatRupiah(item.nominal, 'Rp')
             this.formDetail.alasan = item.alasan
             if(item.karyawan){
@@ -416,6 +419,10 @@ export default {
  
 			rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
 			return prefix == undefined ? rupiah : (rupiah ? 'Rp' + rupiah : '');
+        },
+
+        formatTanggal(value){
+            return value.split("-").reverse().join("-");
         },
     },
     mounted(){

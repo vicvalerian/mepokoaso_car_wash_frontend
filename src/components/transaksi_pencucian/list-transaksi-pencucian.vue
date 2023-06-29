@@ -20,6 +20,9 @@
             <v-tabs-items v-model="tab">
                 <v-tab-item v-for="status in stasuses" :key="status">
                     <v-data-table :headers="list.headers" :items="list.datas" :search="list.search" class="elevation-1">
+                        <template v-slot:[`item.tgl_pencucian`]="{ item }">
+                            <template>{{ formatTanggal(item.tgl_pencucian) }}</template>
+                        </template>
                         <template v-slot:[`item.is_free`]="{ item }">
                             <template v-if="item.is_free == true">Ya</template>
                             <template v-else>Tidak</template>
@@ -364,6 +367,10 @@ export default {
  
 			rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
 			return prefix == undefined ? rupiah : (rupiah ? 'Rp' + rupiah : '');
+        },
+
+        formatTanggal(value){
+            return value.split("-").reverse().join("-");
         },
     },
     mounted(){

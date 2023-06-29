@@ -152,7 +152,7 @@
                             </v-dialog>
                         </v-flex>
                         <v-flex xs12 md2 sm4 class="text-xs-right">
-                            <v-btn dense class="btn-confirm-delete" @click="konfirmasiHandler(`pengeluaran-kedai?tglMulai=${dateMulaiPengeluaranKedai}&tglSelesai=${dateSelesaiPengeluaranKedai}`, 'Penjualan Kedai')">Unduh</v-btn>
+                            <v-btn dense class="btn-confirm-delete" @click="konfirmasiHandler(`pengeluaran-kedai?tglMulai=${dateMulaiPengeluaranKedai}&tglSelesai=${dateSelesaiPengeluaranKedai}`, 'Pengeluaran Kedai')">Unduh</v-btn>
                         </v-flex>
                     </v-layout>
                 </v-card-text>

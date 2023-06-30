@@ -70,6 +70,7 @@
                                         <v-text-field v-model="formDetail.nama" label="Nama Kendaraan" readonly></v-text-field>
                                         <v-text-field v-model="formDetail.jenis_kendaraan" label="Jenis Kendaraan" readonly></v-text-field>
                                         <v-text-field v-model="formDetail.harga" label="Harga Kendaraan" readonly></v-text-field>
+                                        <v-text-field v-model="formDetail.tipe" label="Tipe Kendaraan" readonly></v-text-field>
                                     </div>
                                 </div>        
                             </v-flex>
@@ -94,12 +95,14 @@
                         <v-text-field v-model="form.nama" label="Nama Kendaraan" required></v-text-field>
                         <v-text-field v-model="form.harga" label="Harga Kendaraan" required></v-text-field>
                         <v-file-input append-icon="mdi-camera" accept="image/*" label="Foto Kendaraan" id="fotoKendaraan" ref="fileKendaraan"></v-file-input>
+                        <v-select :items="tipe_kendaraan_list" v-model="form.tipe" label="Tipe Kendaraan" required></v-select>
                     </v-container>
                     <v-container v-else>
                         <v-select :items="jenis_kendaraan_list" v-model="form.jenis_kendaraan_id" label="Jenis Kendaraan" item-value="id" item-text="nama" required></v-select>
                         <v-text-field v-model="form.nama" label="Nama Jenis Kendaraan" required></v-text-field>
                         <v-text-field v-model="form.harga" label="Harga Kendaraan" required></v-text-field>
                         <v-file-input append-icon="mdi-camera" accept="image/*" label="Foto Kendaraan" id="fotoKendaraan" ref="fileKendaraan"></v-file-input>
+                        <v-select :items="tipe_kendaraan_list" v-model="form.tipe" label="Tipe Kendaraan" required></v-select>
                     </v-container>
                 </v-card-text>
                 <v-card-actions>
@@ -185,6 +188,7 @@ export default {
             dialogDetail: false,
             dialogAddEdit: false,
             jenis_kendaraan_list: [],
+            tipe_kendaraan_list: ['Mobil', 'Motor'],
             kendaraan: new FormData(),
             editId: '',
             deleteId: '',
@@ -203,12 +207,14 @@ export default {
                 harga: '',
                 foto: '',
                 jenis_kendaraan: '',
+                tipe: '',
             },
             form: {
                 jenis_kendaraan_id: '',
                 nama: '',
                 harga: '',
                 foto: '',
+                tipe: '',
             },
             filter: {
                 search: '',
@@ -270,6 +276,7 @@ export default {
             this.kendaraan.append('jenis_kendaraan_id', this.form.jenis_kendaraan_id);
             this.kendaraan.append('nama', this.form.nama);
             this.kendaraan.append('harga', this.form.harga);
+            this.kendaraan.append('tipe', this.form.tipe);
 
             var logo_kendaraan = document.getElementById('fotoKendaraan'), dataFotoKendaraan = logo_kendaraan.files[0];
             this.kendaraan.append('foto', dataFotoKendaraan);
@@ -296,6 +303,7 @@ export default {
             data.append('jenis_kendaraan_id', this.form.jenis_kendaraan_id);
             data.append('nama', this.form.nama);
             data.append('harga', this.form.harga);
+            data.append('tipe', this.form.tipe);
 
             var logo_kendaraan = document.getElementById('fotoKendaraan'), dataFotoKendaraan = logo_kendaraan.files[0];
 
@@ -348,6 +356,7 @@ export default {
             this.formDetail.nama = item.nama
             this.formDetail.harga = this.formatRupiah(item.harga, 'Rp')
             this.formDetail.foto = item.foto
+            this.formDetail.tipe = item.tipe
             if(item.jenis_kendaraan){
                 this.formDetail.jenis_kendaraan = item.jenis_kendaraan.nama
             } else{
@@ -363,6 +372,7 @@ export default {
             this.form.nama = item.nama;
             this.form.harga = item.harga;
             this.form.foto = item.foto;
+            this.form.tipe = item.tipe;
             this.dialogAddEdit = true;
         },
 

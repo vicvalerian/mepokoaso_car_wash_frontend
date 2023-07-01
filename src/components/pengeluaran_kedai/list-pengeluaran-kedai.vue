@@ -111,7 +111,7 @@
                         <v-dialog ref="dialog" v-model="modal" :return-value.sync="form.tgl_pembelian" persistent width="290px">
                             <template v-slot:activator="{ on, attrs }">
                                 <v-text-field
-                                    v-model="form.tgl_pembelian"
+                                    v-model="form.tgl_pembelian_show"
                                     label="Tanggal Pembelian"
                                     prepend-icon="mdi-calendar-blank-outline"
                                     readonly
@@ -133,7 +133,7 @@
                         <v-dialog ref="dialog2" v-model="modal2" :return-value.sync="form.tgl_pembelian" persistent width="290px">
                             <template v-slot:activator="{ on, attrs }">
                                 <v-text-field
-                                    v-model="form.tgl_pembelian"
+                                    v-model="form.tgl_pembelian_show"
                                     label="Tanggal Pembelian"
                                     prepend-icon="mdi-calendar-blank-outline"
                                     readonly
@@ -170,7 +170,7 @@
                         <v-dialog ref="dialog3" v-model="modal3" :return-value.sync="form.tgl_pembelian" persistent width="290px">
                             <template v-slot:activator="{ on, attrs }">
                                 <v-text-field
-                                    v-model="form.tgl_pembelian"
+                                    v-model="form.tgl_pembelian_show"
                                     label="Tanggal Pembelian"
                                     prepend-icon="mdi-calendar-blank-outline"
                                     readonly
@@ -192,7 +192,7 @@
                         <v-dialog ref="dialog4" v-model="modal4" :return-value.sync="form.tgl_pembelian" persistent width="290px">
                             <template v-slot:activator="{ on, attrs }">
                                 <v-text-field
-                                    v-model="form.tgl_pembelian"
+                                    v-model="form.tgl_pembelian_show"
                                     label="Tanggal Pembelian"
                                     prepend-icon="mdi-calendar-blank-outline"
                                     readonly
@@ -331,6 +331,7 @@ export default {
                 menu_kedai_id: '',
                 nama_barang: '',
                 tgl_pembelian: new Date().toISOString().substr(0, 10),
+                tgl_pembelian_show: '',
                 jumlah_barang: '',
                 harga_pembelian: '',
             },
@@ -366,6 +367,7 @@ export default {
 
             this.axioData();
             this.axioMenuKedai();
+            this.form.tgl_pembelian_show = this.formatTanggal(this.form.tgl_pembelian);
         },
 
         axioData() {
@@ -478,6 +480,7 @@ export default {
             this.form.menu_kedai_id = item.menu_kedai_id;
             this.form.nama_barang = item.nama_barang;
             this.form.tgl_pembelian = item.tgl_pembelian;
+            this.form.tgl_pembelian_show = this.formatTanggal(item.tgl_pembelian);
             this.form.jumlah_barang = item.jumlah_barang;
             this.form.harga_pembelian = item.harga_pembelian;
 
@@ -498,6 +501,7 @@ export default {
                 menu_kedai_id: '',
                 nama_barang: '',
                 tgl_pembelian: new Date().toISOString().substr(0, 10),
+                tgl_pembelian_show: this.formatTanggal(this.form.tgl_pembelian),
                 jumlah_barang: '',
                 harga_pembelian: '',
             };
@@ -549,6 +553,12 @@ export default {
                 this.filter.search = ''
             }
             this.axioData();
+        },
+
+        'form.tgl_pembelian'(val){
+            if(val){
+                this.form.tgl_pembelian_show = this.formatTanggal(val)
+            }
         },
 
         'form.menu_kedai_id'(val){

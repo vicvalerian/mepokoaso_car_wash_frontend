@@ -34,7 +34,7 @@
                                                         <v-dialog ref="dialog" v-model="modal" :return-value.sync="form.tgl_pencucian" persistent width="290px">
                                                             <template v-slot:activator="{ on, attrs }">
                                                                 <v-text-field
-                                                                    v-model="form.tgl_pencucian"
+                                                                    v-model="form.tgl_pencucian_show"
                                                                     label="Tanggal Pencucian" outlined
                                                                     prepend-inner-icon="mdi-calendar-blank-outline"
                                                                     readonly
@@ -205,6 +205,7 @@ export default {
                 no_polisi: '',
                 jenis_kendaraan: '',
                 tgl_pencucian: new Date().toISOString().substr(0, 10),
+                tgl_pencucian_show: '',
                 waktu_pencucian: '',
                 karyawan_id: '',
                 status: 'Baru',
@@ -243,6 +244,7 @@ export default {
             this.setFieldKaryawan();
             this.setFieldWaktu();
             this.readKendaraan();
+            this.form.tgl_pencucian_show = this.formatTanggal(this.form.tgl_pencucian);
         },
 
         axioKaryawanPenjagaKedai(){
@@ -362,6 +364,10 @@ export default {
             });
         },
 
+        formatTanggal(value){
+            return value.split("-").reverse().join("-");
+        },
+
         resetPencucianCart(){
             localStorage.removeItem('pencucianCart');
         }
@@ -370,7 +376,11 @@ export default {
 
     },
     watch: {
-
+        'form.tgl_pencucian'(val){
+            if(val){
+                this.form.tgl_pencucian_show = this.formatTanggal(val)
+            }
+        },
     },
     computed:{
 

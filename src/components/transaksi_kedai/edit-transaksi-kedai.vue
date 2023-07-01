@@ -81,7 +81,7 @@
                                                         <v-dialog ref="dialog" v-model="modal" :return-value.sync="form.tgl_penjualan" persistent width="290px">
                                                             <template v-slot:activator="{ on, attrs }">
                                                                 <v-text-field
-                                                                    v-model="form.tgl_penjualan"
+                                                                    v-model="form.tgl_penjualan_show"
                                                                     label="Tanggal Penjualan" outlined
                                                                     prepend-inner-icon="mdi-calendar-blank-outline"
                                                                     readonly
@@ -249,6 +249,7 @@ export default {
                 total_penjualan: '',
                 total_penjualan_show: '',
                 tgl_penjualan: '',
+                tgl_penjualan_show: '',
                 waktu_penjualan: '',
                 detail_transaksi_kedai: [],
             },
@@ -429,12 +430,20 @@ export default {
 			rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
 			return prefix == undefined ? rupiah : (rupiah ? 'Rp' + rupiah : '');
         },
+
+        formatTanggal(value){
+            return value.split("-").reverse().join("-");
+        },
     },
     mounted(){
 
     },
     watch: {
-
+        'form.tgl_penjualan'(val){
+            if(val){
+                this.form.tgl_penjualan_show = this.formatTanggal(val)
+            }
+        },
     },
     computed:{
 

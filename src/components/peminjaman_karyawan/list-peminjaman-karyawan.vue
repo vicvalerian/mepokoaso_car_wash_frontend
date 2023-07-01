@@ -90,7 +90,7 @@
                         <v-dialog ref="dialog" v-model="modal" :return-value.sync="form.tgl_peminjaman" persistent width="290px">
                             <template v-slot:activator="{ on, attrs }">
                                 <v-text-field
-                                    v-model="form.tgl_peminjaman"
+                                    v-model="form.tgl_peminjaman_show"
                                     label="Tanggal Peminjaman"
                                     prepend-icon="mdi-calendar-blank-outline"
                                     readonly
@@ -112,7 +112,7 @@
                         <v-dialog ref="dialog" v-model="modal" :return-value.sync="form.tgl_peminjaman" persistent width="290px">
                             <template v-slot:activator="{ on, attrs }">
                                 <v-text-field
-                                    v-model="form.tgl_peminjaman"
+                                    v-model="form.tgl_peminjaman_show"
                                     label="Tanggal Peminjaman"
                                     prepend-icon="mdi-calendar-blank-outline"
                                     readonly
@@ -236,6 +236,7 @@ export default {
             form: {
                 karyawan_id: '',
                 tgl_peminjaman: new Date().toISOString().substr(0, 10),
+                tgl_peminjaman_show: '',
                 nominal: '',
                 alasan: '',
             },
@@ -270,6 +271,7 @@ export default {
 
             this.axioData();
             this.axioKaryawan();
+            this.form.tgl_peminjaman_show = this.formatTanggal(this.form.tgl_peminjaman);
         },
 
         axioData() {
@@ -379,6 +381,7 @@ export default {
             this.editId = item.id;
             this.form.karyawan_id = item.karyawan_id;
             this.form.tgl_peminjaman = item.tgl_peminjaman;
+            this.form.tgl_peminjaman_show = this.formatTanggal(item.tgl_peminjaman);
             this.form.nominal = item.nominal;
             this.form.alasan = item.alasan;
             this.dialogAddEdit = true;
@@ -393,6 +396,7 @@ export default {
             this.form = {
                 karyawan_id: '',
                 tgl_peminjaman: new Date().toISOString().substr(0, 10),
+                tgl_peminjaman_show: this.formatTanggal(this.form.tgl_peminjaman),
                 nominal: '',
                 alasan: '',
             };
@@ -429,6 +433,12 @@ export default {
         
     },
     watch: {
+        'form.tgl_peminjaman'(val){
+            if(val){
+                this.form.tgl_peminjaman_show = this.formatTanggal(val)
+            }
+        },
+
         'filter.search'(val){
             if(!val){
                 this.filter.search = ''

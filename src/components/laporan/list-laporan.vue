@@ -13,7 +13,7 @@
                             <v-dialog ref="dialogTransaksiPencucian1" v-model="modalMulaiTransaksiPencucian" :return-value.sync="dateMulaiTransaksiPencucian" persistent width="290px">
                                 <template v-slot:activator="{ on, attrs }">
                                     <v-text-field
-                                        v-model="dateMulaiTransaksiPencucian"
+                                        v-model="dateMulaiTransaksiPencucianShow"
                                         label="Tanggal Mulai" hide-details
                                         prepend-icon="mdi-calendar-blank-outline"
                                         readonly
@@ -32,7 +32,7 @@
                             <v-dialog ref="dialogTransaksiPencucian2" v-model="modalSelesaiTransaksiPencucian" :return-value.sync="dateSelesaiTransaksiPencucian" persistent width="290px">
                                 <template v-slot:activator="{ on, attrs }">
                                     <v-text-field
-                                        v-model="dateSelesaiTransaksiPencucian"
+                                        v-model="dateSelesaiTransaksiPencucianShow"
                                         label="Tanggal Selesai" hide-details
                                         prepend-icon="mdi-calendar-blank-outline"
                                         readonly
@@ -65,7 +65,7 @@
                             <v-dialog ref="dialogTransaksiKedai1" v-model="modalMulaiTransaksiKedai" :return-value.sync="dateMulaiTransaksiKedai" persistent width="290px">
                                 <template v-slot:activator="{ on, attrs }">
                                     <v-text-field
-                                        v-model="dateMulaiTransaksiKedai"
+                                        v-model="dateMulaiTransaksiKedaiShow"
                                         label="Tanggal Mulai" hide-details
                                         prepend-icon="mdi-calendar-blank-outline"
                                         readonly
@@ -84,7 +84,7 @@
                             <v-dialog ref="dialog" v-model="modalSelesaiTransaksiKedai" :return-value.sync="dateSelesaiTransaksiKedai" persistent width="290px">
                                 <template v-slot:activator="{ on, attrs }">
                                     <v-text-field
-                                        v-model="dateSelesaiTransaksiKedai"
+                                        v-model="dateSelesaiTransaksiKedaiShow"
                                         label="Tanggal Selesai" hide-details
                                         prepend-icon="mdi-calendar-blank-outline"
                                         readonly
@@ -117,7 +117,7 @@
                             <v-dialog ref="dialogPengeluaranKedai1" v-model="modalMulaiPengeluaranKedai" :return-value.sync="dateMulaiPengeluaranKedai" persistent width="290px">
                                 <template v-slot:activator="{ on, attrs }">
                                     <v-text-field
-                                        v-model="dateMulaiPengeluaranKedai"
+                                        v-model="dateMulaiPengeluaranKedaiShow"
                                         label="Tanggal Mulai" hide-details
                                         prepend-icon="mdi-calendar-blank-outline"
                                         readonly
@@ -136,7 +136,7 @@
                             <v-dialog ref="dialogPengeluaranKedai2" v-model="modalSelesaiPengeluaranKedai" :return-value.sync="dateSelesaiPengeluaranKedai" persistent width="290px">
                                 <template v-slot:activator="{ on, attrs }">
                                     <v-text-field
-                                        v-model="dateSelesaiPengeluaranKedai"
+                                        v-model="dateSelesaiPengeluaranKedaiShow"
                                         label="Tanggal Selesai" hide-details
                                         prepend-icon="mdi-calendar-blank-outline"
                                         readonly
@@ -261,11 +261,17 @@ export default {
             modalMulaiPengeluaranKedai: false,
             modalSelesaiPengeluaranKedai: false,
             dateMulaiTransaksiPencucian: new Date().toISOString().substr(0, 10),
+            dateMulaiTransaksiPencucianShow: '',
             dateMulaiTransaksiKedai: new Date().toISOString().substr(0, 10),
+            dateMulaiTransaksiKedaiShow: '',
             dateMulaiPengeluaranKedai: new Date().toISOString().substr(0, 10),
+            dateMulaiPengeluaranKedaiShow: '',
             dateSelesaiTransaksiPencucian: new Date().toISOString().substr(0, 10),
+            dateSelesaiTransaksiPencucianShow:'',
             dateSelesaiTransaksiKedai: new Date().toISOString().substr(0, 10),
+            dateSelesaiTransaksiKedaiShow: '',
             dateSelesaiPengeluaranKedai: new Date().toISOString().substr(0, 10),
+            dateSelesaiPengeluaranKedaiShow: '',
             path: '',
             documentName: '',
             dialogKonfirmasi: false,
@@ -277,9 +283,18 @@ export default {
         }
     },
     created(){
- 
+        this.initialize();
     },
     methods: {
+        initialize(){
+            this.dateMulaiTransaksiPencucianShow = this.formatTanggal(this.dateMulaiTransaksiPencucian);
+            this.dateMulaiTransaksiKedaiShow = this.formatTanggal(this.dateMulaiTransaksiKedai);
+            this.dateMulaiPengeluaranKedaiShow = this.formatTanggal(this.dateMulaiPengeluaranKedai);
+            this.dateSelesaiTransaksiPencucianShow = this.formatTanggal(this.dateSelesaiTransaksiPencucian);
+            this.dateSelesaiTransaksiKedaiShow = this.formatTanggal(this.dateSelesaiTransaksiKedai);
+            this.dateSelesaiPengeluaranKedaiShow = this.formatTanggal(this.dateSelesaiPengeluaranKedai);
+        },  
+
         exportLaporan(){
             var url = this.$api + "/laporan/" + this.path;
             this.$http.get(url, {
@@ -305,6 +320,10 @@ export default {
             this.dialogKonfirmasi = true;
         },
 
+        formatTanggal(value){
+            return value.split("-").reverse().join("-");
+        },
+
         cancelExport(){
             this.path = '';
             this.documentName = '';
@@ -316,6 +335,38 @@ export default {
     },
     computed:{
 
+    },
+    watch:{
+        'dateMulaiTransaksiPencucian'(val){
+            if(val){
+                this.dateMulaiTransaksiPencucianShow = this.formatTanggal(val)
+            }
+        },
+        'dateMulaiTransaksiKedai'(val){
+            if(val){
+                this.dateMulaiTransaksiKedaiShow = this.formatTanggal(val)
+            }
+        },
+        'dateMulaiPengeluaranKedai'(val){
+            if(val){
+                this.dateMulaiPengeluaranKedaiShow = this.formatTanggal(val)
+            }
+        },
+        'dateSelesaiTransaksiPencucian'(val){
+            if(val){
+                this.dateSelesaiTransaksiPencucianShow = this.formatTanggal(val)
+            }
+        },
+        'dateSelesaiTransaksiKedai'(val){
+            if(val){
+                this.dateSelesaiTransaksiKedaiShow = this.formatTanggal(val)
+            }
+        },
+        'dateSelesaiPengeluaranKedai'(val){
+            if(val){
+                this.dateSelesaiPengeluaranKedaiShow = this.formatTanggal(val)
+            }
+        },
     },
 }
 </script>

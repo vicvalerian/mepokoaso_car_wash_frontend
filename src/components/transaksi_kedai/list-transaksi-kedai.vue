@@ -134,7 +134,7 @@ export default {
     methods: {
         initialize(){
             this.list.headers = [
-                { text: "Nomor Transaksi Penjualan", value: "no_penjualan"},
+                // { text: "Nomor Transaksi Penjualan", value: "no_penjualan"},
                 { text: "Tanggal Penjualan", value: "tgl_penjualan"},
                 { text: "Pelayan", value: "karyawan.nama"},
                 { text: "Total Penjualan", value: "total_penjualan"},

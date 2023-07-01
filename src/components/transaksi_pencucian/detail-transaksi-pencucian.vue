@@ -8,11 +8,11 @@
                     <v-layout justify-center>
                         <v-flex xs12>
                             <div>
-                                <v-layout justify>
+                                <!-- <v-layout justify>
                                     <v-flex xs12>
                                         <v-text-field v-model="form.no_pencucian" label="Nomor Transaksi Pencucian" readonly></v-text-field>
                                     </v-flex>
-                                </v-layout>
+                                </v-layout> -->
                                 <v-layout justify>
                                     <v-flex xs5>
                                         <v-autocomplete v-model="form.kendaraan_id" :items="kendaraan_list" label="Nama Kendaraan" item-text="nama" item-value="id" readonly></v-autocomplete>
@@ -175,7 +175,7 @@ export default {
                 message: '',
             },
             form: {
-                no_pencucian: '',
+                // no_pencucian: '',
                 kendaraan_id: '',
                 nama_kendaraan: '',
                 tarif_kendaraan: '',

@@ -342,7 +342,8 @@ export default {
 
         cetakNotaHandler(item){
             this.notaId = item.id;
-            this.notaPencucianNumber = item.no_pencucian;
+            // this.notaPencucianNumber = item.no_pencucian;
+            this.notaPencucianNumber = item.kendaraan.nama + ' ' + item.no_polisi;
             this.dialogConfirmCetakNota = true;
         },
 

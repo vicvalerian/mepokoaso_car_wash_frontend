@@ -351,12 +351,12 @@ export default {
             });
         },
 
-        getNoPencucian(){
-            let url = this.$api + '/generate-nomor-pencucian';
-            this.$http.get(url).then(response => {
-                this.form.no_pencucian = response.data;
-            });
-        },
+        // getNoPencucian(){
+        //     let url = this.$api + '/generate-nomor-pencucian';
+        //     this.$http.get(url).then(response => {
+        //         this.form.no_pencucian = response.data;
+        //     });
+        // },
 
         goToListTransaksiPencucian(){
             this.$router.push({

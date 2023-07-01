@@ -311,7 +311,7 @@ export default {
             let data = {
                 'kendaraan_id': this.form.kendaraan_id,
                 'karyawan_id': this.form.karyawan_id,
-                'no_pencucian': this.form.no_pencucian,
+                // 'no_pencucian': this.form.no_pencucian,
                 'no_polisi': this.form.no_polisi,
                 'jenis_kendaraan': this.form.jenis_kendaraan,
                 'tarif_kendaraan': this.form.tarif_kendaraan,

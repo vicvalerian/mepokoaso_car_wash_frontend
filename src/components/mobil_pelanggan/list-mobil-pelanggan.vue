@@ -154,7 +154,7 @@ export default {
             ];
 
             this.formDetail.headers = [
-                { text: "Nomor Transaksi Pencucian", value: "no_pencucian"},
+                // { text: "Nomor Transaksi Pencucian", value: "no_pencucian"},
                 { text: "Status", value: "status"},
                 { text: "Tanggal Pencucian", value: "tgl_pencucian"},
                 { text: "Waktu Pencucian", value: "waktu_pencucian"},

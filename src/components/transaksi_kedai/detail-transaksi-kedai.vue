@@ -8,11 +8,11 @@
                     <v-layout justify-center>
                         <v-flex xs12>
                             <div>
-                                <v-layout justify>
+                                <!-- <v-layout justify>
                                     <v-flex xs12>
                                         <v-text-field v-model="form.no_penjualan" label="Nomor Transaksi Penjualan" readonly></v-text-field>
                                     </v-flex>
-                                </v-layout>
+                                </v-layout> -->
                                 <v-layout justify>
                                     <v-flex xs12>
                                         <v-select :items="penjaga_kedai_list" v-model="form.karyawan_id" label="Pelayan" required readonly></v-select>
@@ -134,7 +134,7 @@ export default {
                 message: '',
             },
             form: {
-                no_penjualan: '',
+                // no_penjualan: '',
                 karyawan_id: '',
                 total_penjualan: '',
                 tgl_penjualan: '',

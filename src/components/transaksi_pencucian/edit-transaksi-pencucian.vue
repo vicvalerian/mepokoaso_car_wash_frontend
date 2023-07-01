@@ -242,13 +242,13 @@ export default {
             this.axioKaryawanKasir();
             this.axioKaryawanPencuci();
             this.axioKendaraan();
-            this.form.tgl_pencucian_show = this.formatTanggal(this.form.tgl_pencucian);
         },
 
         axioData(){
             let url = this.$api + '/transaksi-pencucian/' + this.id;
             this.$http.get(url).then(response => {
                 this.form = response.data.data;
+                this.form.tgl_pencucian_show = this.formatTanggal(response.data.data.tgl_pencucian);
                 this.list.selectedPencuci = response.data.data.karyawan_pencucis;
                 this.readKendaraan();
             });

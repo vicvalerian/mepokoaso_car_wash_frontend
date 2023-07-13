@@ -16,6 +16,9 @@
             </v-card-title>
 
             <v-data-table :headers="list.headers" :items="list.datas" :search="list.search" class="elevation-1">
+                <template v-slot:[`item.nomor`]="{ item }">
+                    <template>{{ list.datas.indexOf(item) + 1 }}</template>
+                </template>
                 <template v-slot:[`item.harga`]="{ item }">
                     <template>{{ formatRupiah(item.harga, 'Rp') }}</template>
                 </template>
@@ -235,6 +238,7 @@ export default {
 
         initialize(){
             this.list.headers = [
+                { text: "No", value: "nomor" },
                 { text: "Nama Menu", value: "nama" },
                 { text: "Jenis Menu", value: "jenis" },
                 { text: "Harga", value: "harga", filterable:false },

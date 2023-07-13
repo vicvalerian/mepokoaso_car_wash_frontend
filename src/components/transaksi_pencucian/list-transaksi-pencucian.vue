@@ -20,6 +20,9 @@
             <v-tabs-items v-model="tab">
                 <v-tab-item v-for="status in stasuses" :key="status">
                     <v-data-table :headers="list.headers" :items="list.datas" :search="list.search" class="elevation-1">
+                        <template v-slot:[`item.nomor`]="{ item }">
+                            <template>{{ list.datas.indexOf(item) + 1 }}</template>
+                        </template>
                         <template v-slot:[`item.tgl_pencucian`]="{ item }">
                             <template>{{ formatTanggal(item.tgl_pencucian) }}</template>
                         </template>
@@ -198,6 +201,7 @@ export default {
     methods: {
         initialize(){
             this.list.headers = [
+                { text: "No", value: "nomor" },
                 { text: "Status", value: "status"},
                 // { text: "Nomor Transaksi Pencucian", value: "no_pencucian"},
                 { text: "Kendaraan", value: "kendaraan.nama"},

@@ -11,6 +11,9 @@
             </v-card-title>
 
             <v-data-table :headers="list.headers" :items="list.datas" :search="list.search" class="elevation-1">
+                <template v-slot:[`item.nomor`]="{ item }">
+                    <template>{{ list.datas.indexOf(item) + 1 }}</template>
+                </template>
                 <template v-slot:[`item.logo`]="{ item }">
                     <v-img :src="$baseUrl+'/storage/'+item.logo" height="30px" width="30px" style="object-fit:cover; border-radius:50%; padding: 15px 0;"/>
                 </template>
@@ -35,6 +38,9 @@
                                 <div>
                                     <div>
                                         <v-data-table :headers="formDetail.headers" :items="formDetail.datas" class="elevation-1">
+                                                <template v-slot:[`item.nomor_detail`]="{ item }">
+                                                <template>{{ formDetail.datas.indexOf(item) + 1 }}</template>
+                                            </template>
                                             <template v-slot:[`item.tgl_pencucian`]="{ item }">
                                                 <template>{{ formatTanggal(item.tgl_pencucian) }}</template>
                                             </template>
@@ -147,6 +153,7 @@ export default {
     methods: {
         initialize(){
             this.list.headers = [
+                { text: "No", value: "nomor" },
                 { text: "Nama Kendaraan", value: "nama_kendaraan"},
                 { text: "Nomor Polisi", value: "no_polisi"},
                 { text: "Jumlah Transaksi", value: "jml_transaksi"},
@@ -155,6 +162,7 @@ export default {
 
             this.formDetail.headers = [
                 // { text: "Nomor Transaksi Pencucian", value: "no_pencucian"},
+                { text: "No", value: "nomor_detail" },
                 { text: "Status", value: "status"},
                 { text: "Tanggal Pencucian", value: "tgl_pencucian"},
                 { text: "Waktu Pencucian", value: "waktu_pencucian"},

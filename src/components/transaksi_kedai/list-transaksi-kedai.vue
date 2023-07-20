@@ -137,7 +137,7 @@ export default {
     methods: {
         initialize(){
             this.list.headers = [
-                { text: "No", value: "nomor" },
+                { text: "No", value: "nomor", width: '5%' },
                 // { text: "Nomor Transaksi Penjualan", value: "no_penjualan"},
                 { text: "Tanggal Penjualan", value: "tgl_penjualan"},
                 { text: "Pelayan", value: "karyawan.nama"},

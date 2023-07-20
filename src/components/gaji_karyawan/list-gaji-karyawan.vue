@@ -20,8 +20,9 @@
                     <template>{{ list.datas.indexOf(item) + 1 }}</template>
                 </template>
                 <template v-slot:[`item.total_gaji_bersih`]="{ item }">
-                    <template v-if="item.total_gaji_bersih <= 0"><b class="red--text">{{ formatRupiah(item.total_gaji_bersih, 'Rp') }}</b></template>
-                    <template v-else><b class="green--text">{{ formatRupiah(item.total_gaji_bersih, 'Rp') }}</b></template>
+                    <!-- <template v-if="item.total_gaji_bersih <= 0"><b class="red--text">{{ formatRupiah(item.total_gaji_bersih, 'Rp') }}</b></template>
+                    <template v-else><b class="green--text">{{ formatRupiah(item.total_gaji_bersih, 'Rp') }}</b></template> -->
+                    <template>{{ formatRupiah(item.total_gaji_bersih, 'Rp') }}</template>
                 </template>
                 <template v-slot:[`item.status`]="{ item }">
                     <v-chip v-if="item.status === 'Utang'" color="red" outlined>{{ item.status }}</v-chip>
@@ -241,7 +242,7 @@ export default {
 
         initialize(){
             this.list.headers = [
-                { text: "No", value: "nomor" },
+                { text: "No", value: "nomor", width: '5%' },
                 { text: "Nama Karyawan", value: "karyawan.nama" },
                 { text: "Bulan", value: "bulan" },
                 { text: "Tahun", value: "tahun" },

@@ -204,7 +204,7 @@ export default {
 
         initialize(){
             this.list.headers = [
-                { text: "No", value: "nomor" },
+                { text: "No", value: "nomor", width: '5%' },
                 { text: "Nama Jabatan", value: "nama"},
                 { text: "Aksi", value: "actions", sortable: false},
             ];

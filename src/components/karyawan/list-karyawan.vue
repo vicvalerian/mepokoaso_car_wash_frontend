@@ -248,7 +248,7 @@ export default {
 
         initialize(){
             this.list.headers = [
-                { text: "No", value: "nomor" },
+                { text: "No", value: "nomor", width: '5%' },
                 { text: "Jabatan", value: "jabatan.nama" },
                 { text: "Nama", value: "nama" },
                 { text: "Nomor Telepon", value: "no_telp", filterable:false, sortable: false },

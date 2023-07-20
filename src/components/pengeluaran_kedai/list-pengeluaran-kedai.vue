@@ -361,7 +361,7 @@ export default {
 
         initialize(){
             this.list.headers = [
-                { text: "No", value: "nomor" },
+                { text: "No", value: "nomor", width: '5%' },
                 { text: "Tanggal Pembelian", value: "tgl_pembelian" },
                 { text: "Nama Barang", value: "nama_barang" },
                 { text: "Jumlah Barang (pcs)", value: "jumlah_barang" },

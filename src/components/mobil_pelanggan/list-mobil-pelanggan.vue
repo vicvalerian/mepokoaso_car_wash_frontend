@@ -153,7 +153,7 @@ export default {
     methods: {
         initialize(){
             this.list.headers = [
-                { text: "No", value: "nomor" },
+                { text: "No", value: "nomor", width: '5%' },
                 { text: "Nama Kendaraan", value: "nama_kendaraan"},
                 { text: "Nomor Polisi", value: "no_polisi"},
                 { text: "Jumlah Transaksi", value: "jml_transaksi"},

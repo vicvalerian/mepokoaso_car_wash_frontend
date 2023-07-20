@@ -242,7 +242,7 @@ export default {
 
         initialize(){
             this.list.headers = [
-                { text: "No", value: "nomor" },
+                { text: "No", value: "nomor", width: '5%' },
                 { text: "Jenis Kendaraan", value: "jenis_kendaraan.nama" },
                 { text: "Nama Kendaraan", value: "nama" },
                 { text: "Harga", value: "harga", filterable:false },

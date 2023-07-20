@@ -266,7 +266,7 @@ export default {
 
         initialize(){
             this.list.headers = [
-                { text: "No", value: "nomor" },
+                { text: "No", value: "nomor", width: '5%' },
                 { text: "Nama Karyawan", value: "karyawan.nama" },
                 { text: "Tanggal Peminjaman", value: "tgl_peminjaman" },
                 { text: "Nominal", value: "nominal" },

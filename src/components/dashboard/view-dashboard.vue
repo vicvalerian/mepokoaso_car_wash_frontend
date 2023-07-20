@@ -14,13 +14,13 @@
         <v-layout justify wrap>
             <v-flex md6 sm6 xs12 class="pr-2 pb-2">
                 <v-card>
-                    <v-card-title><b>Transaksi Pencucian</b></v-card-title>
+                    <v-card-title><b>Pencucian Kendaraan</b></v-card-title>
                         <apex-chart width="100%" type="bar" :options="pencucianChartOptions" :series="pencucianChart.series"></apex-chart>  
                 </v-card>
             </v-flex>
             <v-flex md6 sm6 xs12 class="pr-2 pb-2">
                 <v-card>
-                    <v-card-title><b>Transaksi Kedai</b></v-card-title>
+                    <v-card-title><b>Penjualan Kedai</b></v-card-title>
                         <apex-chart 
                             width="100%" type="bar" :options="kedaiChartOptions" :series="kedaiChart.series">
                         </apex-chart>  
@@ -146,6 +146,14 @@ export default {
                     }
                 },
                 labels: [],
+                yaxis:{
+                    decimalsInFloat: 0,
+                    labels: {
+                        formatter: function (val) {
+                            return val.toFixed(0);
+                        }
+                    },
+                },
             },
             kedaiChart: {
                 series: [{
@@ -167,6 +175,14 @@ export default {
                     }
                 },
                 labels: [],
+                yaxis:{
+                    decimalsInFloat: 0,
+                    labels: {
+                        formatter: function (val) {
+                            return val.toFixed(0);
+                        }
+                    },
+                },
             },
         }
     },

@@ -30,6 +30,27 @@
     color: black !important;
 }
 
+.red-chip{
+  color: #900A0A !important;
+  background-color: #FFE3E3 !important;
+  font-weight: bolder;
+  letter-spacing: 0.5px;
+}
+
+.orange-chip{
+  color: #e28f0a !important;
+  background-color: #FFF1DA !important;
+  font-weight: bolder;
+  letter-spacing: 0.5px;
+}
+
+.green-chip{
+  color: #005813 !important;
+  background-color: #E1FAEA !important;
+  font-weight: bolder;
+  letter-spacing: 0.5px;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

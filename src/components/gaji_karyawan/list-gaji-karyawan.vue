@@ -26,9 +26,9 @@
                     <template>{{ formatRupiah(item.total_gaji_bersih, 'Rp') }}</template>
                 </template>
                 <template v-slot:[`item.status`]="{ item }">
-                    <v-chip v-if="item.status === 'Utang'" color="red" outlined>{{ item.status }}</v-chip>
-                    <v-chip v-if="item.status === 'Belum Diterima'" color="orange" outlined>{{ item.status }}</v-chip>
-                    <v-chip v-if="item.status === 'Sudah Diterima'" color="green" outlined>{{ item.status }}</v-chip>
+                    <v-chip v-if="item.status === 'Utang'" class="red-chip" label>{{ item.status }}</v-chip>
+                    <v-chip v-if="item.status === 'Belum Diterima'" class="orange-chip" label>{{ item.status }}</v-chip>
+                    <v-chip v-if="item.status === 'Sudah Diterima'" class="green-chip" label>{{ item.status }}</v-chip>
                 </template>
                 <template v-slot:[`item.actions`]="{ item }">
                     <v-icon dense color="#316291" @click="detailHandler(item)" class="data-table-icon">mdi-information</v-icon>

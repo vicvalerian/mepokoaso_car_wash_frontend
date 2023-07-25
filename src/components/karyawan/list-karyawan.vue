@@ -24,9 +24,9 @@
                     <v-img :src="$baseUrl+'/storage/'+item.foto" height="30px" width="30px" style="object-fit:cover; border-radius:50%; padding: 15px 0;"/>
                 </template>
                 <template v-slot:[`item.status`]="{ item }">
-                    <v-chip v-if="item.status === 'Tidak Aktif'" color="red" outlined>{{ item.status }}</v-chip>
-                    <v-chip v-if="item.status === 'Izin'" color="orange" outlined>{{ item.status }}</v-chip>
-                    <v-chip v-if="item.status === 'Aktif'" color="green" outlined>{{ item.status }}</v-chip>
+                    <v-chip v-if="item.status === 'Tidak Aktif'" class="red-chip" label>{{ item.status }}</v-chip>
+                    <v-chip v-if="item.status === 'Izin'" class="orange-chip" label>{{ item.status }}</v-chip>
+                    <v-chip v-if="item.status === 'Aktif'" class="green-chip" label>{{ item.status }}</v-chip>
                 </template>
                 <template v-slot:[`item.actions`]="{ item }">
                     <v-icon dense color="#316291" @click="detailHandler(item)" class="data-table-icon">mdi-information</v-icon>

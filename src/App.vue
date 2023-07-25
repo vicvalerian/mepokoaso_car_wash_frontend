@@ -45,7 +45,7 @@
 }
 
 .green-chip{
-  color: #005813 !important;
+  color: #2E7D32 !important;
   background-color: #E1FAEA !important;
   font-weight: bolder;
   letter-spacing: 0.5px;

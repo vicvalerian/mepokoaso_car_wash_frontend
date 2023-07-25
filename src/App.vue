@@ -51,6 +51,20 @@
   letter-spacing: 0.5px;
 }
 
+.blue-chip{
+  color: #113B98 !important;
+  background-color: #EBF0FB !important;
+  font-weight: bolder;
+  letter-spacing: 0.5px;
+}
+
+.light-blue-chip{
+  color: #5965DB !important;
+  background-color: #EBEDFB !important;
+  font-weight: bolder;
+  letter-spacing: 0.5px;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

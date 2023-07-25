@@ -37,12 +37,17 @@
                         <template v-slot:[`item.karyawan_pencucis`]="{ item }">
                             <template>{{ getVarName(item.karyawan_pencucis) }}</template>
                         </template>
+                        <template v-slot:[`item.status`]="{ item }">
+                            <v-chip v-if="item.status == 'Baru'" class="light-blue-chip">{{ item.status }}</v-chip>
+                            <v-chip v-if="item.status == 'Proses Cuci'" class="blue-chip">{{ item.status }}</v-chip>
+                            <v-chip v-if="item.status == 'Proses Bayar'" class="orange-chip">{{ item.status }}</v-chip>
+                            <v-chip v-if="item.status == 'Selesai'"  class="green-chip">{{ item.status }}</v-chip>
+                        </template>
                         <template v-slot:[`item.actions`]="{ item }">
                             <v-icon dense color="#316291" @click="detailHandler(item)" class="data-table-icon">mdi-information</v-icon>
                             <v-icon v-if="item.status == 'Baru'" dense color="#316291" @click="editHandler(item)" class="data-table-icon">mdi-pencil</v-icon>
                             <v-icon v-if="item.status == 'Baru'" dense color="#316291" @click="ubahStatusHandler(item.id, 'cuci')" class="data-table-icon">mdi-water</v-icon>
-                            <v-icon v-if="item.status == 'Proses Cuci'" dense color="#316291" @click="ubahStatusHandler(item.id, 'kering')" class="data-table-icon">mdi-weather-windy</v-icon>
-                            <v-icon v-if="item.status == 'Proses Kering'" dense color="#316291" @click="ubahStatusHandler(item.id, 'bayar')" class="data-table-icon">mdi-cash</v-icon>
+                            <v-icon v-if="item.status == 'Proses Cuci'" dense color="#316291" @click="ubahStatusHandler(item.id, 'bayar')" class="data-table-icon">mdi-cash</v-icon>
                             <v-icon v-if="item.status == 'Proses Bayar'" dense color="#316291" @click="ubahStatusHandler(item.id, 'finish')" class="data-table-icon">mdi-check</v-icon>
                             <v-icon v-if="item.status == 'Selesai'" dense color="#316291" @click="cetakNotaHandler(item)" class="data-table-icon">mdi-download</v-icon>
                             <v-icon v-if="item.status == 'Baru'" dense color="#316291" @click="deleteHandler(item.id)" class="data-table-icon">mdi-delete</v-icon>
@@ -178,7 +183,7 @@ export default {
         return {
             loadingScreen: true,
             tab: null,
-            stasuses: ['Semua', 'Baru', 'Proses Cuci', 'Proses Kering', 'Proses Bayar', 'Selesai'],
+            stasuses: ['Semua', 'Baru', 'Proses Cuci', 'Proses Bayar', 'Selesai'],
             selected_status: '',
             dialogConfirmDelete: false,
             dialogConfirmUbahStatus: false,
@@ -208,7 +213,6 @@ export default {
         initialize(){
             this.list.headers = [
                 { text: "No", value: "nomor", width: '5%' },
-                { text: "Status", value: "status"},
                 // { text: "Nomor Transaksi Pencucian", value: "no_pencucian"},
                 { text: "Kendaraan", value: "kendaraan.nama"},
                 { text: "Nomor Polisi", value: "no_polisi"},
@@ -216,6 +220,7 @@ export default {
                 { text: "Total Pembayaran", value: "total_pembayaran"},
                 { text: "Gratis", value: "is_free"},
                 { text: "Pencuci", value: "karyawan_pencucis"},
+                { text: "Status", value: "status"},
                 { text: "Aksi", value: "actions", sortable: false},
             ];
 
@@ -331,10 +336,6 @@ export default {
             switch(status){
                 case 'cuci':{
                     this.selectedProses = 'cuci';
-                    break;
-                }
-                case 'kering':{
-                    this.selectedProses = 'kering';
                     break;
                 }
                 case 'bayar':{

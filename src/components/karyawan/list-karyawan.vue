@@ -1,6 +1,7 @@
 <template>
 
     <v-main class="list">
+        <loading-screen :value="loadingScreen"></loading-screen>
         <h1 class="page-custom-title">DATA KARYAWAN</h1>
         <v-card>
             <v-card-title>
@@ -184,11 +185,16 @@
 </style>
 
 <script>
+import LoadingScreen from '@/components/loading-screen.vue';
 
 export default {
+    components: {
+        'loading-screen': LoadingScreen,
+    },
     name: 'karyawan-list',
     data() {
         return {
+            loadingScreen: true,
             statuses: ['Aktif', 'Izin', 'Tidak Aktif'],
             previewImgLogo: '',
             inputType: 'Tambah',
@@ -266,6 +272,9 @@ export default {
             let url = this.$api + '/karyawan';
             this.$http.get(url).then(response => {
                 this.list.datas = response.data.data;
+                setTimeout(() =>{
+                    this.loadingScreen = false;
+                }, 300);
             });
         },
 
@@ -295,6 +304,7 @@ export default {
             var foto_karyawan = document.getElementById('fotoKaryawan'), dataFotoKaryawan = foto_karyawan.files[0];
             this.karyawan.append('foto', dataFotoKaryawan);
 
+            this.loadingScreen = true;
             var url = this.$api + '/karyawan';
             this.$http.post(url, this.karyawan).then((response) => {
                 this.snackbar.error_message = response.data.message;
@@ -308,6 +318,9 @@ export default {
                 this.snackbar.error_message = error.response.data.message;
                 this.snackbar.color = "red";
                 this.snackbar.snackbarNotif = true;
+                setTimeout(() =>{
+                    this.loadingScreen = false;
+                }, 300);
                 this.dialogAddEdit = false
             });
         },
@@ -328,6 +341,7 @@ export default {
                 data.append('foto', dataFotoKaryawan);
             }
 
+            this.loadingScreen = true;
             var url = this.$api + '/karyawan/' + this.editId;
             this.load = true;
             this.$http.post(url, data).then((response) => {
@@ -347,11 +361,15 @@ export default {
                 this.snackbar.error_message = error.response.data.message;
                 this.snackbar.color = "red";
                 this.snackbar.snackbarNotif = true;
+                setTimeout(() =>{
+                    this.loadingScreen = false;
+                }, 300);
                 this.dialogAddEdit = false
             });
         },
 
         deleteData(){
+            this.loadingScreen = true;
             let id = this.deleteId;
             var url = this.$api + "/karyawan/" + id;
             this.$http.delete(url).then((response) => {
@@ -365,6 +383,9 @@ export default {
                 this.snackbar.error_message = error.response.data.message;
                 this.snackbar.color = "red";
                 this.snackbar.snackbarNotif = true;
+                setTimeout(() =>{
+                    this.loadingScreen = false;
+                }, 300);
                 this.dialogConfirmDelete = false
             });
         },

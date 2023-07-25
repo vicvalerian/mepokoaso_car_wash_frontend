@@ -1,6 +1,7 @@
 <template>
 
     <v-main class="list">
+        <loading-screen :value="loadingScreen"></loading-screen>
         <h1 class="page-custom-title">DATA TRANSAKSI PENCUCIAN</h1>
         <v-card>
             <v-tabs v-model="tab" background-color="transparent" color="#316291">
@@ -166,11 +167,16 @@
 </style>
 
 <script>
+import LoadingScreen from '@/components/loading-screen.vue';
 
 export default {
+    components: {
+        'loading-screen': LoadingScreen,
+    },
     name: 'transaksi-pencucian-list',
     data() {
         return {
+            loadingScreen: true,
             tab: null,
             stasuses: ['Semua', 'Baru', 'Proses Cuci', 'Proses Kering', 'Proses Bayar', 'Selesai'],
             selected_status: '',
@@ -225,10 +231,14 @@ export default {
             let url = this.$api + '/transaksi-pencucian?status=' + tabStatus;
             this.$http.get(url).then(response => {
                 this.list.datas = response.data.data;
+                setTimeout(() =>{
+                    this.loadingScreen = false;
+                }, 300);
             });
         },
 
         deleteData(){
+            this.loadingScreen = true;
             let id = this.deleteId;
             var url = this.$api + "/transaksi-pencucian/" + id;
             this.$http.delete(url).then((response) => {
@@ -242,6 +252,9 @@ export default {
                 this.snackbar.error_message = error.response.data.message;
                 this.snackbar.color = "red";
                 this.snackbar.snackbarNotif = true;
+                setTimeout(() =>{
+                    this.loadingScreen = false;
+                }, 300);
                 this.dialogConfirmDelete = false
             });
         },
@@ -385,6 +398,7 @@ export default {
         'tab'(val){
             this.selected_status = this.stasuses[val]
 
+            this.loadingScreen = true;
             this.axioData(this.selected_status)
         }
     },

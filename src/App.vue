@@ -18,6 +18,18 @@
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+.v-application {
+  font-family: 'Poppins', sans-serif !important;
+}
+
+.v-data-table-header th {
+    font-weight: bold !important;
+    font-size: 14px !important;
+    color: black !important;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

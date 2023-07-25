@@ -169,7 +169,7 @@
                     <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn dense color="btn-confirm-cancel" @click="cancelExport()">Batal</v-btn>
-                        <v-btn dense class="btn-confirm-delete" @click="exportLaporan()">Unduh</v-btn>
+                        <v-btn dense class="btn-confirm-delete" @click="exportLaporan()" :loading="loading">Unduh</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-dialog>
@@ -280,6 +280,7 @@ export default {
                 color: '',
                 message: '',
             },
+            loading: false,
         }
     },
     created(){
@@ -296,10 +297,12 @@ export default {
         },  
 
         exportLaporan(){
+            this.loading = true;
             var url = this.$api + "/laporan/" + this.path;
             this.$http.get(url, {
                 responseType: 'arraybuffer'
             }).then((response) => {
+                this.loading = false;
                 let blob = new Blob([response.data], { type: 'application/pdf' });
                 let link = document.createElement('a');
                 link.href = window.URL.createObjectURL(blob);
@@ -308,6 +311,7 @@ export default {
                 this.dialogKonfirmasi = false;
             })
             .catch((error) => {
+                this.loading = false;
                 this.snackbar.error_message = error.response.data.message;
                 this.snackbar.color = "red";
                 this.dialogKonfirmasi = false;

@@ -1,6 +1,7 @@
 <template>
 
     <v-main class="list">
+        <loading-screen :value="loadingScreen"></loading-screen>
         <h1 class="page-custom-title">DATA MOBIL PELANGGAN</h1>
         <v-card>
             <v-card-title>
@@ -125,11 +126,16 @@
 </style>
 
 <script>
+import LoadingScreen from '@/components/loading-screen.vue';
 
 export default {
+    components: {
+        'loading-screen': LoadingScreen,
+    },
     name: 'mobil-pelanggan-list',
     data() {
         return {
+            loadingScreen: true,
             dialogDetail: false,
             snackbar: {
                 snackbarNotif: false,
@@ -175,6 +181,9 @@ export default {
             let url = this.$api + '/mobil-pelanggan';
             this.$http.get(url).then(response => {
                 this.list.datas = response.data.data;
+                setTimeout(() =>{
+                    this.loadingScreen = false;
+                }, 300);
             });
         },
 

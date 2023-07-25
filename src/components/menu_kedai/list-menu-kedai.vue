@@ -1,6 +1,7 @@
 <template>
 
     <v-main class="list">
+        <loading-screen :value="loadingScreen"></loading-screen>
         <h1 class="page-custom-title">DATA MENU KEDAI</h1>
         <v-card>
             <v-card-title>
@@ -177,11 +178,16 @@
 </style>
 
 <script>
+import LoadingScreen from '@/components/loading-screen.vue';
 
 export default {
+    components: {
+        'loading-screen': LoadingScreen,
+    },
     name: 'menu-kedai-list',
     data() {
         return {
+            loadingScreen: true,
             fieldBolean : [{ text: "Ya", value: 1 }, { text: "Tidak", value: 0 }],
             inputType: 'Tambah',
             dialogConfirmDelete: false,
@@ -253,6 +259,9 @@ export default {
             let url = this.$api + '/menu-kedai?jenis=' + this.filter.search;
             this.$http.get(url).then(response => {
                 this.list.datas = response.data.data;
+                setTimeout(() =>{
+                    this.loadingScreen = false;
+                }, 300);
             });
         },
 
@@ -263,6 +272,7 @@ export default {
             this.menuKedai.append('stok', this.form.stok ?? 0);
             this.menuKedai.append('is_stok', this.form.is_stok);
 
+            this.loadingScreen = true;
             var url = this.$api + '/menu-kedai';
             this.$http.post(url, this.menuKedai).then((response) => {
                 this.snackbar.error_message = response.data.message;
@@ -276,6 +286,9 @@ export default {
                 this.snackbar.error_message = error.response.data.message;
                 this.snackbar.color = "red";
                 this.snackbar.snackbarNotif = true;
+                setTimeout(() =>{
+                    this.loadingScreen = false;
+                }, 300);
                 this.dialogAddEdit = false
             });
         },
@@ -288,6 +301,7 @@ export default {
             data.append('stok', this.form.stok ?? 0);
             data.append('is_stok', this.form.is_stok);
 
+            this.loadingScreen = true;
             var url = this.$api + '/menu-kedai/' + this.editId;
             this.load = true;
             this.$http.post(url, data).then((response) => {
@@ -303,11 +317,15 @@ export default {
                 this.snackbar.error_message = error.response.data.message;
                 this.snackbar.color = "red";
                 this.snackbar.snackbarNotif = true;
+                setTimeout(() =>{
+                    this.loadingScreen = false;
+                }, 300);
                 this.dialogAddEdit = false
             });
         },
 
         deleteData(){
+            this.loadingScreen = true;
             let id = this.deleteId;
             var url = this.$api + "/menu-kedai/" + id;
             this.$http.delete(url).then((response) => {
@@ -321,6 +339,9 @@ export default {
                 this.snackbar.error_message = error.response.data.message;
                 this.snackbar.color = "red";
                 this.snackbar.snackbarNotif = true;
+                setTimeout(() =>{
+                    this.loadingScreen = false;
+                }, 300);
                 this.dialogConfirmDelete = false
             });
         },

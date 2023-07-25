@@ -1,6 +1,7 @@
 <template>
 
     <v-main class="list">
+        <loading-screen :value="loadingScreen"></loading-screen>
         <h1 class="page-custom-title">UBAH TRANSAKSI KEDAI</h1>
         <v-card>
             <v-card-text class="dialog-confirm-content">
@@ -224,11 +225,16 @@
 </style>
 
 <script>
+import LoadingScreen from '@/components/loading-screen.vue';
 
 export default {
+    components: {
+        'loading-screen': LoadingScreen,
+    },
     name: 'transaksi-kedai-edit',
     data() {
         return {
+            loadingScreen: true,
             id: this.$route.params.id,
             jenis_menu_list: [
                 { name: 'Semua', value: '', icon: 'mdi-silverware' }, 
@@ -322,9 +328,13 @@ export default {
         },
 
         axioMenuKedai(jenis){
+            this.loadingScreen = true;
             let url = this.$api + '/menu-kedai?jenis=' + jenis;
             this.$http.get(url).then(response => {
                 this.menu_kedai_list = response.data.data;
+                setTimeout(() =>{
+                    this.loadingScreen = false;
+                }, 300);
             });
         },
 
@@ -337,11 +347,15 @@ export default {
                 'detail_transaksi_kedai': this.list.datas,
             }
      
+            this.loadingScreen = true;
             var url = this.$api + '/transaksi-kedai/' + this.id;
             this.$http.post(url, data).then((response) => {
                 this.snackbar.error_message = response.data.message;
                 this.snackbar.color = "green";
                 this.snackbar.snackbarNotif = true;
+                setTimeout(() =>{
+                    this.loadingScreen = false;
+                }, 300);
                 setTimeout(() =>{
                     this.goToListTransaksiKedai();    
                 }, 500);
@@ -350,6 +364,9 @@ export default {
                 this.snackbar.error_message = error.response.data.message;
                 this.snackbar.color = "red";
                 this.snackbar.snackbarNotif = true;
+                setTimeout(() =>{
+                    this.loadingScreen = false;
+                }, 300);
                 // this.goToListTransaksiKedai();
             });
         },

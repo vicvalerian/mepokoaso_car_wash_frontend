@@ -1,6 +1,7 @@
 <template>
 
     <v-main class="list">
+        <loading-screen :value="loadingScreen"></loading-screen>
         <h1 class="page-custom-title">DATA GAJI KARYAWAN</h1>
         <v-card>
             <v-card-title>
@@ -177,11 +178,16 @@
 </style>
 
 <script>
+import LoadingScreen from '@/components/loading-screen.vue';
 
 export default {
+    components: {
+        'loading-screen': LoadingScreen,
+    },
     name: 'gaji-karyawan-list',
     data() {
         return {
+            loadingScreen: true,
             inputType: 'Sync',
             dialogDetail: false,
             dialogAddEdit: false,
@@ -259,6 +265,9 @@ export default {
             let url = this.$api + '/gaji-karyawan?karyawan=' + this.filter.search;
             this.$http.get(url).then(response => {
                 this.list.datas = response.data.data;
+                setTimeout(() =>{
+                    this.loadingScreen = false;
+                }, 300);
             });
         },
 
@@ -278,6 +287,7 @@ export default {
         },
 
         syncData(){
+            this.loadingScreen = true;
             var url = this.$api + '/gaji-karyawan?karyawan_id=' + this.form.karyawan_id + '&bulan=' + this.form.bulan + '&tahun=' + this.form.tahun;
             this.$http.post(url).then((response) => {
                 this.snackbar.error_message = response.data.message;
@@ -291,6 +301,9 @@ export default {
                 this.snackbar.error_message = error.response.data.message;
                 this.snackbar.color = "red";
                 this.snackbar.snackbarNotif = true;
+                setTimeout(() =>{
+                    this.loadingScreen = false;
+                }, 300);
                 this.dialogAddEdit = false
             });
         },

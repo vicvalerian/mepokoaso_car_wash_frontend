@@ -1,6 +1,7 @@
 <template>
 
     <v-main class="list">
+        <loading-screen :value="loadingScreen"></loading-screen>
         <h1 class="page-custom-title">PROFIL</h1>
         <v-layout justify wrap>
             <v-flex md4 sm6 xs12 class="pr-2 pb-2">
@@ -26,7 +27,7 @@
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn dense color="btn-confirm-delete" @click="updateProfil()">Simpan</v-btn>
+                        <v-btn dense color="btn-confirm-delete" @click="updateProfil()" :loading="loading">Simpan</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-flex>
@@ -43,7 +44,7 @@
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn dense color="btn-confirm-cancel" @click="closeDialogFoto()">Batal</v-btn>
-                    <v-btn dense class="btn-confirm-delete" @click="updateFotoProfil()">Ubah</v-btn>
+                    <v-btn dense class="btn-confirm-delete" @click="updateFotoProfil()" :loading="loading">Ubah</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -71,7 +72,7 @@
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn dense color="btn-confirm-cancel" @click="closeDialogPassword()">Batal</v-btn>
-                    <v-btn dense class="btn-confirm-delete" @click="submitForm()">Ubah</v-btn>
+                    <v-btn dense class="btn-confirm-delete" @click="submitForm()" :loading="loading">Ubah</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -140,11 +141,17 @@
 </style>
 
 <script>
+import LoadingScreen from '@/components/loading-screen.vue';
 
 export default {
+    components: {
+        'loading-screen': LoadingScreen,
+    },
     name: 'profil-list',
     data() {
         return {
+            loadingScreen: true,
+            loading: false,
             show: false,
             show2: false,
             show3: false,
@@ -196,6 +203,9 @@ export default {
                 this.form.status = response.data.data.status;
                 this.form.jabatan_id = response.data.data.jabatan_id;
                 this.form.foto = response.data.data.foto;
+                setTimeout(() =>{
+                    this.loadingScreen = false;
+                }, 300);
             });
         },
 
@@ -234,16 +244,19 @@ export default {
             data.append('username', this.form.username);
             data.append('status', this.form.status);
 
+            this.loading = true;
             var url = this.$api + '/karyawan/profil/' + this.userLogin.id;
             this.$http.post(url, data).then((response) => {
+                this.loading = false;
                 this.snackbar.error_message = response.data.message;
                 this.snackbar.color = "green";
                 this.snackbar.snackbarNotif = true;
                 this.dialogAddEdit = false
                 this.axioData();
-                location.reload();
+                // location.reload();
             })
             .catch((error) => {
+                this.loading = false;
                 this.snackbar.error_message = error.response.data.message;
                 this.snackbar.color = "red";
                 this.snackbar.snackbarNotif = true;
@@ -255,17 +268,20 @@ export default {
             var foto_karyawan = document.getElementById('fotoKaryawan'), dataFotoKaryawan = foto_karyawan.files[0];
             data.append('foto', dataFotoKaryawan);
 
+            this.loading = true;
             var url = this.$api + '/karyawan/photo/' + this.userLogin.id;
             this.$http.post(url, data).then((response) => {
+                this.loading = false;
                 this.snackbar.error_message = response.data.message;
                 this.snackbar.color = "green";
                 this.snackbar.snackbarNotif = true;
                 this.dialogAddEdit = false
                 this.axioData();
                 this.closeDialogFoto();
-                location.reload();
+                // location.reload();
             })
             .catch((error) => {
+                this.loading = false;
                 this.snackbar.error_message = error.response.data.message;
                 this.snackbar.color = "red";
                 this.snackbar.snackbarNotif = true;
@@ -279,8 +295,10 @@ export default {
             data.append('newPassword', this.formEdit.newPassword);
             data.append('confirmNewPassword', this.formEdit.confirmNewPassword);
 
+            this.loading = true;
             var url = this.$api + '/karyawan/password/' + this.userLogin.id;
             this.$http.post(url, data).then((response) => {
+                this.loading = false;
                 this.snackbar.error_message = response.data.message;
                 this.snackbar.color = "green";
                 this.snackbar.snackbarNotif = true;
@@ -289,6 +307,7 @@ export default {
                 this.closeDialogPassword();
             })
             .catch((error) => {
+                this.loading = false;
                 this.snackbar.error_message = error.response.data.message;
                 this.snackbar.color = "red";
                 this.snackbar.snackbarNotif = true;

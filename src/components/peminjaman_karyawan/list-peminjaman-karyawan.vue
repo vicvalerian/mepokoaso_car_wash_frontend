@@ -1,6 +1,7 @@
 <template>
 
     <v-main class="list">
+        <loading-screen :value="loadingScreen"></loading-screen>
         <h1 class="page-custom-title">DATA PEMINJAMAN KARYAWAN</h1>
         <v-card>
             <v-card-title>
@@ -205,11 +206,16 @@
 </style>
 
 <script>
+import LoadingScreen from '@/components/loading-screen.vue';
 
 export default {
+    components: {
+        'loading-screen': LoadingScreen,
+    },
     name: 'peminjaman-karyawan-list',
     data() {
         return {
+            loadingScreen: true,
             modal: false,
             previewImgLogo: '',
             inputType: 'Tambah',
@@ -282,6 +288,9 @@ export default {
             let url = this.$api + '/peminjaman-karyawan?karyawan=' + this.filter.search;
             this.$http.get(url).then(response => {
                 this.list.datas = response.data.data;
+                setTimeout(() =>{
+                    this.loadingScreen = false;
+                }, 300);
             });
         },
 
@@ -306,6 +315,7 @@ export default {
             this.peminjamanKaryawan.append('nominal', this.form.nominal);
             this.peminjamanKaryawan.append('alasan', this.form.alasan);
 
+            this.loadingScreen = true;
             var url = this.$api + '/peminjaman-karyawan';
             this.$http.post(url, this.peminjamanKaryawan).then((response) => {
                 this.snackbar.error_message = response.data.message;
@@ -319,6 +329,9 @@ export default {
                 this.snackbar.error_message = error.response.data.message;
                 this.snackbar.color = "red";
                 this.snackbar.snackbarNotif = true;
+                setTimeout(() =>{
+                    this.loadingScreen = false;
+                }, 300);
                 this.dialogAddEdit = false
             });
         },
@@ -330,7 +343,7 @@ export default {
             data.append('nominal', this.form.nominal);
             data.append('alasan', this.form.alasan);
 
-
+            this.loadingScreen = true;
             var url = this.$api + '/peminjaman-karyawan/' + this.editId;
             this.load = true;
             this.$http.post(url, data).then((response) => {
@@ -346,11 +359,15 @@ export default {
                 this.snackbar.error_message = error.response.data.message;
                 this.snackbar.color = "red";
                 this.snackbar.snackbarNotif = true;
+                setTimeout(() =>{
+                    this.loadingScreen = false;
+                }, 300);
                 this.dialogAddEdit = false
             });
         },
 
         deleteData(){
+            this.loadingScreen = true;
             let id = this.deleteId;
             var url = this.$api + "/peminjaman-karyawan/" + id;
             this.$http.delete(url).then((response) => {
@@ -364,6 +381,9 @@ export default {
                 this.snackbar.error_message = error.response.data.message;
                 this.snackbar.color = "red";
                 this.snackbar.snackbarNotif = true;
+                setTimeout(() =>{
+                    this.loadingScreen = false;
+                }, 300);
                 this.dialogConfirmDelete = false
             });
         },

@@ -1,6 +1,7 @@
 <template>
 
     <v-main class="list">
+        <loading-screen :value="loadingScreen"></loading-screen>
         <h1 class="page-custom-title">DASHBOARD</h1>
         <v-layout justify>
             <v-flex xs5>
@@ -33,6 +34,12 @@
 </template>
 
 <style>
+    .center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
     .page-custom-title{
         margin: 24px 0px;
         text-align: left;
@@ -91,11 +98,16 @@
 </style>
 
 <script>
+import loadingScreen from '@/components/loading-screen.vue';
 
 export default {
+    components: {
+        'loading-screen': loadingScreen,
+    },
     name: 'dashboard-view',
     data() {
         return {
+            loadingScreen: true,
             bulan_list: [
                 { text: "Januari", value: 1 },
                 { text: "Februari", value: 2 },
@@ -196,6 +208,9 @@ export default {
 
             this.getPencucianChart(urlPencucianChart);
             this.getKedaiChart(urlKedaiChart);
+            setTimeout(() =>{
+                this.loadingScreen = false;
+            }, 300);
         },
 
         getPencucianChart(url){
@@ -277,10 +292,12 @@ export default {
     },
     watch: {
         'form.bulan'(){
+            this.loadingScreen = true;
             this.refreshChart();
         },
 
         'form.tahun'(){
+            this.loadingScreen = true;
             this.refreshChart();
         },
     },

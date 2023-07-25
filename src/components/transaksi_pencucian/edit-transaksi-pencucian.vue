@@ -1,6 +1,7 @@
 <template>
 
     <v-main class="list">
+        <loading-screen :value="loadingScreen"></loading-screen>
         <h1 class="page-custom-title">UBAH TRANSAKSI PENCUCIAN</h1>
         <v-card>
             <v-card-text class="dialog-confirm-content">
@@ -176,11 +177,16 @@
 </style>
 
 <script>
+import LoadingScreen from '@/components/loading-screen.vue';
 
 export default {
+    components: {
+        'loading-screen': LoadingScreen,
+    },
     name: 'transaksi-pencucian-edit',
     data() {
         return {
+            loadingScreen: true,
             e1: 1,
             userLogin: JSON.parse(localStorage.getItem('userLogin')),
             previewImgMobil: '',
@@ -242,6 +248,9 @@ export default {
             this.axioKaryawanKasir();
             this.axioKaryawanPencuci();
             this.axioKendaraan();
+            setTimeout(() =>{
+                this.loadingScreen = false;
+            }, 300);
         },
 
         axioData(){
@@ -321,11 +330,15 @@ export default {
                 'detail_transaksi_pencuci': this.form.detail_transaksi_pencuci,
             }
             
+            this.loadingScreen = true;
             var url = this.$api + '/transaksi-pencucian/' + this.id;
             this.$http.post(url, data).then((response) => {
                 this.snackbar.error_message = response.data.message;
                 this.snackbar.color = "green";
                 this.snackbar.snackbarNotif = true;
+                setTimeout(() =>{
+                    this.loadingScreen = false;
+                }, 300);
                 setTimeout(() =>{
                     this.goToListTransaksiPencucian();    
                 }, 500);
@@ -334,6 +347,9 @@ export default {
                 this.snackbar.error_message = error.response.data.message;
                 this.snackbar.color = "red";
                 this.snackbar.snackbarNotif = true;
+                setTimeout(() =>{
+                    this.loadingScreen = false;
+                }, 300);
             });
         },
 

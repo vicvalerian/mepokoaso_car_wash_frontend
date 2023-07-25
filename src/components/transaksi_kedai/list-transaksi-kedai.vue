@@ -1,6 +1,7 @@
 <template>
 
     <v-main class="list">
+        <loading-screen :value="loadingScreen"></loading-screen>
         <h1 class="page-custom-title">DATA TRANSAKSI KEDAI</h1>
         <v-card>
             <v-card-title>
@@ -113,11 +114,16 @@
 </style>
 
 <script>
+import LoadingScreen from '@/components/loading-screen.vue';
 
 export default {
+    components: {
+        'loading-screen': LoadingScreen,
+    },
     name: 'transaksi-kedai-list',
     data() {
         return {
+            loadingScreen: true,
             dialogConfirmDelete: false,
             snackbar: {
                 snackbarNotif: false,
@@ -152,10 +158,14 @@ export default {
             let url = this.$api + '/transaksi-kedai';
             this.$http.get(url).then(response => {
                 this.list.datas = response.data.data;
+                setTimeout(() =>{
+                    this.loadingScreen = false;
+                }, 300);
             });
         },
 
         deleteData(){
+            this.loadingScreen = true;
             let id = this.deleteId;
             var url = this.$api + "/transaksi-kedai/" + id;
             this.$http.delete(url).then((response) => {
@@ -169,6 +179,9 @@ export default {
                 this.snackbar.error_message = error.response.data.message;
                 this.snackbar.color = "red";
                 this.snackbar.snackbarNotif = true;
+                setTimeout(() =>{
+                    this.loadingScreen = false;
+                }, 300);
                 this.dialogConfirmDelete = false
             });
         },

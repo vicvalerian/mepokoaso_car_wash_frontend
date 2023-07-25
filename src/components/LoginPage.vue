@@ -23,7 +23,7 @@
                                 ></v-text-field>
                             </v-card-text>
                             <v-card-actions>
-                                <v-btn rounded color="#316291" class="white--text" @click="login()" id="login-btn">Masuk</v-btn>
+                                <v-btn :loading="loading" rounded color="#316291" class="white--text" @click="login()" id="login-btn">Masuk</v-btn>
                             </v-card-actions>
                         </v-card>
                     </v-form>
@@ -77,11 +77,13 @@ export default {
             },
             username_rule: [ v => (v != "") || 'Username tidak boleh kosong!' ],
             password_rule: [ v => (v != "") || 'Password tidak boleh kosong!' ],
+            loading: false,
         }
     },
     methods: {
         login(){
             if(this.$refs.form.validate()){
+                this.loading = true;
                 var url = this.$api + '/login';
                 let data = {
                     username: this.form.username,
@@ -91,6 +93,7 @@ export default {
                     this.snackbar.error_message = response.data.message;
                     this.snackbar.color = "green";
                     this.snackbar.snackbarNotif = true;
+                    this.loading = false;
                     this.clear();
                     
                     let userLogin = {
@@ -111,6 +114,7 @@ export default {
                     }
                 })
                 .catch((error) => {
+                    this.loading = false;
                     this.snackbar.error_message = error.response.data.message;
                     this.snackbar.color = "red";
                     this.snackbar.snackbarNotif = true;

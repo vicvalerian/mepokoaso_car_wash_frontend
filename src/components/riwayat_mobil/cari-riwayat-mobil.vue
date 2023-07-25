@@ -22,7 +22,7 @@
                                 ></v-text-field>
                             </v-card-text>
                             <v-card-actions>
-                                <v-btn rounded color="#316291" class="white--text" @click="search()" id="login-btn">Cari</v-btn>
+                                <v-btn :loading="loading" color="#316291" class="white--text" @click="search()" id="login-btn">Cari</v-btn>
                             </v-card-actions>
                         </v-card>
                     </v-form>
@@ -76,13 +76,16 @@ export default {
                 message: '',
             },
             no_plat_rule: [ v => (v != "") || 'Nomor plat tidak boleh kosong!' ],
+            loading: false,
         }
     },
     methods: {
         search(){
             if(this.$refs.form.validate()){
+                this.loading = true;
                 var url = this.$api + '/riwayat/mobil-pelanggan?no_polisi=' + this.form.no_plat;
                 this.$http.get(url).then((response) => {
+                    this.loading = false;
                     this.snackbar.error_message = response.data.message;
                     this.snackbar.color = "green";
                     this.snackbar.snackbarNotif = true;
@@ -93,6 +96,7 @@ export default {
                     });
                 })
                 .catch((error) => {
+                    this.loading = false;
                     this.snackbar.error_message = error.response.data.message;
                     this.snackbar.color = "red";
                     this.snackbar.snackbarNotif = true;

@@ -1,6 +1,7 @@
 <template>
 
     <v-main class="list">
+        <loading-screen :value="loadingScreen"></loading-screen>
         <h1 class="page-custom-title">DATA KENDARAAN</h1>
         <v-card>
             <v-card-title>
@@ -180,11 +181,16 @@
 </style>
 
 <script>
+import LoadingScreen from '@/components/loading-screen.vue';
 
 export default {
+    components: {
+        'loading-screen': LoadingScreen,
+    },
     name: 'kendaraan-list',
     data() {
         return {
+            loadingScreen: true,
             previewImgLogo: '',
             inputType: 'Tambah',
             dialogConfirmDelete: false,
@@ -258,6 +264,9 @@ export default {
             let url = this.$api + '/kendaraan?jenis=' + this.filter.search;
             this.$http.get(url).then(response => {
                 this.list.datas = response.data.data;
+                setTimeout(() =>{
+                    this.loadingScreen = false;
+                }, 300);
             });
         },
 
@@ -285,6 +294,7 @@ export default {
             var logo_kendaraan = document.getElementById('fotoKendaraan'), dataFotoKendaraan = logo_kendaraan.files[0];
             this.kendaraan.append('foto', dataFotoKendaraan);
 
+            this.loadingScreen = true;
             var url = this.$api + '/kendaraan';
             this.$http.post(url, this.kendaraan).then((response) => {
                 this.snackbar.error_message = response.data.message;
@@ -298,6 +308,9 @@ export default {
                 this.snackbar.error_message = error.response.data.message;
                 this.snackbar.color = "red";
                 this.snackbar.snackbarNotif = true;
+                setTimeout(() =>{
+                    this.loadingScreen = false;
+                }, 300);
                 this.dialogAddEdit = false
             });
         },
@@ -315,6 +328,7 @@ export default {
                 data.append('foto', dataFotoKendaraan);
             }
 
+            this.loadingScreen = true;
             var url = this.$api + '/kendaraan/' + this.editId;
             this.load = true;
             this.$http.post(url, data).then((response) => {
@@ -334,11 +348,15 @@ export default {
                 this.snackbar.error_message = error.response.data.message;
                 this.snackbar.color = "red";
                 this.snackbar.snackbarNotif = true;
+                setTimeout(() =>{
+                    this.loadingScreen = false;
+                }, 300);
                 this.dialogAddEdit = false
             });
         },
 
         deleteData(){
+            this.loadingScreen = true;
             let id = this.deleteId;
             var url = this.$api + "/kendaraan/" + id;
             this.$http.delete(url).then((response) => {
@@ -352,6 +370,9 @@ export default {
                 this.snackbar.error_message = error.response.data.message;
                 this.snackbar.color = "red";
                 this.snackbar.snackbarNotif = true;
+                setTimeout(() =>{
+                    this.loadingScreen = false;
+                }, 300);
                 this.dialogConfirmDelete = false
             });
         },

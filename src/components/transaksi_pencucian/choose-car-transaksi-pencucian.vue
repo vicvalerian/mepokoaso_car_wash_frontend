@@ -1,6 +1,7 @@
 <template>
 
     <v-main class="list">
+        <loading-screen :value="loadingScreen"></loading-screen>
         <h1 class="page-custom-title">PILIH KENDARAAN</h1>
         <v-card>
             <v-card-text class="dialog-confirm-content">
@@ -12,7 +13,7 @@
                                     <v-item-group mandatory>
                                         <v-col v-for="(item, index) in jenis_kendaraan_list" :key="index">
                                             <v-item v-slot="{ active, toggle }">
-                                                <v-card class="mt-4" width="150" height="160" :color="active ? '#BCBCBC' : ''" @click="toggle">
+                                                <v-card class="mt-4" width="150" height="160" :color="active ? '#BCBCBC' : ''" @click="toggle" hover>
                                                     <v-card-title class="justify-center" @click="axioKendaraan(item.nama)">
                                                         <v-img contain width="100" height="100" :src="previewImageUrl == '' ? $baseUrl+'/storage/'+item.logo : previewImageUrl" style="object-fit:cover;"></v-img>
                                                     </v-card-title>
@@ -30,7 +31,7 @@
                                             <v-row>
                                                 <v-col v-for="(item, index) in kendaraan_list" :key="index" cols="12" md="4">
                                                     <v-item>
-                                                        <v-card class="mt-4" style="height: auto;" elevation="5" @click="goToTambahPencucian(item)">
+                                                        <v-card class="mt-4" style="height: auto;" @click="goToTambahPencucian(item)" hover>
                                                             <v-card-title class="justify-center">
                                                                 <v-img contain width="100" height="250" :src="previewImageUrl == '' ? $baseUrl+'/storage/'+item.foto : previewImageUrl" style="object-fit:cover;"></v-img>
                                                             </v-card-title>
@@ -126,11 +127,16 @@
 </style>
 
 <script>
+import LoadingScreen from '@/components/loading-screen.vue';
 
 export default {
+    components: {
+        'loading-screen': LoadingScreen,
+    },
     name: 'transaksi-pencucian-choose-car',
     data() {
         return {
+            loadingScreen: true,
             jenis_kendaraan_list: [],
             kendaraan_list: [],
             previewImageUrl: '',
@@ -165,10 +171,14 @@ export default {
         },
 
         axioKendaraan(value){
+            this.loadingScreen = true;
             let url = this.$api + '/kendaraan?jenis=' + value;
             this.$http.get(url).then(response => {
                 this.kendaraan_list = response.data.data;
                 window.scrollTo(0,0);
+                setTimeout(() =>{
+                    this.loadingScreen = false;
+                }, 300);
             });
         },
 

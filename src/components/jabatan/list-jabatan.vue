@@ -1,6 +1,7 @@
 <template>
 
     <v-main class="list">
+        <loading-screen :value="loadingScreen"></loading-screen>
         <h1 class="page-custom-title">DATA JABATAN</h1>
         <v-card>
             <v-card-title>
@@ -155,11 +156,16 @@
 </style>
 
 <script>
+import LoadingScreen from '@/components/loading-screen.vue';
 
 export default {
+    components: {
+        'loading-screen': LoadingScreen,
+    },
     name: 'jabatan-list',
     data() {
         return {
+            loadingScreen: true,
             previewImgLogo: '',
             inputType: 'Tambah',
             dialogConfirmDelete: false,
@@ -216,12 +222,16 @@ export default {
             let url = this.$api + '/jabatan';
             this.$http.get(url).then(response => {
                 this.list.datas = response.data.data;
+                setTimeout(() =>{
+                    this.loadingScreen = false;
+                }, 300);
             });
         },
 
         saveData(){
             this.jabatan.append('nama', this.form.nama);
 
+            this.loadingScreen = true;
             var url = this.$api + '/jabatan';
             this.$http.post(url, this.jabatan).then((response) => {
                 this.snackbar.error_message = response.data.message;
@@ -236,6 +246,9 @@ export default {
                 this.snackbar.color = "red";
                 this.snackbar.snackbarNotif = true;
                 this.dialogAddEdit = false
+                setTimeout(() =>{
+                    this.loadingScreen = false;
+                }, 300);
             });
         },
 
@@ -243,6 +256,7 @@ export default {
             var data = new FormData();
             data.append('nama', this.form.nama);
 
+            this.loadingScreen = true;
             var url = this.$api + '/jabatan/' + this.editId;
             this.load = true;
             this.$http.post(url, data).then((response) => {
@@ -258,11 +272,15 @@ export default {
                 this.snackbar.error_message = error.response.data.message;
                 this.snackbar.color = "red";
                 this.snackbar.snackbarNotif = true;
+                setTimeout(() =>{
+                    this.loadingScreen = false;
+                }, 300);
                 this.dialogAddEdit = false
             });
         },
 
         deleteData(){
+            this.loadingScreen = true;
             let id = this.deleteId;
             var url = this.$api + "/jabatan/" + id;
             this.$http.delete(url).then((response) => {
@@ -276,6 +294,9 @@ export default {
                 this.snackbar.error_message = error.response.data.message;
                 this.snackbar.color = "red";
                 this.snackbar.snackbarNotif = true;
+                setTimeout(() =>{
+                    this.loadingScreen = false;
+                }, 300);
                 this.dialogConfirmDelete = false
             });
         },

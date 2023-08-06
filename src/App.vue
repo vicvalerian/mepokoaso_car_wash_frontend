@@ -35,6 +35,8 @@
   background-color: #FFE3E3 !important;
   font-weight: bolder;
   letter-spacing: 0.5px;
+  justify-content: center;
+  width: 100%;
 }
 
 .orange-chip{
@@ -42,6 +44,8 @@
   background-color: #FFF1DA !important;
   font-weight: bolder;
   letter-spacing: 0.5px;
+  justify-content: center;
+  width: 100%;
 }
 
 .green-chip{
@@ -49,6 +53,8 @@
   background-color: #E1FAEA !important;
   font-weight: bolder;
   letter-spacing: 0.5px;
+  justify-content: center;
+  width: 100%;
 }
 
 .blue-chip{
@@ -56,6 +62,8 @@
   background-color: #EBF0FB !important;
   font-weight: bolder;
   letter-spacing: 0.5px;
+  justify-content: center;
+  width: 100%;
 }
 
 .light-blue-chip{
@@ -63,6 +71,8 @@
   background-color: #EBEDFB !important;
   font-weight: bolder;
   letter-spacing: 0.5px;
+  justify-content: center;
+  width: 100%;
 }
 
 #app {

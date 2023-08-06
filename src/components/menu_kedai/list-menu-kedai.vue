@@ -269,7 +269,7 @@ export default {
             this.menuKedai.append('nama', this.form.nama);
             this.menuKedai.append('jenis', this.form.jenis);
             this.menuKedai.append('harga', this.form.harga);
-            this.menuKedai.append('stok', this.form.stok ?? 0);
+            this.menuKedai.append('stok', this.form.stok ? this.form.stok : 0);
             this.menuKedai.append('is_stok', this.form.is_stok);
 
             this.loadingScreen = true;
@@ -298,7 +298,7 @@ export default {
             data.append('nama', this.form.nama);
             data.append('jenis', this.form.jenis);
             data.append('harga', this.form.harga);
-            data.append('stok', this.form.stok ?? 0);
+            data.append('stok', this.form.stok ? this.form.stok : 0);
             data.append('is_stok', this.form.is_stok);
 
             this.loadingScreen = true;

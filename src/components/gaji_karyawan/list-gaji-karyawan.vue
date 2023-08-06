@@ -253,7 +253,7 @@ export default {
                 { text: "Bulan", value: "bulan" },
                 { text: "Tahun", value: "tahun" },
                 { text: "Total Gaji", value: "total_gaji_bersih" },
-                { text: "Status", value: "status" },
+                { text: "Status", value: "status", width: '15%' },
                 { text: "Aksi", value: "actions", sortable: false },
             ];
 

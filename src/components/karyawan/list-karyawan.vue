@@ -260,7 +260,7 @@ export default {
                 { text: "Nomor Telepon", value: "no_telp", filterable:false, sortable: false },
                 { text: "Gaji", value: "gaji" },
                 { text: "Foto", value: "foto", filterable: false, sortable: false },
-                { text: "Status", value: "status" },
+                { text: "Status", value: "status", width: '10%' },
                 { text: "Aksi", value: "actions", sortable: false },
             ];
 

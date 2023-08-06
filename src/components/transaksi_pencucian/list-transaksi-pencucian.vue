@@ -38,10 +38,10 @@
                             <template>{{ getVarName(item.karyawan_pencucis) }}</template>
                         </template>
                         <template v-slot:[`item.status`]="{ item }">
-                            <v-chip v-if="item.status == 'Baru'" class="light-blue-chip">{{ item.status }}</v-chip>
-                            <v-chip v-if="item.status == 'Proses Cuci'" class="blue-chip">{{ item.status }}</v-chip>
-                            <v-chip v-if="item.status == 'Proses Bayar'" class="orange-chip">{{ item.status }}</v-chip>
-                            <v-chip v-if="item.status == 'Selesai'"  class="green-chip">{{ item.status }}</v-chip>
+                            <v-chip v-if="item.status == 'Baru'" class="light-blue-chip" label>{{ item.status }}</v-chip>
+                            <v-chip v-if="item.status == 'Proses Cuci'" class="blue-chip" label>{{ item.status }}</v-chip>
+                            <v-chip v-if="item.status == 'Proses Bayar'" class="orange-chip" label>{{ item.status }}</v-chip>
+                            <v-chip v-if="item.status == 'Selesai'"  class="green-chip" label>{{ item.status }}</v-chip>
                         </template>
                         <template v-slot:[`item.actions`]="{ item }">
                             <v-icon dense color="#316291" @click="detailHandler(item)" class="data-table-icon">mdi-information</v-icon>
@@ -220,7 +220,7 @@ export default {
                 { text: "Total Pembayaran", value: "total_pembayaran"},
                 { text: "Gratis", value: "is_free"},
                 { text: "Pencuci", value: "karyawan_pencucis"},
-                { text: "Status", value: "status"},
+                { text: "Status", value: "status", width: '10%'},
                 { text: "Aksi", value: "actions", sortable: false},
             ];
 

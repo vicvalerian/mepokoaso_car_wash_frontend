@@ -187,6 +187,7 @@ export default {
     name: 'gaji-karyawan-list',
     data() {
         return {
+            userLogin: JSON.parse(localStorage.getItem('userLogin')),
             loadingScreen: true,
             inputType: 'Sync',
             dialogDetail: false,
@@ -263,7 +264,7 @@ export default {
 
         axioData() {
             let url = this.$api + '/gaji-karyawan?karyawan=' + this.filter.search;
-            this.$http.get(url).then(response => {
+            this.$http.get(url, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then(response => {
                 this.list.datas = response.data.data;
                 setTimeout(() =>{
                     this.loadingScreen = false;
@@ -273,7 +274,7 @@ export default {
 
         axioKaryawan(){
             let url = this.$api + '/list-selection-karyawan';
-            this.$http.get(url).then(response => {
+            this.$http.get(url, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then(response => {
                 if(response.status == 200){
                     let data = JSON.parse(JSON.stringify(response.data));
                     data.forEach((item)=>{
@@ -289,7 +290,7 @@ export default {
         syncData(){
             this.loadingScreen = true;
             var url = this.$api + '/gaji-karyawan?karyawan_id=' + this.form.karyawan_id + '&bulan=' + this.form.bulan + '&tahun=' + this.form.tahun;
-            this.$http.post(url).then((response) => {
+            this.$http.post(url, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then((response) => {
                 this.snackbar.error_message = response.data.message;
                 this.snackbar.color = "green";
                 this.snackbar.snackbarNotif = true;
@@ -315,7 +316,7 @@ export default {
 
             var url = this.$api + '/gaji-karyawan/status/' + this.editId;
             this.load = true;
-            this.$http.put(url, data).then((response) => {
+            this.$http.put(url, data, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then((response) => {
                 this.snackbar.error_message = response.data.message;
                 this.snackbar.color = "green";
                 this.snackbar.snackbarNotif = true;

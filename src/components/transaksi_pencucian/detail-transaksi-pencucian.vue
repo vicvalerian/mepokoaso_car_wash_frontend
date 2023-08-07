@@ -161,6 +161,7 @@ export default {
     name: 'transaksi-pencucian-detail',
     data() {
         return {
+            userLogin: JSON.parse(localStorage.getItem('userLogin')),
             id: this.$route.params.id,
             singleSelect: false,
             selected: [],
@@ -213,7 +214,7 @@ export default {
 
         axioData(){
             let url = this.$api + '/transaksi-pencucian/' + this.id;
-            this.$http.get(url).then(response => {
+            this.$http.get(url, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then(response => {
                 this.form = response.data.data;
                 this.form.keuntungan = this.formatRupiah(response.data.data.keuntungan, 'Rp');
                 this.form.tarif_kendaraan = this.formatRupiah(response.data.data.tarif_kendaraan, 'Rp');
@@ -225,7 +226,7 @@ export default {
 
         axioKaryawanKasir(){
             let url = this.$api + '/list-selection-kasir';
-            this.$http.get(url).then(response => {
+            this.$http.get(url, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then(response => {
                 if(response.status == 200){
                     let data = JSON.parse(JSON.stringify(response.data));
                     data.forEach((item)=>{
@@ -240,7 +241,7 @@ export default {
 
         axioKendaraan(){
             let url = this.$api + '/list-selection-kendaraan';
-            this.$http.get(url).then(response => {
+            this.$http.get(url, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then(response => {
                 if(response.status == 200){
                     let data = JSON.parse(JSON.stringify(response.data));
                     data.forEach((item)=>{

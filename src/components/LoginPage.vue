@@ -97,7 +97,7 @@ export default {
                     this.clear();
                     
                     let userLogin = {
-                        id: response.data.data.id,
+                        token: response.data.data.token,
                         jabatan: response.data.data.jabatan.nama,
                     }
 

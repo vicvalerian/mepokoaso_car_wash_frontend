@@ -234,6 +234,7 @@ export default {
     name: 'transaksi-kedai-edit',
     data() {
         return {
+            userLogin: JSON.parse(localStorage.getItem('userLogin')),
             loadingScreen: true,
             id: this.$route.params.id,
             jenis_menu_list: [
@@ -284,7 +285,7 @@ export default {
 
         axioData(){
             let url = this.$api + '/transaksi-kedai/' + this.id;
-            this.$http.get(url).then(response => {
+            this.$http.get(url, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then(response => {
                 this.form.karyawan_id = response.data.data.karyawan_id;
                 this.form.total_penjualan = response.data.data.total_penjualan;
                 this.form.tgl_penjualan = response.data.data.tgl_penjualan;
@@ -313,7 +314,7 @@ export default {
 
         axioKaryawanPenjagaKedai(){
             let url = this.$api + '/list-selection-karyawan';
-            this.$http.get(url).then(response => {
+            this.$http.get(url, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then(response => {
                 if(response.status == 200){
                     let data = JSON.parse(JSON.stringify(response.data));
                     data.forEach((item)=>{
@@ -330,7 +331,7 @@ export default {
         axioMenuKedai(jenis){
             this.loadingScreen = true;
             let url = this.$api + '/menu-kedai?jenis=' + jenis;
-            this.$http.get(url).then(response => {
+            this.$http.get(url, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then(response => {
                 this.menu_kedai_list = response.data.data;
                 setTimeout(() =>{
                     this.loadingScreen = false;
@@ -349,7 +350,7 @@ export default {
      
             this.loadingScreen = true;
             var url = this.$api + '/transaksi-kedai/' + this.id;
-            this.$http.post(url, data).then((response) => {
+            this.$http.post(url, data, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then((response) => {
                 this.snackbar.error_message = response.data.message;
                 this.snackbar.color = "green";
                 this.snackbar.snackbarNotif = true;

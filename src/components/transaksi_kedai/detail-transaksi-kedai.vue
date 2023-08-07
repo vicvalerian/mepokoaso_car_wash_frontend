@@ -123,6 +123,7 @@ export default {
     name: 'transaksi-kedai-detail',
     data() {
         return {
+            userLogin: JSON.parse(localStorage.getItem('userLogin')),
             id: this.$route.params.id,
             selected: [],
             modal: false,
@@ -164,7 +165,7 @@ export default {
 
         axioData(){
             let url = this.$api + '/transaksi-kedai/' + this.id;
-            this.$http.get(url).then(response => {
+            this.$http.get(url, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then(response => {
                 this.form = response.data.data;
                 this.form.total_penjualan = this.formatRupiah(response.data.data.total_penjualan, 'Rp');
                 this.list.datas = response.data.data.menu_kedai;
@@ -173,7 +174,7 @@ export default {
 
         axioKaryawanPenjagaKedai(){
             let url = this.$api + '/list-selection-karyawan';
-            this.$http.get(url).then(response => {
+            this.$http.get(url, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then(response => {
                 if(response.status == 200){
                     let data = JSON.parse(JSON.stringify(response.data));
                     data.forEach((item)=>{

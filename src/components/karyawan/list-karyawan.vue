@@ -194,6 +194,7 @@ export default {
     name: 'karyawan-list',
     data() {
         return {
+            userLogin: JSON.parse(localStorage.getItem('userLogin')),
             loadingScreen: true,
             statuses: ['Aktif', 'Izin', 'Tidak Aktif'],
             previewImgLogo: '',
@@ -270,7 +271,7 @@ export default {
 
         axioData() {
             let url = this.$api + '/karyawan';
-            this.$http.get(url).then(response => {
+            this.$http.get(url, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then(response => {
                 this.list.datas = response.data.data;
                 setTimeout(() =>{
                     this.loadingScreen = false;
@@ -280,7 +281,7 @@ export default {
 
         axioJabatan(){
             let url = this.$api + '/list-selection-jabatan';
-            this.$http.get(url).then(response => {
+            this.$http.get(url, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then(response => {
                 if(response.status == 200){
                     let data = JSON.parse(JSON.stringify(response.data));
                     data.forEach((item)=>{
@@ -306,7 +307,7 @@ export default {
 
             this.loadingScreen = true;
             var url = this.$api + '/karyawan';
-            this.$http.post(url, this.karyawan).then((response) => {
+            this.$http.post(url, this.karyawan, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then((response) => {
                 this.snackbar.error_message = response.data.message;
                 this.snackbar.color = "green";
                 this.snackbar.snackbarNotif = true;
@@ -344,7 +345,7 @@ export default {
             this.loadingScreen = true;
             var url = this.$api + '/karyawan/' + this.editId;
             this.load = true;
-            this.$http.post(url, data).then((response) => {
+            this.$http.post(url, data, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then((response) => {
                 this.snackbar.error_message = response.data.message;
                 this.snackbar.color = "green";
                 this.snackbar.snackbarNotif = true;
@@ -372,7 +373,7 @@ export default {
             this.loadingScreen = true;
             let id = this.deleteId;
             var url = this.$api + "/karyawan/" + id;
-            this.$http.delete(url).then((response) => {
+            this.$http.delete(url, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then((response) => {
                 this.snackbar.error_message = response.data.message;
                 this.snackbar.color = "green";
                 this.snackbar.snackbarNotif = true;

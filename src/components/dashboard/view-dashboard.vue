@@ -107,6 +107,7 @@ export default {
     name: 'dashboard-view',
     data() {
         return {
+            userLogin: JSON.parse(localStorage.getItem('userLogin')),
             loadingScreen: true,
             bulan_list: [
                 { text: "Januari", value: 1 },
@@ -214,13 +215,13 @@ export default {
         },
 
         getPencucianChart(url){
-            this.$http.get(url).then(response => {
+            this.$http.get(url, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then(response => {
                 this.filterPencucianChart(response.data);
             });
         },
 
         getKedaiChart(url){
-            this.$http.get(url).then(response => {
+            this.$http.get(url, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then(response => {
                 this.filterKedaiChart(response.data);
             });
         },

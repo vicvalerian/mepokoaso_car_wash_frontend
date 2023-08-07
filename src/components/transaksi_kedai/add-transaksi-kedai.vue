@@ -287,7 +287,7 @@ export default {
 
         axioKaryawanPenjagaKedai(){
             let url = this.$api + '/list-selection-karyawan';
-            this.$http.get(url).then(response => {
+            this.$http.get(url, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then(response => {
                 if(response.status == 200){
                     let data = JSON.parse(JSON.stringify(response.data));
                     data.forEach((item)=>{
@@ -304,7 +304,7 @@ export default {
         axioMenuKedai(jenis){
             this.loadingScreen = true;
             let url = this.$api + '/menu-kedai?jenis=' + jenis;
-            this.$http.get(url).then(response => {
+            this.$http.get(url, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then(response => {
                 this.menu_kedai_list = response.data.data;
                 setTimeout(() =>{
                     this.loadingScreen = false;
@@ -335,7 +335,7 @@ export default {
             
             this.loadingScreen = true;
             var url = this.$api + '/transaksi-kedai';
-            this.$http.post(url, data).then((response) => {
+            this.$http.post(url, data, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then((response) => {
                 this.snackbar.error_message = response.data.message;
                 this.snackbar.color = "green";
                 this.snackbar.snackbarNotif = true;

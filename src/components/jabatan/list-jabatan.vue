@@ -165,6 +165,7 @@ export default {
     name: 'jabatan-list',
     data() {
         return {
+            userLogin: JSON.parse(localStorage.getItem('userLogin')),
             loadingScreen: true,
             previewImgLogo: '',
             inputType: 'Tambah',
@@ -220,7 +221,7 @@ export default {
 
         axioData() {
             let url = this.$api + '/jabatan';
-            this.$http.get(url).then(response => {
+            this.$http.get(url, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then(response => {
                 this.list.datas = response.data.data;
                 setTimeout(() =>{
                     this.loadingScreen = false;
@@ -233,7 +234,7 @@ export default {
 
             this.loadingScreen = true;
             var url = this.$api + '/jabatan';
-            this.$http.post(url, this.jabatan).then((response) => {
+            this.$http.post(url, this.jabatan, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then((response) => {
                 this.snackbar.error_message = response.data.message;
                 this.snackbar.color = "green";
                 this.snackbar.snackbarNotif = true;
@@ -259,7 +260,7 @@ export default {
             this.loadingScreen = true;
             var url = this.$api + '/jabatan/' + this.editId;
             this.load = true;
-            this.$http.post(url, data).then((response) => {
+            this.$http.post(url, data, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then((response) => {
                 this.snackbar.error_message = response.data.message;
                 this.snackbar.color = "green";
                 this.snackbar.snackbarNotif = true;
@@ -283,7 +284,7 @@ export default {
             this.loadingScreen = true;
             let id = this.deleteId;
             var url = this.$api + "/jabatan/" + id;
-            this.$http.delete(url).then((response) => {
+            this.$http.delete(url, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then((response) => {
                 this.snackbar.error_message = response.data.message;
                 this.snackbar.color = "green";
                 this.snackbar.snackbarNotif = true;

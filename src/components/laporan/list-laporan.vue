@@ -254,6 +254,7 @@ export default {
     name: 'laporan-list',
     data() {
         return {
+            userLogin: JSON.parse(localStorage.getItem('userLogin')),
             modalMulaiTransaksiPencucian: false,
             modalSelesaiTransaksiPencucian: false,
             modalMulaiTransaksiKedai: false,
@@ -300,6 +301,7 @@ export default {
             this.loading = true;
             var url = this.$api + "/laporan/" + this.path;
             this.$http.get(url, {
+                headers: {'Authorization' : 'Bearer ' + this.userLogin.token},
                 responseType: 'arraybuffer'
             }).then((response) => {
                 this.loading = false;

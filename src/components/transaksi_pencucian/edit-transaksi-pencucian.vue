@@ -255,7 +255,7 @@ export default {
 
         axioData(){
             let url = this.$api + '/transaksi-pencucian/' + this.id;
-            this.$http.get(url).then(response => {
+            this.$http.get(url, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then(response => {
                 this.form = response.data.data;
                 this.form.tgl_pencucian_show = this.formatTanggal(response.data.data.tgl_pencucian);
                 this.list.selectedPencuci = response.data.data.karyawan_pencucis;
@@ -265,7 +265,7 @@ export default {
 
         axioKaryawanKasir(){
             let url = this.$api + '/list-selection-kasir';
-            this.$http.get(url).then(response => {
+            this.$http.get(url, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then(response => {
                 if(response.status == 200){
                     let data = JSON.parse(JSON.stringify(response.data));
                     data.forEach((item)=>{
@@ -280,7 +280,7 @@ export default {
 
         readKendaraan(){
             let url = this.$api + '/kendaraan/' + this.form.kendaraan_id;
-            this.$http.get(url).then(response => {
+            this.$http.get(url, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then(response => {
                 this.formMobil.foto = response.data.data.foto;
                 this.form.tarif_kendaraan = response.data.data.harga;
                 this.form.jenis_kendaraan = response.data.data.tipe;
@@ -289,7 +289,7 @@ export default {
 
         axioKendaraan(){
             let url = this.$api + '/list-selection-kendaraan';
-            this.$http.get(url).then(response => {
+            this.$http.get(url, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then(response => {
                 if(response.status == 200){
                     let data = JSON.parse(JSON.stringify(response.data));
                     data.forEach((item)=>{
@@ -304,7 +304,7 @@ export default {
 
         axioKaryawanPencuci(){
             let url = this.$api + '/list-selection-pencuci';
-            this.$http.get(url).then(response => {
+            this.$http.get(url, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then(response => {
                 this.list.datas = response.data;
             });
         },
@@ -332,7 +332,7 @@ export default {
             
             this.loadingScreen = true;
             var url = this.$api + '/transaksi-pencucian/' + this.id;
-            this.$http.post(url, data).then((response) => {
+            this.$http.post(url, data, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then((response) => {
                 this.snackbar.error_message = response.data.message;
                 this.snackbar.color = "green";
                 this.snackbar.snackbarNotif = true;

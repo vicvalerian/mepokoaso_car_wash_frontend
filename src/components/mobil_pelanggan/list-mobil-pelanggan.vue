@@ -135,6 +135,7 @@ export default {
     name: 'mobil-pelanggan-list',
     data() {
         return {
+            userLogin: JSON.parse(localStorage.getItem('userLogin')),
             loadingScreen: true,
             dialogDetail: false,
             snackbar: {
@@ -179,7 +180,7 @@ export default {
 
         axioData() {
             let url = this.$api + '/mobil-pelanggan';
-            this.$http.get(url).then(response => {
+            this.$http.get(url, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then(response => {
                 this.list.datas = response.data.data;
                 setTimeout(() =>{
                     this.loadingScreen = false;
@@ -189,7 +190,7 @@ export default {
 
         detailHandler(item){
             let url = this.$api + '/mobil-pelanggan-transaksi/' + item.id;
-            this.$http.get(url).then(response => {
+            this.$http.get(url, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then(response => {
                 this.formDetail.datas = response.data;
             });
             this.dialogDetail = true

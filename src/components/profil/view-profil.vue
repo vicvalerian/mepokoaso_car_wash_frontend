@@ -195,8 +195,8 @@ export default {
         },
 
         axioData(){
-            let url = this.$api + '/karyawan/' + this.userLogin.id;
-            this.$http.get(url).then(response => {
+            let url = this.$api + '/profil/karyawan';
+            this.$http.get(url, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then(response => {
                 this.form.nama = response.data.data.nama;
                 this.form.no_telp = response.data.data.no_telp;
                 this.form.username = response.data.data.username;
@@ -211,7 +211,7 @@ export default {
 
         axioJabatan(){
             let url = this.$api + '/list-selection-jabatan';
-            this.$http.get(url).then(response => {
+            this.$http.get(url, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then(response => {
                 if(response.status == 200){
                     let data = JSON.parse(JSON.stringify(response.data));
                     data.forEach((item)=>{
@@ -245,8 +245,8 @@ export default {
             data.append('status', this.form.status);
 
             this.loading = true;
-            var url = this.$api + '/karyawan/profil/' + this.userLogin.id;
-            this.$http.post(url, data).then((response) => {
+            var url = this.$api + '/profil/karyawan';
+            this.$http.post(url, data, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then((response) => {
                 this.loading = false;
                 this.snackbar.error_message = response.data.message;
                 this.snackbar.color = "green";
@@ -269,8 +269,8 @@ export default {
             data.append('foto', dataFotoKaryawan);
 
             this.loading = true;
-            var url = this.$api + '/karyawan/photo/' + this.userLogin.id;
-            this.$http.post(url, data).then((response) => {
+            var url = this.$api + '/profil/photo/karyawan';
+            this.$http.post(url, data, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then((response) => {
                 this.loading = false;
                 this.snackbar.error_message = response.data.message;
                 this.snackbar.color = "green";
@@ -296,8 +296,8 @@ export default {
             data.append('confirmNewPassword', this.formEdit.confirmNewPassword);
 
             this.loading = true;
-            var url = this.$api + '/karyawan/password/' + this.userLogin.id;
-            this.$http.post(url, data).then((response) => {
+            var url = this.$api + '/profil/password/karyawan';
+            this.$http.post(url, data, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then((response) => {
                 this.loading = false;
                 this.snackbar.error_message = response.data.message;
                 this.snackbar.color = "green";

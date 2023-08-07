@@ -144,9 +144,13 @@
       },
 
       logout(){
-        localStorage.removeItem('userLogin');
-        this.$router.push({
-          name: 'Login',
+        let url = this.$api + '/logout';
+        this.$http.get(url, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then(response => {
+          console.log(response.data.message);
+          localStorage.removeItem('userLogin');
+          this.$router.push({
+            name: 'Login',
+          });
         });
       },
     },

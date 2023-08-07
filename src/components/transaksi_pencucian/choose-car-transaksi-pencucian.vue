@@ -136,6 +136,7 @@ export default {
     name: 'transaksi-pencucian-choose-car',
     data() {
         return {
+            userLogin: JSON.parse(localStorage.getItem('userLogin')),
             loadingScreen: true,
             jenis_kendaraan_list: [],
             kendaraan_list: [],
@@ -162,7 +163,7 @@ export default {
 
         axioJenisKendaraan(){
             let url = this.$api + '/list-card-jenis-kendaraan';
-            this.$http.get(url).then(response => {
+            this.$http.get(url, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then(response => {
                 this.jenis_kendaraan_list = response.data;
                 this.init_jenis = this.jenis_kendaraan_list[0] ? this.jenis_kendaraan_list[0].nama : '';
 
@@ -173,7 +174,7 @@ export default {
         axioKendaraan(value){
             this.loadingScreen = true;
             let url = this.$api + '/kendaraan?jenis=' + value;
-            this.$http.get(url).then(response => {
+            this.$http.get(url, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then(response => {
                 this.kendaraan_list = response.data.data;
                 window.scrollTo(0,0);
                 setTimeout(() =>{

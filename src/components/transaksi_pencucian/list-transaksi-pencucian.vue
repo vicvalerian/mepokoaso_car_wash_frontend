@@ -181,6 +181,7 @@ export default {
     name: 'transaksi-pencucian-list',
     data() {
         return {
+            userLogin: JSON.parse(localStorage.getItem('userLogin')),
             loadingScreen: true,
             tab: null,
             stasuses: ['Semua', 'Baru', 'Proses Cuci', 'Proses Bayar', 'Selesai'],
@@ -234,7 +235,7 @@ export default {
             }
 
             let url = this.$api + '/transaksi-pencucian?status=' + tabStatus;
-            this.$http.get(url).then(response => {
+            this.$http.get(url, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then(response => {
                 this.list.datas = response.data.data;
                 setTimeout(() =>{
                     this.loadingScreen = false;
@@ -246,7 +247,7 @@ export default {
             this.loadingScreen = true;
             let id = this.deleteId;
             var url = this.$api + "/transaksi-pencucian/" + id;
-            this.$http.delete(url).then((response) => {
+            this.$http.delete(url, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then((response) => {
                 this.snackbar.error_message = response.data.message;
                 this.snackbar.color = "green";
                 this.snackbar.snackbarNotif = true;
@@ -269,7 +270,7 @@ export default {
                 "id": this.statusId,
             }
             var url = this.$api + "/transaksi-pencucian/" + this.selectedProses;
-            this.$http.put(url, data).then((response) => {
+            this.$http.put(url, data, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then((response) => {
                 this.snackbar.error_message = response.data.message;
                 this.snackbar.color = "green";
                 this.snackbar.snackbarNotif = true;
@@ -287,6 +288,7 @@ export default {
         cetakNota(){
             var url = this.$api + "/transaksi-pencucian/nota/" + this.notaId;
             this.$http.get(url, {
+                headers: {'Authorization' : 'Bearer ' + this.userLogin.token},
                 responseType: 'arraybuffer'
             }).then((response) => {
                 let blob = new Blob([response.data], { type: 'application/pdf' });

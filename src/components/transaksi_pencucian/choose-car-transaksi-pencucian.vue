@@ -193,9 +193,7 @@ export default {
 
         setPencucianCart(item){
             let parsed = {
-                "kendaraan_id": item.id,
-                "nama": item.nama,
-                "tarif": item.harga,
+                "kendaraan_id": item.uuid,
             }
             localStorage.setItem('pencucianCart', JSON.stringify(parsed));
         },

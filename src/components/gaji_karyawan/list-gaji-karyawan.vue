@@ -346,7 +346,7 @@ export default {
 
         editHandler(item) {
             this.inputType = 'Ubah';
-            this.editId = item.id;
+            this.editId = item.uuid;
             this.form.karyawan_id = item.karyawan_id;
             this.form.bulan = item.bulan;
             this.form.tahun = item.tahun;

@@ -31,7 +31,7 @@
                 <template v-slot:[`item.actions`]="{ item }">
                     <v-icon dense color="#316291" @click="detailHandler(item)" class="data-table-icon">mdi-information</v-icon>
                     <v-icon dense color="#316291" @click="editHandler(item)" class="data-table-icon">mdi-pencil</v-icon>
-                    <v-icon dense color="#316291" @click="deleteHandler(item.id)" class="data-table-icon">mdi-delete</v-icon>
+                    <v-icon dense color="#316291" @click="deleteHandler(item.uuid)" class="data-table-icon">mdi-delete</v-icon>
                 </template>
                 <template v-slot:no-data>
                   <div color="white" class="red--text" icon="warning"><b>Maaf, tidak ada data tersedia.</b></div>
@@ -502,7 +502,7 @@ export default {
 
         editHandler(item) {
             this.inputType = 'Ubah';
-            this.editId = item.id;
+            this.editId = item.uuid;
             this.form.menu_kedai_id = item.menu_kedai_id;
             this.form.nama_barang = item.nama_barang;
             this.form.tgl_pembelian = item.tgl_pembelian;

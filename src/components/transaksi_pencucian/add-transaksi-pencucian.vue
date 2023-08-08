@@ -204,7 +204,6 @@ export default {
                 message: '',
             },
             form: {
-                // no_pencucian: '',
                 kendaraan_id: '',
                 nama_kendaraan: '',
                 tarif_kendaraan: '',
@@ -213,7 +212,6 @@ export default {
                 tgl_pencucian: new Date().toISOString().substr(0, 10),
                 tgl_pencucian_show: '',
                 waktu_pencucian: '',
-                karyawan_id: '',
                 status: 'Baru',
                 detail_transaksi_pencuci: [],
             },
@@ -246,10 +244,8 @@ export default {
             this.axioKaryawanPenjagaKedai();
             this.axioKaryawanPencuci();
             this.axioKendaraan();
-            this.setFieldKendaraan();
-            this.setFieldKaryawan();
-            this.setFieldWaktu();
             this.readKendaraan();
+            this.setFieldWaktu();
             this.form.tgl_pencucian_show = this.formatTanggal(this.form.tgl_pencucian);
             setTimeout(() =>{
                 this.loadingScreen = false;
@@ -297,19 +293,11 @@ export default {
             let url = this.$api + '/kendaraan/' + this.pencucianCart.kendaraan_id;
             this.$http.get(url, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then(response => {
                 this.formMobil.foto = response.data.data.foto;
-                this.formMobil.nama = response.data.data.nama;
-                this.formMobil.harga = response.data.data.harga;
+
                 this.form.jenis_kendaraan = response.data.data.tipe;
+                this.form.kendaraan_id = response.data.data.id;
+                this.form.tarif_kendaraan = response.data.data.harga;
             });
-        },
-
-        setFieldKendaraan(){
-            this.form.kendaraan_id = this.pencucianCart.kendaraan_id;
-            this.form.tarif_kendaraan = this.pencucianCart.tarif;
-        },
-
-        setFieldKaryawan(){
-            this.form.karyawan_id = this.userLogin.id;
         },
 
         setFieldWaktu(){
@@ -330,8 +318,6 @@ export default {
 
             let data = {
                 'kendaraan_id': this.form.kendaraan_id,
-                'karyawan_id': this.form.karyawan_id,
-                // 'no_pencucian': this.form.no_pencucian,
                 'no_polisi': this.form.no_polisi,
                 'jenis_kendaraan': this.form.jenis_kendaraan,
                 'tarif_kendaraan': this.form.tarif_kendaraan,

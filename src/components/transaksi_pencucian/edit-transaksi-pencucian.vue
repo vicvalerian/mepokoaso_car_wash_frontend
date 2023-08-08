@@ -214,9 +214,9 @@ export default {
                 tgl_pencucian: new Date().toISOString().substr(0, 10),
                 tgl_pencucian_show: '',
                 waktu_pencucian: '',
-                karyawan_id: '',
                 status: 'Baru',
                 detail_transaksi_pencuci: [],
+                kendaraan_uuid: '',
             },
             formMobil: {
                 foto: '',
@@ -259,7 +259,11 @@ export default {
                 this.form = response.data.data;
                 this.form.tgl_pencucian_show = this.formatTanggal(response.data.data.tgl_pencucian);
                 this.list.selectedPencuci = response.data.data.karyawan_pencucis;
-                this.readKendaraan();
+
+                this.formMobil.foto = response.data.data.kendaraan.foto;
+                this.form.tarif_kendaraan = response.data.data.kendaraan.harga;
+                this.form.jenis_kendaraan = response.data.data.kendaraan.tipe;
+                this.form.kendaraan_uuid = response.data.data.kendaraan.uuid;
             });
         },
 
@@ -279,7 +283,7 @@ export default {
         },
 
         readKendaraan(){
-            let url = this.$api + '/kendaraan/' + this.form.kendaraan_id;
+            let url = this.$api + '/kendaraan/' + this.form.kendaraan_uuid;
             this.$http.get(url, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then(response => {
                 this.formMobil.foto = response.data.data.foto;
                 this.form.tarif_kendaraan = response.data.data.harga;
@@ -294,6 +298,7 @@ export default {
                     let data = JSON.parse(JSON.stringify(response.data));
                     data.forEach((item)=>{
                         let dashboard = item;
+                        dashboard.uuid = item.uuid
                         dashboard.text = item.nama
                         dashboard.value = item.id
                         this.kendaraan_list.push(dashboard);
@@ -319,8 +324,6 @@ export default {
 
             let data = {
                 'kendaraan_id': this.form.kendaraan_id,
-                'karyawan_id': this.form.karyawan_id,
-                // 'no_pencucian': this.form.no_pencucian,
                 'no_polisi': this.form.no_polisi,
                 'jenis_kendaraan': this.form.jenis_kendaraan,
                 'tarif_kendaraan': this.form.tarif_kendaraan,
@@ -373,12 +376,12 @@ export default {
             }
         },
 
-        'form.kendaraan_id'(){
-            // this.kendaraan_list.forEach((item)=>{
-            //     if(item.id == val){
-            //         this.form.tarif_kendaraan = item.harga
-            //     }
-            // });
+        'form.kendaraan_id'(val){
+            this.kendaraan_list.forEach((item)=>{
+                if(item.id == val){
+                    this.form.kendaraan_uuid = item.uuid
+                }
+            });
             this.readKendaraan();
         }
     },

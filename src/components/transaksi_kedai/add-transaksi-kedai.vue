@@ -118,7 +118,6 @@
                                                         </v-dialog>
                                                     </v-flex>
                                                 </v-layout>
-                                                <!-- <v-select outlined :items="penjaga_kedai_list" v-model="form.karyawan_id" label="Pilih Penjaga Kedai" required></v-select> -->
                                                 <v-layout>
                                                     <v-card width="100%" height="32px" color="grey lighten-4" elevation="0" class="center">
                                                         <v-flex xs5>
@@ -251,7 +250,6 @@ export default {
                 message: '',
             },
             form: {
-                karyawan_id: '',
                 total_penjualan: '',
                 total_penjualan_show: '',
                 tgl_penjualan: new Date().toISOString().substr(0, 10),
@@ -277,10 +275,8 @@ export default {
                 { text: "Aksi", value: "actions", sortable: false },
             ];
 
-            this.axioKaryawanPenjagaKedai();
             this.axioMenuKedai('');
             this.setFieldWaktu();
-            this.setFieldKaryawan();
             this.calculateTotal();
             this.form.tgl_penjualan_show = this.formatTanggal(this.form.tgl_penjualan);
         },
@@ -320,13 +316,8 @@ export default {
             this.form.waktu_penjualan = hours+':'+minutes+':'+seconds;
         },
 
-        setFieldKaryawan(){
-            this.form.karyawan_id = this.userLogin.id;
-        },
-
         saveData(){
             let data = {
-                'karyawan_id': this.form.karyawan_id,
                 'tgl_penjualan': this.form.tgl_penjualan,
                 'waktu_penjualan': this.form.waktu_penjualan,
                 'total_penjualan': this.form.total_penjualan,

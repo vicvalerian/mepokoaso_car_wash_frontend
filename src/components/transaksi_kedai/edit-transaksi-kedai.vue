@@ -118,7 +118,6 @@
                                                         </v-dialog>
                                                     </v-flex>
                                                 </v-layout>
-                                                <!-- <v-select outlined :items="penjaga_kedai_list" v-model="form.karyawan_id" label="Pilih Penjaga Kedai" required></v-select> -->
                                                 <v-layout>
                                                     <v-card width="100%" height="32px" color="grey lighten-4" elevation="0" class="center">
                                                         <v-flex xs5>
@@ -252,7 +251,6 @@ export default {
                 message: '',
             },
             form: {
-                karyawan_id: '',
                 total_penjualan: '',
                 total_penjualan_show: '',
                 tgl_penjualan: '',
@@ -286,7 +284,6 @@ export default {
         axioData(){
             let url = this.$api + '/transaksi-kedai/' + this.id;
             this.$http.get(url, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then(response => {
-                this.form.karyawan_id = response.data.data.karyawan_id;
                 this.form.total_penjualan = response.data.data.total_penjualan;
                 this.form.tgl_penjualan = response.data.data.tgl_penjualan;
                 this.form.waktu_penjualan = response.data.data.waktu_penjualan;
@@ -341,7 +338,6 @@ export default {
 
         updateData(){
             let data = {
-                'karyawan_id': this.form.karyawan_id,
                 'tgl_penjualan': this.form.tgl_penjualan,
                 'waktu_penjualan': this.form.waktu_penjualan,
                 'total_penjualan': this.form.total_penjualan,

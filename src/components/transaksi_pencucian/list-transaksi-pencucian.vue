@@ -46,11 +46,11 @@
                         <template v-slot:[`item.actions`]="{ item }">
                             <v-icon dense color="#316291" @click="detailHandler(item)" class="data-table-icon">mdi-information</v-icon>
                             <v-icon v-if="item.status == 'Baru'" dense color="#316291" @click="editHandler(item)" class="data-table-icon">mdi-pencil</v-icon>
-                            <v-icon v-if="item.status == 'Baru'" dense color="#316291" @click="ubahStatusHandler(item.id, 'cuci')" class="data-table-icon">mdi-water</v-icon>
-                            <v-icon v-if="item.status == 'Proses Cuci'" dense color="#316291" @click="ubahStatusHandler(item.id, 'bayar')" class="data-table-icon">mdi-cash</v-icon>
-                            <v-icon v-if="item.status == 'Proses Bayar'" dense color="#316291" @click="ubahStatusHandler(item.id, 'finish')" class="data-table-icon">mdi-check</v-icon>
+                            <v-icon v-if="item.status == 'Baru'" dense color="#316291" @click="ubahStatusHandler(item.uuid, 'cuci')" class="data-table-icon">mdi-water</v-icon>
+                            <v-icon v-if="item.status == 'Proses Cuci'" dense color="#316291" @click="ubahStatusHandler(item.uuid, 'bayar')" class="data-table-icon">mdi-cash</v-icon>
+                            <v-icon v-if="item.status == 'Proses Bayar'" dense color="#316291" @click="ubahStatusHandler(item.uuid, 'finish')" class="data-table-icon">mdi-check</v-icon>
                             <v-icon v-if="item.status == 'Selesai'" dense color="#316291" @click="cetakNotaHandler(item)" class="data-table-icon">mdi-download</v-icon>
-                            <v-icon v-if="item.status == 'Baru'" dense color="#316291" @click="deleteHandler(item.id)" class="data-table-icon">mdi-delete</v-icon>
+                            <v-icon v-if="item.status == 'Baru'" dense color="#316291" @click="deleteHandler(item.uuid)" class="data-table-icon">mdi-delete</v-icon>
                         </template>
                         <template v-slot:no-data>
                         <div color="white" class="red--text" icon="warning"><b>Maaf, tidak ada data tersedia.</b></div>
@@ -269,6 +269,7 @@ export default {
             let data = {
                 "id": this.statusId,
             }
+            this.loadingScreen = true;
             var url = this.$api + "/transaksi-pencucian/" + this.selectedProses;
             this.$http.put(url, data, {headers: {'Authorization' : 'Bearer ' + this.userLogin.token}}).then((response) => {
                 this.snackbar.error_message = response.data.message;
@@ -318,13 +319,13 @@ export default {
 
         detailHandler(item){
             this.$router.push({
-                path: '/transaksi-pencucian/detail/' + item.id,
+                path: '/transaksi-pencucian/detail/' + item.uuid,
             });
         },
 
         editHandler(item) {
             this.$router.push({
-                path: '/transaksi-pencucian/ubah/' + item.id,
+                path: '/transaksi-pencucian/ubah/' + item.uuid,
             });
         },
 
@@ -361,7 +362,7 @@ export default {
         },
 
         cetakNotaHandler(item){
-            this.notaId = item.id;
+            this.notaId = item.uuid;
             // this.notaPencucianNumber = item.no_pencucian;
             this.notaPencucianNumber = item.kendaraan.nama + ' ' + item.no_polisi;
             this.dialogConfirmCetakNota = true;

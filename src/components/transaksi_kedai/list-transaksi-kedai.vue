@@ -25,7 +25,7 @@
                 <template v-slot:[`item.actions`]="{ item }">
                     <v-icon dense color="#316291" @click="detailHandler(item)" class="data-table-icon">mdi-information</v-icon>
                     <v-icon dense color="#316291" @click="editHandler(item)" class="data-table-icon">mdi-pencil</v-icon>
-                    <v-icon dense color="#316291" @click="deleteHandler(item.id)" class="data-table-icon">mdi-delete</v-icon>
+                    <v-icon dense color="#316291" @click="deleteHandler(item.uuid)" class="data-table-icon">mdi-delete</v-icon>
                 </template>
                 <template v-slot:no-data>
                 <div color="white" class="red--text" icon="warning"><b>Maaf, tidak ada data tersedia.</b></div>
@@ -145,7 +145,7 @@ export default {
         initialize(){
             this.list.headers = [
                 { text: "No", value: "nomor", width: '5%' },
-                // { text: "Nomor Transaksi Penjualan", value: "no_penjualan"},
+                { text: "Nomor Transaksi Penjualan", value: "no_penjualan"},
                 { text: "Tanggal Penjualan", value: "tgl_penjualan"},
                 { text: "Pelayan", value: "karyawan.nama"},
                 { text: "Total Penjualan", value: "total_penjualan"},
@@ -200,13 +200,13 @@ export default {
 
         detailHandler(item){
             this.$router.push({
-                path: '/transaksi-kedai/detail/' + item.id,
+                path: '/transaksi-kedai/detail/' + item.uuid,
             });
         },
 
         editHandler(item) {
             this.$router.push({
-                path: '/transaksi-kedai/ubah/' + item.id,
+                path: '/transaksi-kedai/ubah/' + item.uuid,
             });
         },
 

@@ -85,7 +85,18 @@
                                                 <v-text-field v-model="list.search" append-icon="mdi-magnify" label="Cari Pencuci" single-line hide-details></v-text-field>
                                             </v-card-title>
                                             <v-card-text>
-                                                <v-data-table v-model="list.selectedPencuci" :headers="list.headers" :items="list.datas" :search="list.search" class="elevation-1" show-select>
+                                                <v-data-table v-model="list.selectedPencuci" :headers="list.headers" :items="list.datas" :search="list.search" class="elevation-1" show-select
+                                                    :footer-props="{
+                                                        showFirstLastPage: true,
+                                                        firstIcon: 'mdi-skip-previous',
+                                                        lastIcon: 'mdi-skip-next',
+                                                        itemsPerPageAllText: 'Semua',
+                                                        itemsPerPageText: 'Data per halaman',
+                                                    }"
+                                                >
+                                                    <template v-slot:[`footer.page-text`]="items"> 
+                                                        {{ items.pageStart }} - {{ items.pageStop }} dari {{ items.itemsLength }}
+                                                    </template>
                                                     <template v-slot:no-data>
                                                         <div color="white" class="red--text" icon="warning"><b>Maaf, tidak ada data tersedia.</b></div>
                                                     </template>

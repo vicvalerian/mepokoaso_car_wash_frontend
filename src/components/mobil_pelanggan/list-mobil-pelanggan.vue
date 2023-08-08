@@ -11,7 +11,15 @@
                 <v-spacer></v-spacer>
             </v-card-title>
 
-            <v-data-table :headers="list.headers" :items="list.datas" :search="list.search" class="elevation-1">
+            <v-data-table :headers="list.headers" :items="list.datas" :search="list.search" class="elevation-1"
+                :footer-props="{
+                    showFirstLastPage: true,
+                    firstIcon: 'mdi-skip-previous',
+                    lastIcon: 'mdi-skip-next',
+                    itemsPerPageAllText: 'Semua',
+                    itemsPerPageText: 'Data per halaman',
+                }"
+            >
                 <template v-slot:[`item.nomor`]="{ item }">
                     <template>{{ list.datas.indexOf(item) + 1 }}</template>
                 </template>
@@ -20,6 +28,9 @@
                 </template>
                 <template v-slot:[`item.actions`]="{ item }">
                     <v-icon dense color="#316291" @click="detailHandler(item)" class="data-table-icon">mdi-information</v-icon>
+                </template>
+                <template v-slot:[`footer.page-text`]="items"> 
+                    {{ items.pageStart }} - {{ items.pageStop }} dari {{ items.itemsLength }}
                 </template>
                 <template v-slot:no-data>
                   <div color="white" class="red--text" icon="warning"><b>Maaf, tidak ada data tersedia.</b></div>
@@ -38,12 +49,23 @@
                             <v-flex xs12>
                                 <div>
                                     <div>
-                                        <v-data-table :headers="formDetail.headers" :items="formDetail.datas" class="elevation-1">
+                                        <v-data-table :headers="formDetail.headers" :items="formDetail.datas" class="elevation-1"
+                                            :footer-props="{
+                                                showFirstLastPage: true,
+                                                firstIcon: 'mdi-skip-previous',
+                                                lastIcon: 'mdi-skip-next',
+                                                itemsPerPageAllText: 'Semua',
+                                                itemsPerPageText: 'Data per halaman',
+                                            }"
+                                        >
                                                 <template v-slot:[`item.nomor_detail`]="{ item }">
                                                 <template>{{ formDetail.datas.indexOf(item) + 1 }}</template>
                                             </template>
                                             <template v-slot:[`item.tgl_pencucian`]="{ item }">
                                                 <template>{{ formatTanggal(item.tgl_pencucian) }}</template>
+                                            </template>
+                                            <template v-slot:[`footer.page-text`]="items"> 
+                                                {{ items.pageStart }} - {{ items.pageStop }} dari {{ items.itemsLength }}
                                             </template>
                                             <template v-slot:no-data>
                                                 <div color="white" class="red--text" icon="warning"><b>Maaf, tidak ada data tersedia.</b></div>

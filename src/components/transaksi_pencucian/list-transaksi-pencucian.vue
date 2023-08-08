@@ -20,7 +20,15 @@
 
             <v-tabs-items v-model="tab">
                 <v-tab-item v-for="status in stasuses" :key="status">
-                    <v-data-table :headers="list.headers" :items="list.datas" :search="list.search" class="elevation-1">
+                    <v-data-table :headers="list.headers" :items="list.datas" :search="list.search" class="elevation-1"
+                        :footer-props="{
+                            showFirstLastPage: true,
+                            firstIcon: 'mdi-skip-previous',
+                            lastIcon: 'mdi-skip-next',
+                            itemsPerPageAllText: 'Semua',
+                            itemsPerPageText: 'Data per halaman',
+                        }"
+                    >
                         <template v-slot:[`item.nomor`]="{ item }">
                             <template>{{ list.datas.indexOf(item) + 1 }}</template>
                         </template>
@@ -51,6 +59,9 @@
                             <v-icon v-if="item.status == 'Proses Bayar'" dense color="#316291" @click="ubahStatusHandler(item.uuid, 'finish')" class="data-table-icon">mdi-check</v-icon>
                             <v-icon v-if="item.status == 'Selesai'" dense color="#316291" @click="cetakNotaHandler(item)" class="data-table-icon">mdi-download</v-icon>
                             <v-icon v-if="item.status == 'Baru'" dense color="#316291" @click="deleteHandler(item.uuid)" class="data-table-icon">mdi-delete</v-icon>
+                        </template>
+                        <template v-slot:[`footer.page-text`]="items"> 
+                            {{ items.pageStart }} - {{ items.pageStop }} dari {{ items.itemsLength }}
                         </template>
                         <template v-slot:no-data>
                         <div color="white" class="red--text" icon="warning"><b>Maaf, tidak ada data tersedia.</b></div>
